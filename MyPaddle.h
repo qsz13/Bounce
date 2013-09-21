@@ -10,7 +10,7 @@
 #include "cocos2d.h"
 #include "Paddle.h"
 using namespace cocos2d;
-
+#define MY_PADDLE_SCALE 0.5
 
 class MyPaddle : public Paddle {
 public:
@@ -19,18 +19,19 @@ public:
 	static MyPaddle* getMyPaddle();
 
 	void myInit();
+	float getWidth();
+	float getHeight();
 
-	void Drag(CCPoint offSet);
-	//touch
-	virtual void onEnter();
-	virtual void onExit();
-	virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-	virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-	virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    b2Body* getMyPaddleBody();
+    void setMyPaddleBody(b2Body* myPaddleBody);
+
+	
 protected:
 	static MyPaddle *myPaddle;
 	MyPaddle();
 	virtual ~MyPaddle();
+	b2Body *myPaddleBody;
+
 };
 
 #endif /* MYPADDLE_H_ */

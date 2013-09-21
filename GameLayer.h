@@ -25,10 +25,35 @@ public:
 
     CREATE_FUNC(GameLayer);
     void doStep(float delta);
+
+    CCSize winSize;
+
     b2World *world;
+    b2Body *groundBody;
+    b2Fixture *bottomFixture;
+	b2Fixture *ballFixture;
+    
     Ball *ball;
     MyPaddle *myPaddle;
     EnemyPaddle *enemyPaddle;
+    
+    b2Body *myPaddleBody;
+    b2Body *enemyPaddleBody;
+
+    b2Fixture *myPaddleFixture;
+    b2Fixture *enemyPaddleFixture;
+
+    b2MouseJoint *_mouseJoint; 
+    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    bool MouseDown(const b2Vec2& p);
+    void MouseMove(const b2Vec2& p);
+    void MouseUp(const b2Vec2& p);
+
+private:
+    bool gameIsPaused;
+
 };
 
 #endif /* GAMELAYER_H_ */

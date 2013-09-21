@@ -6,11 +6,10 @@
  */
 
 #include "Ball.h"
-
 Ball* Ball::ball = NULL;
 
 Ball::Ball() {
-
+	velocity = 15;
 
 }
 
@@ -27,6 +26,7 @@ Ball* Ball::getBall(){
 	else
 	{
 		Ball* ball = new Ball();
+
 		if (ball && ball->initWithFile("ball.png"))
 		{
 			ball->myInit();
@@ -40,11 +40,33 @@ Ball* Ball::getBall(){
 
 
 void Ball::myInit(){
-	this->setScale(0.5);
+	this->setScale(BALL_SCALE);
 }
 
 
+float Ball::getWidth(){
+	return this->getTextureRect().getMaxY()*BALL_SCALE;
+}
 
+float Ball::getHeight(){
+	return this->getTextureRect().getMaxX()*BALL_SCALE;
+}
 
+float Ball::getRadius(){
+	return this->getTextureRect().getMaxX()*BALL_SCALE/2;
+}
 
+int Ball::getVelocity(){
+	return velocity;
+}
 
+void Ball::setVelocity(int v){
+	velocity = v;
+}
+
+b2Body* Ball::getBallBody(){
+	return ballBody;
+}
+void Ball::setBallBody(b2Body* ballBody){
+	this->ballBody = ballBody;
+}
