@@ -201,7 +201,7 @@ void GameLayer::doStep(float delta)
 
         }
     }
-
+    enemyPaddle->move(ball);
 
 	if(!gameIsPaused){
 		Ball *ball= (Ball*)this->getChildByTag(0);

@@ -10,9 +10,10 @@
 
 
 EnemyPaddle* EnemyPaddle::enemyPaddle = NULL;
+
 EnemyPaddle::EnemyPaddle():Paddle() {
 	paddleBodyDef.userData = enemyPaddle;
-
+	velocity = 100;
 }
 
 EnemyPaddle::~EnemyPaddle() {
@@ -56,5 +57,19 @@ b2Body* EnemyPaddle::getEnemyPaddleBody(){
 }
 void EnemyPaddle::setEnemyPaddleBody(b2Body* enemyPaddleBody){
 	this->enemyPaddleBody = enemyPaddleBody;
+
+}
+
+void EnemyPaddle::move(Ball *ball){
+	CCPoint ballPosition = ball->getPosition();
+	if(ballPosition.x < this->getPosition().x){
+		b2Vec2 v = b2Vec2(-10,0);
+    	enemyPaddleBody->SetLinearVelocity(v);
+	}
+	else if(ballPosition.x > this->getPosition().x+this->getWidth()){
+		b2Vec2 v = b2Vec2(10,0);
+    	enemyPaddleBody->SetLinearVelocity(v);
+	}
+
 
 }

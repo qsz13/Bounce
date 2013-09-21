@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "Paddle.h"
+#include "Ball.h"
 #define ENEMY_PADDLE_SCALE 0.5
 using namespace cocos2d;
 
@@ -23,12 +24,15 @@ public:
 
     b2Body* getEnemyPaddleBody();
     void setEnemyPaddleBody(b2Body* enemyPaddleBody);
-
+    void move(Ball *ball);
 private:
     static EnemyPaddle* enemyPaddle;
     EnemyPaddle();
 	virtual ~EnemyPaddle();
 	b2Body *enemyPaddleBody;
+	float velocity;
+
+
 };
 
 #endif /* ENEMYPADDLE_H_ */
