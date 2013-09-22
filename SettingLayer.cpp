@@ -7,7 +7,7 @@
 
 #include "SettingLayer.h"
 
-int SettingLayer::controlMode = 0;
+int SettingLayer::controlMode = 1;
 
 SettingLayer::SettingLayer() {
 
@@ -17,22 +17,22 @@ SettingLayer::~SettingLayer() {
 	
 }
 
-
-CCScene* SettingLayer::scene()
-{
-       // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
-
-    // 'layer' is an autorelease object
-    SettingLayer *layer = SettingLayer::create();
-
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
- 
-}
+//
+//CCScene* SettingLayer::scene()
+//{
+//       // 'scene' is an autorelease object
+//    CCScene *scene = CCScene::create();
+//
+//    // 'layer' is an autorelease object
+//    SettingLayer *layer = SettingLayer::create();
+//
+//    // add layer as a child to scene
+//    scene->addChild(layer);
+//
+//    // return the scene
+//    return scene;
+//
+//}
 
 
 

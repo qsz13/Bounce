@@ -12,19 +12,21 @@
 #include "GameLayer.h"
 using namespace cocos2d;
 class MenuLayer : public CCLayer{
-public:
-	MenuLayer();
-	virtual bool init();
-	static CCScene* scene();
 
-	CREATE_FUNC(MenuLayer);
-
-
-	 void startCallback(CCObject* pSender);
 
 private:
 
-	//CCSprite *startButton;
+	void initBackground();
+	void initMenu();
+
+public:
+	//MenuLayer();
+	virtual bool init();
+	static CCScene* scene();
+	void menuCloseCallback(CCObject* pSender);
+	void menuStart(CCObject* pSender);
+
+	CREATE_FUNC(MenuLayer);
 
 };
 

@@ -16,7 +16,7 @@ public:
 	SettingLayer();
 	virtual ~SettingLayer();
 	virtual bool init();
-	static cocos2d::CCScene* scene();
+	//static cocos2d::CCScene* scene();
 
 	static int getControlMode();
 	static void setControlMode(int mode);
