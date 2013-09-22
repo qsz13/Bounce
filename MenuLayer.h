@@ -1,8 +1,8 @@
 /*
  * MenuLayer.h
  *
- *  Created on: Sep 17, 2013
- *      Author: daniel
+ *  Created on: 2013-9-17
+ *      Author: tomhu
  */
 
 #ifndef MENULAYER_H_
@@ -10,22 +10,24 @@
 
 #include "cocos2d.h"
 #include "GameLayer.h"
-using namespace cocos2d;
-class MenuLayer : public CCLayer{
+
+class MenuLayer : public cocos2d::CCLayer
+{
+private:
+	void initBackground();
+	void initMenu();
+
 public:
-	MenuLayer();
 	virtual bool init();
-	static CCScene* scene();
+
+	static cocos2d::CCScene* scene();
+
+	void menuCloseCallback(CCObject *pSender);
+	void menuStart(CCObject *pSender);
+	void menuHelp(CCObject *pSender);
+	void menuSetting(CCObject *pSender);
 
 	CREATE_FUNC(MenuLayer);
-
-
-	 void startCallback(CCObject* pSender);
-
-private:
-
-	//CCSprite *startButton;
-
 };
 
 #endif /* MENULAYER_H_ */
