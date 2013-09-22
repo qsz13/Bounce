@@ -42,16 +42,17 @@ MyPaddle* MyPaddle::getMyPaddle(){
 
 
 void MyPaddle::myInit(){
-	this->setScale(MY_PADDLE_SCALE);
+	this->setScaleX(MY_PADDLE_SCALE_X);
+	this->setScaleY(MY_PADDLE_SCALE_Y);
 }
 
 
 float MyPaddle::getWidth(){
-    return this->getTextureRect().getMaxX()*MY_PADDLE_SCALE;
+    return this->getTextureRect().getMaxX()*MY_PADDLE_SCALE_X;
 }
 
 float MyPaddle::getHeight(){
-    return this->getTextureRect().getMaxY()*MY_PADDLE_SCALE;
+    return this->getTextureRect().getMaxY()*MY_PADDLE_SCALE_Y;
 }
 
 
