@@ -22,8 +22,9 @@ public:
 
 	static cocos2d::CCScene* scene();
 
-	void menuCloseCallback(CCObject* pSender);
-	void menuStart(CCObject* pSender);
+	void menuCloseCallback(CCObject *pSender);
+	void menuStart(CCObject *pSender);
+	void menuHelp(CCObject *pSender);
 
 	CREATE_FUNC(MainScene);
 };

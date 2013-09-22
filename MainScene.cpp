@@ -46,7 +46,7 @@ void MainScene::initMenu()
 														  "Help.png",
 														  "Help_Pressed.png",
 														  this,
-														  menu_selector(MainScene::menuStart));
+														  menu_selector(MainScene::menuHelp));
 	pHelpItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusHelp = CCMenu::create(pHelpItem, NULL);
@@ -82,6 +82,10 @@ bool MainScene::init()
 	if (!CCLayer::init())
 		return false;
 
+	setTouchEnabled(true);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
+	setTouchMode(kCCTouchesOneByOne);
+
 	this->initBackground();
 	this->initMenu();
 
@@ -113,4 +117,12 @@ void MainScene::menuStart(CCObject* pSender)
 //	this->addChild(testLabel, 2);
 
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+}
+
+void MainScene::menuHelp(CCObject *pSender)
+{
+	CCLabelTTF *testLabel = CCLabelTTF::create("Test", "Jenna Sue", 30);
+	CCSize size=CCDirector::sharedDirector()->getWinSize();
+	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
+	this->addChild(testLabel, 2);
 }
