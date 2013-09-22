@@ -9,7 +9,6 @@ CCScene* GameLayer::scene()
     CCScene *scene = CCScene::create();
     GameLayer *layer = GameLayer::create();
     scene->addChild(layer);
-
     return scene;
 }
 
@@ -22,7 +21,20 @@ bool GameLayer::init()
         return false;
     }
 
-    setTouchEnabled(true); 
+    
+    if(SettingLayer::getControlMode()==0){
+        setAccelerometerEnabled(true);
+        setTouchEnabled(false);
+
+    }
+    else //if(SettingLayer::getControlMode()==1||
+         //   SettingLayer::getControlMode()= 0;)
+    {
+        setTouchEnabled(true);
+        setAccelerometerEnabled(false);
+    }
+
+
     gameIsPaused = false;
     winSize = CCDirector::sharedDirector()->getWinSize();
 
@@ -155,8 +167,6 @@ bool GameLayer::init()
 
 
 
-
-
 //restrict paddle's movement
     b2PrismaticJointDef jointDef;
     b2Vec2 worldAxis(1.0f, 0.0f);
@@ -168,9 +178,6 @@ bool GameLayer::init()
     jointDef.Initialize(enemyPaddle->getEnemyPaddleBody(), groundBody,
             enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
        world->CreateJoint(&jointDef);
-
-
-
 
 
     schedule(schedule_selector(GameLayer::doStep));
@@ -203,31 +210,49 @@ void GameLayer::doStep(float delta)
     }
     enemyPaddle->move(ball);
 
-	if(!gameIsPaused){
+	if(!gameIsEnded){
 		Ball *ball= (Ball*)this->getChildByTag(0);
         if(ball->getPosition().y<0){
-        	CCLOG("!!!!!");
+        	//CCLOG("!!!!!");
 //                  char temp[30];
 //                  sprintf(temp,"%f",sprite->getPosition().y);
 //                    CCLOG(temp);
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
-            gameIsPaused = true;
+            gameIsEnded = true;
             //ball->removeFromParentAndCleanup(true);
         }
         else if(ball->getPosition().y > winSize.height){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
-            label->setPosition(ccp(winSize.width/2,winSize.height/2));
+            label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
-            gameIsPaused = true;
+            gameIsEnded = true;
            // ball->removeFromParentAndCleanup(true);
+            
         }
+        restart();
+    }
+
+}
+
+
+
+
+void GameLayer::restart(){
+    if(gameIsEnded){
+        CCSprite *restartButton = CCSprite::create("restart.png");
+        restartButton->setScale(0.4);
+        this->addChild(restartButton,2,0);
+        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+
     }
 
 
 
 }
+
+
 
 
 

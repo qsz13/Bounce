@@ -19,11 +19,10 @@ CCScene* HelloWorld::scene()
     return scene;
 }
 
-// on "init" you need to initialize your instance
+
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
+
     if ( !CCLayer::init() )
     {
         return false;

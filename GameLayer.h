@@ -13,6 +13,7 @@
 #include "MyPaddle.h"
 #include "EnemyPaddle.h"
 #include "Ball.h"
+#include "SettingLayer.h"
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
@@ -20,7 +21,7 @@ class GameLayer : public CCLayer {
 public:
 	virtual bool init();
 	static CCScene* scene();
-	void menuCloseCallback(CCObject* pSender);
+	//void menuCloseCallback(CCObject* pSender);
 
 
     CREATE_FUNC(GameLayer);
@@ -37,8 +38,8 @@ public:
     MyPaddle *myPaddle;
     EnemyPaddle *enemyPaddle;
     
-    b2Body *myPaddleBody;
-    b2Body *enemyPaddleBody;
+    // b2Body *myPaddleBody;
+    // b2Body *enemyPaddleBody;
 
     b2Fixture *myPaddleFixture;
     b2Fixture *enemyPaddleFixture;
@@ -47,12 +48,17 @@ public:
     virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    bool MouseDown(const b2Vec2& p);
-    void MouseMove(const b2Vec2& p);
-    void MouseUp(const b2Vec2& p);
+    // bool MouseDown(const b2Vec2& p);
+    // void MouseMove(const b2Vec2& p);
+    // void MouseUp(const b2Vec2& p);
+    void restart();
+    
+
+
 
 private:
     bool gameIsPaused;
+    bool gameIsEnded;
 
 };
 
