@@ -52,7 +52,7 @@ public:
     // void MouseMove(const b2Vec2& p);
     // void MouseUp(const b2Vec2& p);
     void restart();
-    
+    void didAccelerate(CCAcceleration* pAccelerationValue);
 
 
 

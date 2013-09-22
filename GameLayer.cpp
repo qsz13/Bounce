@@ -86,8 +86,8 @@ bool GameLayer::init()
     b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
     ballBodyDef.position.Set(ball->getPosition().x/PTM_RATIO, ball->getPosition().y/PTM_RATIO);
-    //ballBodyDef.userData = ball;
-    //spriteBody->SetUserData(sprite);  
+    ballBodyDef.userData = ball;
+    ballBodyDef.gravityScale = 0.0f;
     ball->setBallBody(world->CreateBody(&ballBodyDef));
     ball->getBallBody()->SetUserData(ball);
 //circle shape
@@ -151,6 +151,7 @@ bool GameLayer::init()
     enemyPaddleBodyDef.type = b2_dynamicBody;
     enemyPaddleBodyDef.position.Set(enemyPaddle->getPosition().x/PTM_RATIO,enemyPaddle->getPosition().y/PTM_RATIO);
     enemyPaddleBodyDef.userData = enemyPaddle;
+    enemyPaddleBodyDef.gravityScale = 0.0f;
     enemyPaddle->setEnemyPaddleBody(world->CreateBody(&enemyPaddleBodyDef));
 
 //enemy paddle fixture
@@ -161,7 +162,7 @@ bool GameLayer::init()
     enemyPaddleFixtureDef.density = 10.0f;
     enemyPaddleFixtureDef.friction = 0.4f;
     enemyPaddleFixtureDef.restitution = 0.1f;
-
+   // enemyPaddleFixtureDef.gravityScale = 0.0f;
     enemyPaddleFixture = enemyPaddle->getEnemyPaddleBody()->CreateFixture(&enemyPaddleFixtureDef);
 
 
@@ -302,3 +303,12 @@ void GameLayer::restart(){
      }
      
  }
+
+
+ void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
+ {
+     b2Vec2 gravity(pAccelerationValue->x * 500,pAccelerationValue->y * 00);
+     world->SetGravity(gravity);
+ }
+
+

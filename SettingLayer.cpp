@@ -7,7 +7,7 @@
 
 #include "SettingLayer.h"
 
-int SettingLayer::controlMode = 1;
+int SettingLayer::controlMode = 0;
 
 SettingLayer::SettingLayer() {
 	// TODO Auto-generated constructor stub
@@ -21,12 +21,10 @@ SettingLayer::~SettingLayer() {
 
 int SettingLayer::getControlMode(){
 	return controlMode;
-
 }
 
 
 
 void SettingLayer::setControlMode(int mode){
 	controlMode = mode;
-
 }
