@@ -8,27 +8,22 @@
 #ifndef SETTINGLAYER_H_
 #define SETTINGLAYER_H_
 
+
 #include "cocos2d.h"
+#include "GameLayer.h"
 using namespace cocos2d;
 
-class SettingLayer:public CCLayer {
+class SettingLayer : public CCLayer{
 public:
 	SettingLayer();
 	virtual ~SettingLayer();
-	virtual bool init();
-	//static cocos2d::CCScene* scene();
 
 	static int getControlMode();
 	static void setControlMode(int mode);
 
 private:
 	static int controlMode;
-	//0 for gravity 1 for drag 2 for touch;
-
-
-
-
-
+	//0 for Accelerometer 1 for drag 2 for touch
 };
 
 #endif /* SETTINGLAYER_H_ */
