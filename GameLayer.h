@@ -14,6 +14,7 @@
 #include "EnemyPaddle.h"
 #include "Ball.h"
 #include "SettingLayer.h"
+#include "EnlargeItem.h"
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
@@ -51,14 +52,22 @@ public:
     // bool MouseDown(const b2Vec2& p);
     // void MouseMove(const b2Vec2& p);
     // void MouseUp(const b2Vec2& p);
-    void restart();
+    void restartConfirm();
     void didAccelerate(CCAcceleration* pAccelerationValue);
+    void putItem();
+
+    void restart();
+    static void* ThreadFunction(void* arg);
+    void CreateThread();
+
+
 
 
 
 private:
     bool gameIsPaused;
     bool gameIsEnded;
+    //CCMenuItemImage *restartButton;
 
 };
 

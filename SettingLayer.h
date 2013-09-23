@@ -20,10 +20,32 @@ public:
 
 	static int getControlMode();
 	static void setControlMode(int mode);
-
+	static int getSensitivity();
+	static void setSensitivity(int sensitivity);
 private:
+
+	static int sensitivity;
 	static int controlMode;
+	
+
 	//0 for Accelerometer 1 for drag 2 for touch
+
+
+
+	/*
+	 * control mode
+	 * music on/off
+	 * volume
+	 * if gravity control{
+	 * 		set sensitivity
+	 * }
+	 *
+	 *
+	 */
+
+
+
+
 };
 
 #endif /* SETTINGLAYER_H_ */

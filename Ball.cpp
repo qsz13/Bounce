@@ -19,12 +19,12 @@ Ball::~Ball() {
 
 Ball* Ball::getBall(){
 
-	if(ball != NULL)
-	{
-		return ball;
-	}
-	else
-	{
+//	if(ball != NULL)
+//	{
+//		return ball;
+//	}
+//	else
+//	{
 		Ball* ball = new Ball();
 
 		if (ball && ball->initWithFile("ball.png"))
@@ -35,7 +35,7 @@ Ball* Ball::getBall(){
 		}
 			CC_SAFE_DELETE(ball);
 			return NULL;
-	}
+	//}
 }
 
 

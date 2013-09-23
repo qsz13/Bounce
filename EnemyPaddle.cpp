@@ -63,11 +63,11 @@ void EnemyPaddle::setEnemyPaddleBody(b2Body* enemyPaddleBody){
 
 void EnemyPaddle::move(Ball *ball){
 	CCPoint ballPosition = ball->getPosition();
-	if(ballPosition.x < this->getPosition().x){
+	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
 		b2Vec2 v = b2Vec2(-10,0);
     	enemyPaddleBody->SetLinearVelocity(v);
 	}
-	else if(ballPosition.x > this->getPosition().x+this->getWidth()){
+	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
 		b2Vec2 v = b2Vec2(10,0);
     	enemyPaddleBody->SetLinearVelocity(v);
 	}

@@ -40,11 +40,7 @@ bool GameLayer::init()
 
 
     b2Vec2 gravity(0.0f, 0.0f);
-
     world = new b2World(gravity);
-
-
-
 
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
@@ -181,20 +177,15 @@ bool GameLayer::init()
        world->CreateJoint(&jointDef);
 
 
+    putItem();
+
+
     schedule(schedule_selector(GameLayer::doStep));
-    //schedule(schedule_selector(HelloWorld::kick), 5);
 
     return true;
 }
 
-// void GameLayer::menuCloseCallback(CCObject* pSender)
-// {
-//     CCDirector::sharedDirector()->end();
 
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//     exit(0);
-// #endif
-// }
 
 void GameLayer::doStep(float delta)
 {
@@ -205,11 +196,14 @@ void GameLayer::doStep(float delta)
             CCSprite *sprite = (CCSprite *)b->GetUserData();
             sprite->setPosition(ccp(b->GetPosition().x * PTM_RATIO,b->GetPosition().y * PTM_RATIO));
 
-            
 
         }
     }
     enemyPaddle->move(ball);
+
+    char temp[30];
+    sprintf(temp,"%f",myPaddle->getPosition().x);
+    CCLOG(temp);
 
 	if(!gameIsEnded){
 		Ball *ball= (Ball*)this->getChildByTag(0);
@@ -232,31 +226,30 @@ void GameLayer::doStep(float delta)
            // ball->removeFromParentAndCleanup(true);
             
         }
-        restart();
+        restartConfirm();
     }
 
 }
 
 
-
-
-void GameLayer::restart(){
+void GameLayer::restartConfirm(){
     if(gameIsEnded){
-        CCSprite *restartButton = CCSprite::create("restart.png");
-        restartButton->setScale(0.4);
-        this->addChild(restartButton,2,0);
-        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+//        CCSprite *restartButton = CCSprite::create("restart.png");
+//        restartButton->setScale(0.4);
+//        this->addChild(restartButton,2,0);
+//        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+        CCMenuItemImage *restartButton = CCMenuItemImage::create( "restart.png",
+				  "restart.png",
+				  this,
+				  menu_selector(GameLayer::restart));
+        restartButton -> setPosition( ccp(0, 0) );
+        CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
+        	pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/4));
+        	this -> addChild(pMenusSetting, 1);
 
     }
 
-
-
 }
-
-
-
-
-
 
 
  void GameLayer::ccTouchesBegan(CCSet *pTouches,CCEvent *event)
@@ -278,7 +271,6 @@ void GameLayer::restart(){
      md.maxForce =1000.0f*myPaddle->getMyPaddleBody()->GetMass();
      _mouseJoint = (b2MouseJoint *)world->CreateJoint(&md);
      }
-
       
  }
   
@@ -307,8 +299,19 @@ void GameLayer::restart(){
 
  void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
  {
-     b2Vec2 gravity(pAccelerationValue->x * 500,pAccelerationValue->y * 00);
+     b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
      world->SetGravity(gravity);
  }
+
+void GameLayer::putItem(){
+//EnlargeItem
+
+}
+
+void GameLayer::restart(){
+
+	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+
+}
 
 

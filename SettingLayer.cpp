@@ -7,7 +7,17 @@
 
 #include "SettingLayer.h"
 
-int SettingLayer::controlMode = 0;
+int SettingLayer::controlMode = 1;
+int SettingLayer::sensitivity = 250;
+
+int SettingLayer::getSensitivity(){
+	return sensitivity;
+
+}
+void SettingLayer::setSensitivity(int s){
+	sensitivity = s;
+}
+
 
 SettingLayer::SettingLayer() {
 	// TODO Auto-generated constructor stub
@@ -22,7 +32,6 @@ SettingLayer::~SettingLayer() {
 int SettingLayer::getControlMode(){
 	return controlMode;
 }
-
 
 
 void SettingLayer::setControlMode(int mode){
