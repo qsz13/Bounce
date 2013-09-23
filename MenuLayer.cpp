@@ -1,30 +1,14 @@
 /*
  * MenuLayer.cpp
  *
- *  Created on: Sep 17, 2013
- *      Author: daniel
+ *  Created on: 2013-9-17
+ *      Author: tomhu
  */
 
 #include "MenuLayer.h"
 
- // MenuLayer::MenuLayer(){
-	// setTouchEnabled(true);
-	// setTouchPriority(kCCMenuHandlerPriority + 1);
-	// setTouchMode(kCCTouchesOneByOne);
-	// CCSprite* startSpriteNormal = CCSprite::create("play_button.png");
-	// CCMenuItemSprite* item1 = CCMenuItemSprite::create(startSpriteNormal, startSpriteNormal, startSpriteNormal,
-	// 		this, menu_selector(MenuLayer::startCallback) );
-	// CCSprite* quitSpriteNormal =  CCSprite::create("quit_button.png");
-	// CCMenuItemSprite* item2 = CCMenuItemSprite::create(quitSpriteNormal, quitSpriteNormal, quitSpriteNormal,
-	// 			this, menu_selector(MenuLayer::startCallback) );
-	// CCMenu* menu = CCMenu::create( item1, item2,NULL);
-	// menu->alignItemsVertically();
+using namespace cocos2d;
 
-	// addChild(menu);
-	// CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	// menu->setPosition(ccp(winSize.width/2, winSize.height/2));
-
-// }
 void MenuLayer::initBackground()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -39,7 +23,6 @@ void MenuLayer::initBackground()
 	// 把图片精灵放置在图层中
 	this->addChild(pSprite, 0);
 }
-
 
 void MenuLayer::initMenu()
 {
@@ -58,16 +41,28 @@ void MenuLayer::initMenu()
 	pMenusStart -> setPosition( ccp(size.width / 2, size.height / 2 + 152) );
 	this -> addChild(pMenusStart, 1);
 
+	//Setting
+	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
+														  "Setting.png",
+														  "Setting_Pressed.png",
+														  this,
+														  menu_selector(MenuLayer::menuSetting));
+	pSettingItem -> setPosition( ccp(0, 0) );
+
+	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
+	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2) );
+	this -> addChild(pMenusSetting, 1);
+
 	//Help
 	CCMenuItemImage *pHelpItem = CCMenuItemImage::create(
 														  "Help.png",
 														  "Help_Pressed.png",
 														  this,
-														  menu_selector(MenuLayer::menuStart));
+														  menu_selector(MenuLayer::menuHelp));
 	pHelpItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusHelp = CCMenu::create(pHelpItem, NULL);
-	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2) );
+	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 152) );
 	this -> addChild(pMenusHelp, 1);
 
 	//Quit
@@ -79,7 +74,7 @@ void MenuLayer::initMenu()
 	pQuitItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
-	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 152) );
+	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 152 * 2) );
 	this -> addChild(pMenusQuit, 1);
 
 //	//Close
@@ -87,35 +82,21 @@ void MenuLayer::initMenu()
 //											"CloseNormal.png",
 //											"CloseSelected.png",
 //											this,
-//											menu_selector(MainScene::menuCloseCallback));
+//											menu_selector(MenuLayer::menuCloseCallback));
 //	pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
 //	CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
 //	pMenu->setPosition( CCPointZero );
 //	this->addChild(pMenu, 1);
 }
 
-
-
-
-
-
-
-
-
-
-
-CCScene* MenuLayer::scene()
+bool MenuLayer::init()
 {
-    CCScene *scene = CCScene::create();
-    MenuLayer *layer = MenuLayer::create();
-    scene->addChild(layer);
-    return scene;
-}
-
-bool MenuLayer::init(){
-	//CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	if (!CCLayer::init())
 		return false;
+
+	setTouchEnabled(true);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
+	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initMenu();
@@ -123,25 +104,45 @@ bool MenuLayer::init(){
 	return true;
 }
 
-
-void MenuLayer::menuStart(CCObject* pSender){
-	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
-
+CCScene* MenuLayer::scene()
+{
+	CCScene *scene = CCScene::create();
+	MenuLayer *layer = MenuLayer::create();
+	scene->addChild(layer);
+	return scene;
 }
-
 
 void MenuLayer::menuCloseCallback(CCObject* pSender)
 {
     CCDirector::sharedDirector()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }
 
+void MenuLayer::menuStart(CCObject* pSender)
+{
+//	CCLabelTTF *testLabel = CCLabelTTF::create("Test", "Jenna Sue", 30);
+//	CCSize size=CCDirector::sharedDirector()->getWinSize();
+//	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
+//	this->addChild(testLabel, 2);
 
+	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+}
 
+void MenuLayer::menuHelp(CCObject *pSender)
+{
+	CCLabelTTF *testLabel = CCLabelTTF::create("Help", "Jenna Sue", 30);
+	CCSize size=CCDirector::sharedDirector()->getWinSize();
+	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
+	this->addChild(testLabel, 2);
+}
 
-
-
-
-
-
-
-
+void MenuLayer::menuSetting(CCObject *pSender)
+{
+	CCLabelTTF *testLabel = CCLabelTTF::create("Setting", "Jenna Sue", 30);
+	CCSize size=CCDirector::sharedDirector()->getWinSize();
+	testLabel->setPosition(ccp(size.width / 2, size.height / 4));
+	this->addChild(testLabel, 2);
+}
