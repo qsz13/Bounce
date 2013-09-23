@@ -25,6 +25,7 @@ public:
 	void menuCloseCallback(CCObject *pSender);
 	void menuStart(CCObject *pSender);
 	void menuHelp(CCObject *pSender);
+	void menuScores(CCObject *pSender);
 	void menuSetting(CCObject *pSender);
 
 	CREATE_FUNC(MenuLayer);

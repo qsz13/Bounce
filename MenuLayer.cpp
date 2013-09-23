@@ -38,7 +38,7 @@ void MenuLayer::initMenu()
 	pStartItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusStart = CCMenu::create(pStartItem, NULL);
-	pMenusStart -> setPosition( ccp(size.width / 2, size.height / 2 + 152) );
+	pMenusStart -> setPosition( ccp(size.width / 2, size.height / 2 - 171) );
 	this -> addChild(pMenusStart, 1);
 
 	//Setting
@@ -50,7 +50,7 @@ void MenuLayer::initMenu()
 	pSettingItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
-	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2) );
+	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100) );
 	this -> addChild(pMenusSetting, 1);
 
 	//Help
@@ -62,8 +62,20 @@ void MenuLayer::initMenu()
 	pHelpItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusHelp = CCMenu::create(pHelpItem, NULL);
-	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 152) );
+	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80) );
 	this -> addChild(pMenusHelp, 1);
+
+	//Scores
+	CCMenuItemImage *pScoresItem = CCMenuItemImage::create(
+														  "Scores.png",
+														  "Scores_Pressed.png",
+														  this,
+														  menu_selector(MenuLayer::menuScores));
+	pScoresItem -> setPosition( ccp(0, 0) );
+
+	CCMenu* pScoresHelp = CCMenu::create(pScoresItem, NULL);
+	pScoresHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 2) );
+	this -> addChild(pScoresHelp, 1);
 
 	//Quit
 	CCMenuItemImage *pQuitItem = CCMenuItemImage::create(
@@ -74,19 +86,8 @@ void MenuLayer::initMenu()
 	pQuitItem -> setPosition( ccp(0, 0) );
 
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
-	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 152 * 2) );
+	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) );
 	this -> addChild(pMenusQuit, 1);
-
-//	//Close
-//	CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-//											"CloseNormal.png",
-//											"CloseSelected.png",
-//											this,
-//											menu_selector(MenuLayer::menuCloseCallback));
-//	pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
-//	CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-//	pMenu->setPosition( CCPointZero );
-//	this->addChild(pMenu, 1);
 }
 
 bool MenuLayer::init()
@@ -123,11 +124,6 @@ void MenuLayer::menuCloseCallback(CCObject* pSender)
 
 void MenuLayer::menuStart(CCObject* pSender)
 {
-//	CCLabelTTF *testLabel = CCLabelTTF::create("Test", "Jenna Sue", 30);
-//	CCSize size=CCDirector::sharedDirector()->getWinSize();
-//	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
-//	this->addChild(testLabel, 2);
-
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
 }
 
@@ -136,6 +132,14 @@ void MenuLayer::menuHelp(CCObject *pSender)
 	CCLabelTTF *testLabel = CCLabelTTF::create("Help", "Jenna Sue", 30);
 	CCSize size=CCDirector::sharedDirector()->getWinSize();
 	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
+	this->addChild(testLabel, 2);
+}
+
+void MenuLayer::menuScores(CCObject *pSender)
+{
+	CCLabelTTF *testLabel = CCLabelTTF::create("Scores", "Jenna Sue", 30);
+	CCSize size=CCDirector::sharedDirector()->getWinSize();
+	testLabel->setPosition(ccp(size.width / 2, size.height / 5));
 	this->addChild(testLabel, 2);
 }
 
