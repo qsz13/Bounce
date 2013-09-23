@@ -5,8 +5,8 @@
  *      Author: tomhu
  */
 
-#ifndef MenuLayer_H_
-#define MenuLayer_H_
+#ifndef MENULAYER_H_
+#define MENULAYER_H_
 
 #include "cocos2d.h"
 #include "GameLayer.h"
@@ -25,9 +25,10 @@ public:
 	void menuCloseCallback(CCObject *pSender);
 	void menuStart(CCObject *pSender);
 	void menuHelp(CCObject *pSender);
+	void menuScores(CCObject *pSender);
 	void menuSetting(CCObject *pSender);
 
 	CREATE_FUNC(MenuLayer);
 };
 
-#endif /* TESTSCENE_H_ */
+#endif /* MENULAYER_H_ */
