@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	CCSize designSize = CCSizeMake(720, 1280);
 
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionNoBorder);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
 
     // create a scene. it's an autorelease object
     CCScene *pScene = MenuLayer::scene();
