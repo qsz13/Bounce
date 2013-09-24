@@ -28,7 +28,7 @@ EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
 	else
 	{
 		enemyPaddle =new EnemyPaddle();
-		if(enemyPaddle && enemyPaddle->initWithFile("paddle.png")){
+		if(enemyPaddle && enemyPaddle->initWithFile("enemyPaddle.png")){
 				enemyPaddle->myInit();
 				enemyPaddle->autorelease();
 				return enemyPaddle;
@@ -64,13 +64,16 @@ void EnemyPaddle::setEnemyPaddleBody(b2Body* enemyPaddleBody){
 void EnemyPaddle::move(Ball *ball){
 	CCPoint ballPosition = ball->getPosition();
 	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
-		b2Vec2 v = b2Vec2(-10,0);
+		b2Vec2 v = b2Vec2(-50,0);
     	enemyPaddleBody->SetLinearVelocity(v);
 	}
 	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
-		b2Vec2 v = b2Vec2(10,0);
+		b2Vec2 v = b2Vec2(50,0);
     	enemyPaddleBody->SetLinearVelocity(v);
 	}
-
-
+	else{
+		b2Vec2 v = b2Vec2(0,0);
+    	enemyPaddleBody->SetLinearVelocity(v);
+	}
+	//this->setPosition(ccp(ballPosition.x,this->getPosition().y));
 }

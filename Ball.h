@@ -29,7 +29,7 @@ public:
 
     b2Body* getBallBody();
     void setBallBody(b2Body* ballBody);
-
+    CCRect rect();
 
 private:
 	static Ball *ball;

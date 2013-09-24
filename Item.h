@@ -10,15 +10,21 @@
 
 #include "cocos2d.h"
 #define PTM_RATIO 32.0
-#define MAX_ITEM 3
+
 
 using namespace cocos2d;
 
 class Item :public CCSprite {
 public:
+	static int itemNum;
 	Item();
 	virtual ~Item();
+
+	CCRect rect();
+
+
 private:
+
 	//int MAX_ITEM = 3;
 };
 

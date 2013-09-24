@@ -27,7 +27,7 @@ MyPaddle* MyPaddle::getMyPaddle(){
 	else
 	{
 		myPaddle =new MyPaddle();
-		if(myPaddle && myPaddle->initWithFile("paddle.png")){
+		if(myPaddle && myPaddle->initWithFile("myPaddle.png")){
 				myPaddle->myInit();
 				myPaddle->autorelease();
 				return myPaddle;

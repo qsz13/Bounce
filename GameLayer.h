@@ -8,6 +8,7 @@
 #ifndef GAMELAYER_H_
 #define GAMELAYER_H_
 
+#define MAX_ITEM 3
 #include "cocos2d.h"
 #include "Box2D.h"
 #include "MyPaddle.h"
@@ -15,6 +16,10 @@
 #include "Ball.h"
 #include "SettingLayer.h"
 #include "EnlargeItem.h"
+#include "cstdlib"
+#include "ctime"
+#include "Item.h"
+#include <list>
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
@@ -54,19 +59,20 @@ public:
     // void MouseUp(const b2Vec2& p);
     void restartConfirm();
     void didAccelerate(CCAcceleration* pAccelerationValue);
-    void putItem();
 
     void restart();
     static void* ThreadFunction(void* arg);
     void CreateThread();
-
-
+    void itemInteract();
+    void dropItem();
 
 
 
 private:
     bool gameIsPaused;
     bool gameIsEnded;
+    Item* item;
+    list<Item> itemList;
     //CCMenuItemImage *restartButton;
 
 };

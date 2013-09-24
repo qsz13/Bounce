@@ -16,6 +16,8 @@ CCScene* GameLayer::scene()
 bool GameLayer::init()
 {
 
+
+    srand(time(NULL));
     if ( !CCLayer::init() )
     {
         return false;
@@ -138,8 +140,9 @@ bool GameLayer::init()
 //enemy paddle;
     enemyPaddle = EnemyPaddle::getEnemyPaddle();
     this->addChild(enemyPaddle,1);
-    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-enemyPaddle->getTextureRect().getMidY()));
-
+    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-100));
+    char temp[30];
+    sprintf(temp,"%f",winSize.height);
 
 
 //enemy paddle body
@@ -176,12 +179,14 @@ bool GameLayer::init()
             enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
        world->CreateJoint(&jointDef);
 
+       
 
-    putItem();
+
 
 
     schedule(schedule_selector(GameLayer::doStep));
-
+    schedule( schedule_selector(GameLayer::dropItem));
+    schedule( schedule_selector(GameLayer::itemInteract));
     return true;
 }
 
@@ -200,10 +205,6 @@ void GameLayer::doStep(float delta)
         }
     }
     enemyPaddle->move(ball);
-
-    char temp[30];
-    sprintf(temp,"%f",myPaddle->getPosition().x);
-    CCLOG(temp);
 
 	if(!gameIsEnded){
 		Ball *ball= (Ball*)this->getChildByTag(0);
@@ -303,10 +304,7 @@ void GameLayer::restartConfirm(){
      world->SetGravity(gravity);
  }
 
-void GameLayer::putItem(){
-//EnlargeItem
 
-}
 
 void GameLayer::restart(){
 
@@ -314,4 +312,67 @@ void GameLayer::restart(){
 
 }
 
+
+
+
+void GameLayer::dropItem(){
+
+    int drop = rand()%600;
+
+    char temp[30];
+    sprintf(temp,"%d",drop);
+    if(Item::itemNum < MAX_ITEM){
+         if(drop <=1){
+            CCLOG(temp);
+            item = EnlargeItem::getEnlargeItem();
+            int x=rand()%(int)winSize.width;
+            int y=340+rand()%700;
+            item->setPosition(ccp(x,y));
+            addChild(item,1,0);
+            itemList.push_back(*item);
+            Item::itemNum++;
+        }
+    }
+
+}
+
+
+
+
+void GameLayer::itemInteract(){
+
+    if(itemList.size>0){
+        for(list<item>::iterator it= list.begin(); it != end() ; it++){
+             if (it->rect().intersectsRect(ball->rect())) {
+           CCLabelTTF *label = CCLabelTTF::create("interact","",123);
+           label->setPosition(ccp(winSize.width/2,winSize.height/2));
+           addChild(label,1,0);
+
+
+   // sprites are overlapping
+   }
+
+        }
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+    }
+
+
+
+}
 
