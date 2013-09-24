@@ -12,10 +12,30 @@ CCScene* GameLayer::scene()
     return scene;
 }
 
+
+void GameLayer::initBackground()
+{
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    //Background
+    // 创建图片精灵
+    CCSprite* pSprite = CCSprite::create("GameSceneBackground.png");
+
+    // 设置图片精灵的位置
+    pSprite->setPosition(ccp(size.width/2, size.height/2));
+
+    // 把图片精灵放置在图层中
+    this->addChild(pSprite, 0);
+}
+
 // on "init" you need to initialize your instance
 bool GameLayer::init()
 {
+    initBackground();
 
+
+
+    srand(time(NULL));
     if ( !CCLayer::init() )
     {
         return false;
@@ -40,11 +60,7 @@ bool GameLayer::init()
 
 
     b2Vec2 gravity(0.0f, 0.0f);
-
     world = new b2World(gravity);
-
-
-
 
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
@@ -86,8 +102,8 @@ bool GameLayer::init()
     b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
     ballBodyDef.position.Set(ball->getPosition().x/PTM_RATIO, ball->getPosition().y/PTM_RATIO);
-    //ballBodyDef.userData = ball;
-    //spriteBody->SetUserData(sprite);  
+    ballBodyDef.userData = ball;
+    ballBodyDef.gravityScale = 0.0f;
     ball->setBallBody(world->CreateBody(&ballBodyDef));
     ball->getBallBody()->SetUserData(ball);
 //circle shape
@@ -114,7 +130,7 @@ bool GameLayer::init()
 //my paddle;
     myPaddle = MyPaddle::getMyPaddle();
     this->addChild(myPaddle,1);
-    myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()));
+    myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
 
 
 //my paddle body
@@ -142,8 +158,9 @@ bool GameLayer::init()
 //enemy paddle;
     enemyPaddle = EnemyPaddle::getEnemyPaddle();
     this->addChild(enemyPaddle,1);
-    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-enemyPaddle->getTextureRect().getMidY()));
-
+    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-150));
+    char temp[30];
+    sprintf(temp,"%f",winSize.height);
 
 
 //enemy paddle body
@@ -151,6 +168,7 @@ bool GameLayer::init()
     enemyPaddleBodyDef.type = b2_dynamicBody;
     enemyPaddleBodyDef.position.Set(enemyPaddle->getPosition().x/PTM_RATIO,enemyPaddle->getPosition().y/PTM_RATIO);
     enemyPaddleBodyDef.userData = enemyPaddle;
+    enemyPaddleBodyDef.gravityScale = 0.0f;
     enemyPaddle->setEnemyPaddleBody(world->CreateBody(&enemyPaddleBodyDef));
 
 //enemy paddle fixture
@@ -161,7 +179,7 @@ bool GameLayer::init()
     enemyPaddleFixtureDef.density = 10.0f;
     enemyPaddleFixtureDef.friction = 0.4f;
     enemyPaddleFixtureDef.restitution = 0.1f;
-
+   // enemyPaddleFixtureDef.gravityScale = 0.0f;
     enemyPaddleFixture = enemyPaddle->getEnemyPaddleBody()->CreateFixture(&enemyPaddleFixtureDef);
 
 
@@ -179,21 +197,18 @@ bool GameLayer::init()
             enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
        world->CreateJoint(&jointDef);
 
+       
+
+
+
 
     schedule(schedule_selector(GameLayer::doStep));
-    //schedule(schedule_selector(HelloWorld::kick), 5);
-
+    schedule( schedule_selector(GameLayer::dropItem));
+    schedule( schedule_selector(GameLayer::itemInteract));
     return true;
 }
 
-// void GameLayer::menuCloseCallback(CCObject* pSender)
-// {
-//     CCDirector::sharedDirector()->end();
 
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//     exit(0);
-// #endif
-// }
 
 void GameLayer::doStep(float delta)
 {
@@ -204,7 +219,6 @@ void GameLayer::doStep(float delta)
             CCSprite *sprite = (CCSprite *)b->GetUserData();
             sprite->setPosition(ccp(b->GetPosition().x * PTM_RATIO,b->GetPosition().y * PTM_RATIO));
 
-            
 
         }
     }
@@ -231,31 +245,30 @@ void GameLayer::doStep(float delta)
            // ball->removeFromParentAndCleanup(true);
             
         }
-        restart();
+        restartConfirm();
     }
 
 }
 
 
-
-
-void GameLayer::restart(){
+void GameLayer::restartConfirm(){
     if(gameIsEnded){
-        CCSprite *restartButton = CCSprite::create("restart.png");
-        restartButton->setScale(0.4);
-        this->addChild(restartButton,2,0);
-        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+//        CCSprite *restartButton = CCSprite::create("restart.png");
+//        restartButton->setScale(0.4);
+//        this->addChild(restartButton,2,0);
+//        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+        CCMenuItemImage *restartButton = CCMenuItemImage::create( "restart.png",
+				  "restart.png",
+				  this,
+				  menu_selector(GameLayer::restart));
+        restartButton -> setPosition( ccp(0, 0) );
+        CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
+        	pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/4));
+        	this -> addChild(pMenusSetting, 1);
 
     }
 
-
-
 }
-
-
-
-
-
 
 
  void GameLayer::ccTouchesBegan(CCSet *pTouches,CCEvent *event)
@@ -277,7 +290,6 @@ void GameLayer::restart(){
      md.maxForce =1000.0f*myPaddle->getMyPaddleBody()->GetMass();
      _mouseJoint = (b2MouseJoint *)world->CreateJoint(&md);
      }
-
       
  }
   
@@ -302,3 +314,71 @@ void GameLayer::restart(){
      }
      
  }
+
+
+ void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
+ {
+     b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
+     world->SetGravity(gravity);
+ }
+
+
+
+void GameLayer::restart(){
+
+	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+
+}
+
+
+
+
+void GameLayer::dropItem(){
+
+    int drop = rand()%600;
+
+    char temp[30];
+    sprintf(temp,"%d",drop);
+    if(Item::itemNum < MAX_ITEM){
+         if(drop <=1){
+            item = EnlargeItem::getEnlargeItem();
+            int x=rand()%(int)winSize.width;
+            int y=340+rand()%700;
+            item->setPosition(ccp(x,y));
+            addChild(item,1,0);
+            //itemList.push_back(*item);
+            Item::itemNum++;
+        }
+    }
+
+}
+
+
+
+
+void GameLayer::itemInteract(){
+//
+//    if(itemList.size>0){
+//        for(list<Item>::iterator it= list.begin(); it != list.end() ; it++){
+//             if (it->rect().intersectsRect(ball->rect())) {
+//           CCLabelTTF *label = CCLabelTTF::create("interact","",123);
+//           label->setPosition(ccp(winSize.width/2,winSize.height/2));
+//           addChild(label,1,0);
+//
+//
+//   // sprites are overlapping
+//   }
+//
+//        }
+//    }
+//
+
+
+
+
+
+
+
+
+}
+

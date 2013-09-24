@@ -19,12 +19,12 @@ Ball::~Ball() {
 
 Ball* Ball::getBall(){
 
-	if(ball != NULL)
-	{
-		return ball;
-	}
-	else
-	{
+//	if(ball != NULL)
+//	{
+//		return ball;
+//	}
+//	else
+//	{
 		Ball* ball = new Ball();
 
 		if (ball && ball->initWithFile("ball.png"))
@@ -35,25 +35,25 @@ Ball* Ball::getBall(){
 		}
 			CC_SAFE_DELETE(ball);
 			return NULL;
-	}
+	//}
 }
 
 
 void Ball::myInit(){
-	this->setScale(BALL_SCALE);
+	//this->setScale(BALL_SCALE);
 }
 
 
 float Ball::getWidth(){
-	return this->getTextureRect().getMaxY()*BALL_SCALE;
+	return this->getTextureRect().getMaxY();
 }
 
 float Ball::getHeight(){
-	return this->getTextureRect().getMaxX()*BALL_SCALE;
+	return this->getTextureRect().getMaxX();
 }
 
 float Ball::getRadius(){
-	return this->getTextureRect().getMaxX()*BALL_SCALE/2;
+	return this->getTextureRect().getMaxX()/2;
 }
 
 int Ball::getVelocity(){
@@ -70,3 +70,11 @@ b2Body* Ball::getBallBody(){
 void Ball::setBallBody(b2Body* ballBody){
 	this->ballBody = ballBody;
 }
+
+CCRect Ball::rect(){
+
+	CCSize s = this->getContentSize();
+	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width/2, s.height/2);
+	 
+}
+       

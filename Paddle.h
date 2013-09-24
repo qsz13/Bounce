@@ -13,7 +13,7 @@
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
-class Paddle : public CCSprite,public CCTouchDelegate{
+class Paddle : public CCSprite{
 public:
 	Paddle();
 	virtual ~Paddle();

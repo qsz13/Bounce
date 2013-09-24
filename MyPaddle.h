@@ -10,8 +10,8 @@
 #include "cocos2d.h"
 #include "Paddle.h"
 using namespace cocos2d;
-#define MY_PADDLE_SCALE_X 0.3
-#define MY_PADDLE_SCALE_Y 0.5
+// #define MY_PADDLE_SCALE_X 0.3
+// #define MY_PADDLE_SCALE_Y 0.5
 
 class MyPaddle : public Paddle {
 public:

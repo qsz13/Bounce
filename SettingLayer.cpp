@@ -8,47 +8,32 @@
 #include "SettingLayer.h"
 
 int SettingLayer::controlMode = 1;
+int SettingLayer::sensitivity = 250;
+
+int SettingLayer::getSensitivity(){
+	return sensitivity;
+
+}
+void SettingLayer::setSensitivity(int s){
+	sensitivity = s;
+}
+
 
 SettingLayer::SettingLayer() {
+	// TODO Auto-generated constructor stub
 
 }
 
 SettingLayer::~SettingLayer() {
-	
+	// TODO Auto-generated destructor stub
 }
-
-//
-//CCScene* SettingLayer::scene()
-//{
-//       // 'scene' is an autorelease object
-//    CCScene *scene = CCScene::create();
-//
-//    // 'layer' is an autorelease object
-//    SettingLayer *layer = SettingLayer::create();
-//
-//    // add layer as a child to scene
-//    scene->addChild(layer);
-//
-//    // return the scene
-//    return scene;
-//
-//}
-
-
-
-bool SettingLayer::init(){
-
-}
-
-
-
 
 
 int SettingLayer::getControlMode(){
 	return controlMode;
 }
 
+
 void SettingLayer::setControlMode(int mode){
 	controlMode = mode;
-
 }

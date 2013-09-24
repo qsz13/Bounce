@@ -11,8 +11,8 @@
 #include "cocos2d.h"
 #include "Paddle.h"
 #include "Ball.h"
-#define ENEMY_PADDLE_SCALE_X 0.3
-#define ENEMY_PADDLE_SCALE_Y 0.5
+// #define ENEMY_PADDLE_SCALE_X 0.3
+// #define ENEMY_PADDLE_SCALE_Y 0.5
 using namespace cocos2d;
 
 class EnemyPaddle :public Paddle{
