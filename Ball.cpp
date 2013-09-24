@@ -40,20 +40,20 @@ Ball* Ball::getBall(){
 
 
 void Ball::myInit(){
-	this->setScale(BALL_SCALE);
+	//this->setScale(BALL_SCALE);
 }
 
 
 float Ball::getWidth(){
-	return this->getTextureRect().getMaxY()*BALL_SCALE;
+	return this->getTextureRect().getMaxY();
 }
 
 float Ball::getHeight(){
-	return this->getTextureRect().getMaxX()*BALL_SCALE;
+	return this->getTextureRect().getMaxX();
 }
 
 float Ball::getRadius(){
-	return this->getTextureRect().getMaxX()*BALL_SCALE/2;
+	return this->getTextureRect().getMaxX()/2;
 }
 
 int Ball::getVelocity(){

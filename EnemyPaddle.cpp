@@ -39,17 +39,17 @@ EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
 }
 
 void EnemyPaddle::myInit(){
-    this->setScaleX(ENEMY_PADDLE_SCALE_X);
-    this->setScaleY(ENEMY_PADDLE_SCALE_Y);
+    // this->setScaleX(ENEMY_PADDLE_SCALE_X);
+    // this->setScaleY(ENEMY_PADDLE_SCALE_Y);
 }
 
 
 float EnemyPaddle::getWidth(){
-    return this->getTextureRect().getMaxX()*ENEMY_PADDLE_SCALE_X;
+    return this->getTextureRect().getMaxX();
 }
 
 float EnemyPaddle::getHeight(){
-    return this->getTextureRect().getMaxY()*ENEMY_PADDLE_SCALE_Y;
+    return this->getTextureRect().getMaxY();
 }
 
 b2Body* EnemyPaddle::getEnemyPaddleBody(){

@@ -71,9 +71,9 @@ public:
 private:
     bool gameIsPaused;
     bool gameIsEnded;
-    Item* item;
-    list<Item> itemList;
-    //CCMenuItemImage *restartButton;
+     Item* item;
+    // list<Item> itemList;
+
 
 };
 

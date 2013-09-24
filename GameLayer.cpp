@@ -329,7 +329,7 @@ void GameLayer::dropItem(){
             int y=340+rand()%700;
             item->setPosition(ccp(x,y));
             addChild(item,1,0);
-            itemList.push_back(*item);
+            //itemList.push_back(*item);
             Item::itemNum++;
         }
     }
@@ -340,37 +340,26 @@ void GameLayer::dropItem(){
 
 
 void GameLayer::itemInteract(){
-
-    if(itemList.size>0){
-        for(list<item>::iterator it= list.begin(); it != end() ; it++){
-             if (it->rect().intersectsRect(ball->rect())) {
-           CCLabelTTF *label = CCLabelTTF::create("interact","",123);
-           label->setPosition(ccp(winSize.width/2,winSize.height/2));
-           addChild(label,1,0);
-
-
-   // sprites are overlapping
-   }
-
-        }
-
-
-
-
-
-
-
-
-  
+//
+//    if(itemList.size>0){
+//        for(list<Item>::iterator it= list.begin(); it != list.end() ; it++){
+//             if (it->rect().intersectsRect(ball->rect())) {
+//           CCLabelTTF *label = CCLabelTTF::create("interact","",123);
+//           label->setPosition(ccp(winSize.width/2,winSize.height/2));
+//           addChild(label,1,0);
+//
+//
+//   // sprites are overlapping
+//   }
+//
+//        }
+//    }
+//
 
 
 
 
 
-
-
-
-    }
 
 
 

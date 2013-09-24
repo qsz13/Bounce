@@ -10,7 +10,7 @@
 #include "cocos2d.h"
 #include "Box2D.h"
 #define PTM_RATIO 32.0
-#define BALL_SCALE 0.2
+//#define BALL_SCALE 0.2
 using namespace cocos2d;
 class Ball :public CCSprite{
 public:
