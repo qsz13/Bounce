@@ -88,6 +88,15 @@ void MenuLayer::initMenu()
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
 	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) );
 	this -> addChild(pMenusQuit, 1);
+
+
+	CCActionInterval*  action1 = CCFadeIn::create(1.0f);
+	pStartItem->runAction( CCSequence::create( action1, NULL));
+	pSettingItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
+	pHelpItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
+	pScoresItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
+	pQuitItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
+
 }
 
 bool MenuLayer::init()
@@ -124,7 +133,7 @@ void MenuLayer::menuCloseCallback(CCObject* pSender)
 
 void MenuLayer::menuStart(CCObject* pSender)
 {
-	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(1, GameLayer::scene()));
 }
 
 void MenuLayer::menuHelp(CCObject *pSender)
