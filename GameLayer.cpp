@@ -130,7 +130,7 @@ bool GameLayer::init()
 //my paddle;
     myPaddle = MyPaddle::getMyPaddle();
     this->addChild(myPaddle,1);
-    myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()));
+    myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
 
 
 //my paddle body
@@ -158,9 +158,7 @@ bool GameLayer::init()
 //enemy paddle;
     enemyPaddle = EnemyPaddle::getEnemyPaddle();
     this->addChild(enemyPaddle,1);
-    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-100));
-    char temp[30];
-    sprintf(temp,"%f",winSize.height);
+    enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-150));
 
 
 //enemy paddle body
@@ -204,7 +202,7 @@ bool GameLayer::init()
 
     schedule(schedule_selector(GameLayer::doStep));
     schedule( schedule_selector(GameLayer::dropItem));
-    schedule( schedule_selector(GameLayer::itemInteract));
+    schedule( schedule_selector(GameLayer::itemIntersects));
     return true;
 }
 
@@ -325,6 +323,7 @@ void GameLayer::restartConfirm(){
 
 
 void GameLayer::restart(){
+    Item::itemNum = 0;
 
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
 
@@ -337,17 +336,15 @@ void GameLayer::dropItem(){
 
     int drop = rand()%600;
 
-    char temp[30];
-    sprintf(temp,"%d",drop);
+
     if(Item::itemNum < MAX_ITEM){
          if(drop <=1){
-            CCLOG(temp);
             item = EnlargeItem::getEnlargeItem();
             int x=rand()%(int)winSize.width;
             int y=340+rand()%700;
             item->setPosition(ccp(x,y));
             addChild(item,1,0);
-            //itemList.push_back(*item);
+            itemList.push_back(item);
             Item::itemNum++;
         }
     }
@@ -357,29 +354,24 @@ void GameLayer::dropItem(){
 
 
 
-void GameLayer::itemInteract(){
-//
-//    if(itemList.size>0){
-//        for(list<Item>::iterator it= list.begin(); it != list.end() ; it++){
-//             if (it->rect().intersectsRect(ball->rect())) {
-//           CCLabelTTF *label = CCLabelTTF::create("interact","",123);
-//           label->setPosition(ccp(winSize.width/2,winSize.height/2));
-//           addChild(label,1,0);
-//
-//
-//   // sprites are overlapping
-//   }
-//
-//        }
-//    }
-//
+void GameLayer::itemIntersects() {
+//	char temp[300];
+//				sprintf(temp,"%d",itemList.size());
+//				CCLOG(temp);
+	if (itemList.size() > 0) {
+		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();
+				it++) {
 
+			if ((*it)->rect().intersectsRect(ball->rect())) {
+				CCLOG("itemIntersects");
+				CCLabelTTF *label = CCLabelTTF::create("Intersects", "", 123);
+				label->setPosition(ccp(winSize.width / 2, winSize.height / 2));
+				addChild(label, 1, 0);
 
-
-
-
-
-
+				// sprites are overlapping
+			}
+		}
+	}
 
 }
 

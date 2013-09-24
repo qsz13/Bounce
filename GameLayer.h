@@ -63,7 +63,7 @@ public:
     void restart();
     static void* ThreadFunction(void* arg);
     void CreateThread();
-    void itemInteract();
+    void itemIntersects();
     void dropItem();
 
 
@@ -73,8 +73,8 @@ private:
     void initBackground();
     bool gameIsPaused;
     bool gameIsEnded;
-     Item* item;
-    // list<Item> itemList;
+    Item* item;
+    list<Item *> itemList;
 
 
 };

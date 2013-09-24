@@ -74,7 +74,7 @@ void Ball::setBallBody(b2Body* ballBody){
 CCRect Ball::rect(){
 
 	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width/2, s.height/2);
+	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width, s.height);
 	 
 }
        
