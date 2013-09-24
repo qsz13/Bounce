@@ -12,9 +12,27 @@ CCScene* GameLayer::scene()
     return scene;
 }
 
+
+void GameLayer::initBackground()
+{
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    //Background
+    // 创建图片精灵
+    CCSprite* pSprite = CCSprite::create("GameSceneBackground.png");
+
+    // 设置图片精灵的位置
+    pSprite->setPosition(ccp(size.width/2, size.height/2));
+
+    // 把图片精灵放置在图层中
+    this->addChild(pSprite, 0);
+}
+
 // on "init" you need to initialize your instance
 bool GameLayer::init()
 {
+    initBackground();
+
 
 
     srand(time(NULL));

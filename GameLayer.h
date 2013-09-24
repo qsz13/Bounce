@@ -68,7 +68,9 @@ public:
 
 
 
+
 private:
+    void initBackground();
     bool gameIsPaused;
     bool gameIsEnded;
      Item* item;
