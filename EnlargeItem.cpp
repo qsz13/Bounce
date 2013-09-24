@@ -21,7 +21,7 @@ EnlargeItem* EnlargeItem::getEnlargeItem(){
 	EnlargeItem* enlargeItem =new EnlargeItem();
 	if(enlargeItem && enlargeItem->initWithFile("CloseNormal.png")){
 		//enlargeItem->myInit();
-		enlargeItem->autorelease();
+		//enlargeItem->autorelease();
 			return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);

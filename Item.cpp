@@ -7,7 +7,7 @@
 
 #include "Item.h"
 
-int Item::itemNum = 0;
+//int Item::itemNum = 0;
 
 Item::Item() {
 	// TODO Auto-generated constructor stub

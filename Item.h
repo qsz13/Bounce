@@ -16,7 +16,7 @@ using namespace cocos2d;
 
 class Item :public CCSprite {
 public:
-	static int itemNum;
+	//static int itemNum;
 	Item();
 	virtual ~Item();
 

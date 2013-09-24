@@ -201,8 +201,8 @@ bool GameLayer::init()
 
 
     schedule(schedule_selector(GameLayer::doStep));
-    schedule( schedule_selector(GameLayer::dropItem));
-    schedule( schedule_selector(GameLayer::itemIntersects));
+    schedule(schedule_selector(GameLayer::dropItem));
+    schedule(schedule_selector(GameLayer::itemIntersects));
     return true;
 }
 
@@ -323,7 +323,7 @@ void GameLayer::restartConfirm(){
 
 
 void GameLayer::restart(){
-    Item::itemNum = 0;
+   //Item::itemNum = 0;
 
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
 
@@ -337,7 +337,7 @@ void GameLayer::dropItem(){
     int drop = rand()%600;
 
 
-    if(Item::itemNum < MAX_ITEM){
+    if(itemList.size() < MAX_ITEM){
          if(drop <=1){
             item = EnlargeItem::getEnlargeItem();
             int x=rand()%(int)winSize.width;
@@ -345,7 +345,7 @@ void GameLayer::dropItem(){
             item->setPosition(ccp(x,y));
             addChild(item,1,0);
             itemList.push_back(item);
-            Item::itemNum++;
+            //Item::itemNum++;
         }
     }
 
@@ -355,10 +355,9 @@ void GameLayer::dropItem(){
 
 
 void GameLayer::itemIntersects() {
-//	char temp[300];
-//				sprintf(temp,"%d",itemList.size());
-//				CCLOG(temp);
+
 	if (itemList.size() > 0) {
+
 		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();
 				it++) {
 
@@ -368,9 +367,13 @@ void GameLayer::itemIntersects() {
 				label->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 				addChild(label, 1, 0);
 
+				//this->removeChild((*it),);
+				((*it)-> removeFromParentAndCleanup(true));
 				// sprites are overlapping
 			}
 		}
+
+		//((*it)-> removeFromParentAndCleanup(true));
 	}
 
 }
