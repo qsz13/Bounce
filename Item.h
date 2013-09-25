@@ -9,11 +9,12 @@
 #define ITEM_H_
 
 #include "cocos2d.h"
+ #include <string>
 #define PTM_RATIO 32.0
 
 
 using namespace cocos2d;
-
+using namespace std;
 class Item :public CCSprite {
 public:
 	//static int itemNum;
@@ -21,9 +22,13 @@ public:
 	virtual ~Item();
 
 	CCRect rect();
+	void frameAddOne();
+	int getFrameLasted();
+	string getFunction();
+protected:
+	int frameLasted;
+	string function;
 
-
-private:
 
 	//int MAX_ITEM = 3;
 };

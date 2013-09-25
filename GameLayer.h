@@ -16,8 +16,9 @@
 #include "Ball.h"
 #include "SettingLayer.h"
 #include "EnlargeItem.h"
-#include "cstdlib"
-#include "ctime"
+#include <cstdlib>
+#include <ctime>
+#include "ReverseItem.h"
 #include "Item.h"
 #include <list>
 #define PTM_RATIO 32.0
@@ -65,10 +66,10 @@ public:
     void CreateThread();
     void itemIntersects();
     void dropItem();
-
-
-
-
+    void enlargePaddle(Ball *ball);
+    void paddleTimer();
+    void avoidUnwantedSituation();
+    void reverseBallVelocity();
 private:
     void initBackground();
     bool gameIsPaused;

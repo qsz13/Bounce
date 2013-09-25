@@ -18,12 +18,16 @@ public:
 	Paddle();
 	virtual ~Paddle();
 	b2BodyDef* getBodyDef();
+	enum lengthType{shortPaddle,longPaddle};
+	lengthType getLengthState();
+	void toggleLengthState();
+	void setFrameLastedTo0();
+	int getFrameLasted();
+	void frameLastedAddOne();
 protected:
 	b2BodyDef paddleBodyDef;
-
-
-
-
+	lengthType lengthState;
+	int frameLasted;
 };
 
 #endif /* PADDLE_H_ */

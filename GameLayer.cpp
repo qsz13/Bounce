@@ -1,5 +1,3 @@
-/////////sdfasadfasd
-
 #include "GameLayer.h"
 #include "SimpleAudioEngine.h"
 
@@ -120,7 +118,7 @@ bool GameLayer::init()
     ballFixtureDef.friction = 0.0f;
     ballFixtureDef.restitution = 1.0f;
     b2Fixture *ballFixture = ball->getBallBody()->CreateFixture(&ballFixtureDef);
-    b2Vec2 v = b2Vec2(ball->getVelocity(),ball->getVelocity());
+    b2Vec2 v = b2Vec2(ball->getVelocity().x,ball->getVelocity().y);
     ball->getBallBody()->SetLinearVelocity(v);
 
 
@@ -205,6 +203,7 @@ bool GameLayer::init()
     schedule(schedule_selector(GameLayer::doStep));
     schedule(schedule_selector(GameLayer::dropItem));
     schedule(schedule_selector(GameLayer::itemIntersects));
+    schedule(schedule_selector(GameLayer::paddleTimer));
     return true;
 }
 
@@ -218,11 +217,34 @@ void GameLayer::doStep(float delta)
         if (b->GetUserData() != NULL) {
             CCSprite *sprite = (CCSprite *)b->GetUserData();
             sprite->setPosition(ccp(b->GetPosition().x * PTM_RATIO,b->GetPosition().y * PTM_RATIO));
+            b2Fixture* f = b->GetFixtureList();
+            switch (f->GetType())
+            {
+                case b2Shape::e_circle:
+                {
+                    b2CircleShape* circle = (b2CircleShape*) f->GetShape();                    
+                    /* Do stuff with a circle shape */
+                }
+                break;
 
+                case b2Shape::e_polygon:
+                {
+                    b2PolygonShape* poly = (b2PolygonShape*) f->GetShape();
+                    CCRect rect = sprite->boundingBox();
+                    poly->SetAsBox(rect.size.width/2/PTM_RATIO,rect.size.height/2/PTM_RATIO);
+
+                }
+                break;
+            }
 
         }
     }
+
+
+
     enemyPaddle->move(ball);
+
+    avoidUnwantedSituation();
 
 	if(!gameIsEnded){
 		Ball *ball= (Ball*)this->getChildByTag(0);
@@ -336,12 +358,21 @@ void GameLayer::restart(){
 
 void GameLayer::dropItem(){
 
-    int drop = rand()%600;
+    int drop = rand()%6;
 
 
-    if(itemList.size() < MAX_ITEM){
-         if(drop <=1){
-            item = EnlargeItem::getEnlargeItem();
+    if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
+         if(drop ==0){
+            int pos= rand()&1;
+            if(pos < 2){
+            	item = EnlargeItem::getEnlargeItem();
+
+            }
+            else if(pos ==1){
+            	item = ReverseItem::getReverseItem();
+            }
+
+
             int x=rand()%(int)winSize.width;
             int y=340+rand()%700;
             item->setPosition(ccp(x,y));
@@ -350,7 +381,6 @@ void GameLayer::dropItem(){
             //Item::itemNum++;
         }
     }
-
 }
 
 
@@ -358,27 +388,127 @@ void GameLayer::dropItem(){
 
 void GameLayer::itemIntersects() {
 
-	if (itemList.size() > 0) {
+	if (!gameIsEnded && !gameIsPaused && itemList.size() > 0 ) {
 
-		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();
-				it++) {
+		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();) {
 
-			if ((*it)->rect().intersectsRect(ball->rect())) {
-				CCLOG("itemIntersects");
-				CCLabelTTF *label = CCLabelTTF::create("Intersects", "", 123);
-				label->setPosition(ccp(winSize.width / 2, winSize.height / 2));
-				addChild(label, 1, 0);
+            (*it)->frameAddOne();
+            if((*it)->getFrameLasted()>600){
+                CCLOG("remove");
+                ((*it)-> removeFromParentAndCleanup(true));
+                it = itemList.erase(it);
+            }
+			else if ((*it)->rect().intersectsRect(ball->rect())) {
 
-				//this->removeChild((*it),);
+
+				if((*it)->getFunction() == "enlarge"){
+            enlargePaddle(ball);
+        }
+        else if((*it)->getFunction() == "reverse"){
+            reverseBallVelocity();
+        }
+				
+
+
 				((*it)-> removeFromParentAndCleanup(true));
-				// sprites are overlapping
+				it = itemList.erase(it);
+
+			}
+			else{
+				it++;
 			}
 		}
 
-		//((*it)-> removeFromParentAndCleanup(true));
 	}
 
 }
 
-/////////////////////12312312312
+//-------------------------- can be put in paddle class
+void GameLayer::enlargePaddle(Ball* ball){
+    CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
+    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+    
 
+    if(v.y<0){
+
+       if(enemyPaddle->getLengthState() == Paddle::shortPaddle){
+        enemyPaddle->toggleLengthState();
+        enemyPaddle->runAction(actionBy);
+
+      }
+      else{
+
+      }
+    }
+    else if(v.y>0) {
+
+      if(myPaddle->getLengthState() == Paddle::shortPaddle){
+             myPaddle->toggleLengthState();
+             myPaddle->runAction(actionBy);
+
+
+      }
+      else{
+
+        //increase time
+      }
+
+     //actionBy release
+
+
+       
+    }
+
+}
+
+
+void GameLayer::paddleTimer(){
+  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+  if(myPaddle->getLengthState() == Paddle::longPaddle){
+    if(myPaddle->getFrameLasted() > 600){
+      myPaddle->setFrameLastedTo0();
+      myPaddle->toggleLengthState();
+      myPaddle->runAction(actionBy);
+    }
+    else{
+      myPaddle->frameLastedAddOne();
+
+    }
+
+  }
+
+  if(enemyPaddle->getLengthState() == Paddle::longPaddle){
+    if(enemyPaddle->getFrameLasted() > 600){
+      enemyPaddle->setFrameLastedTo0();
+      enemyPaddle->toggleLengthState();
+      enemyPaddle->runAction(actionBy);
+    }
+    else{
+      enemyPaddle->frameLastedAddOne();
+
+    }
+
+  }
+
+ // actionBy->autorelease();
+
+
+}
+
+
+void GameLayer::reverseBallVelocity(){
+    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+    v.x = - v.x;
+    CCLOG("reverse");
+    ball->getBallBody()->SetLinearVelocity(v);
+
+}
+
+
+//===============================================================================
+
+void GameLayer::avoidUnwantedSituation(){
+
+
+
+}

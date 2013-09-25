@@ -18,8 +18,9 @@ public:
 	EnlargeItem();
 	virtual ~EnlargeItem();
 	static EnlargeItem* getEnlargeItem();
-private:
-	//EnlargeItem* enlargeItem;
+
+
+
 
 };
 

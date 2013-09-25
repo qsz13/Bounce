@@ -17,15 +17,17 @@ class SettingLayer : public CCLayer{
 public:
 	SettingLayer();
 	virtual ~SettingLayer();
-
+	enum ControlType{Gravity,Drag,Touch};
 	static int getControlMode();
-	static void setControlMode(int mode);
+	static void setControlMode(ControlType mode);
 	static int getSensitivity();
 	static void setSensitivity(int sensitivity);
+
+
 private:
 
 	static int sensitivity;
-	static int controlMode;
+	static ControlType controlMode;
 	
 
 	//0 for Accelerometer 1 for drag 2 for touch

@@ -9,7 +9,12 @@
 Ball* Ball::ball = NULL;
 
 Ball::Ball() {
-	velocity = 15;
+	velocity.speed = 20;
+
+	velocity.x = 10+rand()%73205/10000;
+	if (rand()&1) 
+		velocity.x = -velocity.x;
+	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
 
 }
 
@@ -56,11 +61,11 @@ float Ball::getRadius(){
 	return this->getTextureRect().getMaxX()/2;
 }
 
-int Ball::getVelocity(){
+Velocity Ball::getVelocity(){
 	return velocity;
 }
 
-void Ball::setVelocity(int v){
+Velocity Ball::setVelocity(Velocity v){
 	velocity = v;
 }
 
@@ -74,7 +79,8 @@ void Ball::setBallBody(b2Body* ballBody){
 CCRect Ball::rect(){
 
 	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width, s.height);
+	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
+
 	 
 }
        

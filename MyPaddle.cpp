@@ -7,7 +7,6 @@
 
 #include "MyPaddle.h"
 MyPaddle* MyPaddle::myPaddle = NULL;
-
 MyPaddle::MyPaddle():Paddle()
 {
     paddleBodyDef.userData = myPaddle;
@@ -20,12 +19,16 @@ MyPaddle::~MyPaddle()
 }
 
 MyPaddle* MyPaddle::getMyPaddle(){
-	if(myPaddle != NULL)
-	{
-		return myPaddle;
-	}
-	else
-	{
+	 // if(myPaddle != NULL)
+	// {
+	// 	CCTexture2D * image = CCTextureCache::sharedTextureCache()->addImage("myPaddle.png");
+	// 	myPaddle->setTexture(image);
+		
+	// 			// CCLOG("123123");
+	// 	return myPaddle;
+	// }
+	// else
+	 // {
 		myPaddle =new MyPaddle();
 		if(myPaddle && myPaddle->initWithFile("myPaddle.png")){
 				myPaddle->myInit();
@@ -34,7 +37,7 @@ MyPaddle* MyPaddle::getMyPaddle(){
 		}
 		CC_SAFE_DELETE(myPaddle);
 		return NULL;
-	}
+	// }
 
 
 

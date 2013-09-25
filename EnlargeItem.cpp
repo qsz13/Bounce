@@ -8,7 +8,7 @@
 #include "EnlargeItem.h"
 
 EnlargeItem::EnlargeItem() {
-	// TODO Auto-generated constructor stub
+	function = "enlarge";
 
 }
 
@@ -19,7 +19,7 @@ EnlargeItem::~EnlargeItem() {
 EnlargeItem* EnlargeItem::getEnlargeItem(){
 
 	EnlargeItem* enlargeItem =new EnlargeItem();
-	if(enlargeItem && enlargeItem->initWithFile("CloseNormal.png")){
+	if(enlargeItem && enlargeItem->initWithFile("enlargeItem.png")){
 		//enlargeItem->myInit();
 		//enlargeItem->autorelease();
 			return enlargeItem;

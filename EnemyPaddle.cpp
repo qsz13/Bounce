@@ -11,9 +11,12 @@
 
 EnemyPaddle* EnemyPaddle::enemyPaddle = NULL;
 
+
+
 EnemyPaddle::EnemyPaddle():Paddle() {
 	paddleBodyDef.userData = enemyPaddle;
-	velocity = 100;
+	//velocity = 100;
+
 }
 
 EnemyPaddle::~EnemyPaddle() {
@@ -21,12 +24,18 @@ EnemyPaddle::~EnemyPaddle() {
 }
 
 EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
-	if(enemyPaddle != NULL)
-	{
-		return enemyPaddle;
-	}
-	else
-	{
+	//  if(enemyPaddle != NULL)
+	//  {
+	// // 	//enemyPaddle->initWithFile("enemyPaddle.png");
+	// // 	//CCLOG("123123");
+	// // 	CCTexture2D * image = CCTextureCache::sharedTextureCache()->addImage("enemyPaddle.png");
+	// // 	enemyPaddle->setTexture(image);
+	// // 	CCLOG("set image");
+	// // 	return enemyPaddle;
+	 
+	// }
+	//  // else
+
 		enemyPaddle =new EnemyPaddle();
 		if(enemyPaddle && enemyPaddle->initWithFile("enemyPaddle.png")){
 				enemyPaddle->myInit();
@@ -35,7 +44,7 @@ EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
 		}
 		CC_SAFE_DELETE(enemyPaddle);
 		return NULL;
-	}
+	// }
 }
 
 void EnemyPaddle::myInit(){
@@ -63,17 +72,39 @@ void EnemyPaddle::setEnemyPaddleBody(b2Body* enemyPaddleBody){
 
 void EnemyPaddle::move(Ball *ball){
 	CCPoint ballPosition = ball->getPosition();
+
+	int possibility = rand()%100;
+
+	b2Vec2 v;
 	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
-		b2Vec2 v = b2Vec2(-50,0);
-    	enemyPaddleBody->SetLinearVelocity(v);
+		
+		if(possibility < 2){
+			 v = b2Vec2(0,0);
+		}
+		else if(possibility > 50){
+			 v = b2Vec2(-1000,0);
+		}
+		else{
+			 v = b2Vec2(-2000,0);
+		}
+		
+    	enemyPaddleBody->ApplyForceToCenter(v);
 	}
 	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
-		b2Vec2 v = b2Vec2(50,0);
-    	enemyPaddleBody->SetLinearVelocity(v);
+				if(possibility < 2){
+			 v = b2Vec2(0,0);
+		}
+		else if(possibility > 80){
+			 v = b2Vec2(1000,0);
+		}
+		else{
+			 v = b2Vec2(2000,0);
+		}
+    	enemyPaddleBody->ApplyForceToCenter(v);
 	}
-	else{
-		b2Vec2 v = b2Vec2(0,0);
-    	enemyPaddleBody->SetLinearVelocity(v);
-	}
+	// else{
+	// 	 v = b2Vec2(0,0);
+ //    	enemyPaddleBody->SetLinearVelocity(v);
+	// }
 	//this->setPosition(ccp(ballPosition.x,this->getPosition().y));
 }

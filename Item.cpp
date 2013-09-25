@@ -10,8 +10,7 @@
 //int Item::itemNum = 0;
 
 Item::Item() {
-	// TODO Auto-generated constructor stub
-
+	frameLasted = 0;
 }
 
 Item::~Item() {
@@ -21,7 +20,18 @@ Item::~Item() {
 CCRect Item::rect(){
 
 	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width, s.height);
-	 
+	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
+
 }
        
+void Item::frameAddOne(){
+	frameLasted++;
+}
+
+int Item::getFrameLasted(){
+	return frameLasted;
+}
+
+string Item::getFunction(){
+	return function;
+}
