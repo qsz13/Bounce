@@ -358,13 +358,13 @@ void GameLayer::restart(){
 
 void GameLayer::dropItem(){
 
-    int drop = rand()%6;
+    int drop = rand()%60;
 
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
          if(drop ==0){
             int pos= rand()&1;
-            if(pos < 2){
+            if(pos < 1){
             	item = EnlargeItem::getEnlargeItem();
 
             }
