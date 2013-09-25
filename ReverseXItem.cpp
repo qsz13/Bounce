@@ -8,7 +8,7 @@
 #include "ReverseXItem.h"
 
 ReverseXItem::ReverseXItem() {
-	function = "reverse";
+	function = "reverseX";
 
 }
 
@@ -20,7 +20,7 @@ ReverseXItem::~ReverseXItem() {
 ReverseXItem* ReverseXItem::getReverseXItem(){
 
 	ReverseXItem* reverseXItem =new ReverseXItem();
-	if(reverseXItem && reverseXItem->initWithFile("reverseXItem.png")){
+	if(reverseXItem && reverseXItem->initWithFile("GameLayer/Items/reverseXItem.png")){
 		reverseXItem -> setScale(0.3);
 		return reverseXItem;
 	}
