@@ -63,7 +63,6 @@ bool GameLayer::init()
 
     extraBall = NULL;
 
-
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -269,7 +268,9 @@ void GameLayer::doStep(float delta)
 
 
 
-    enemyPaddle->move(ball);
+    enemyPaddle->move(ball,extraBall);
+
+    avoidUnwantedSituation();
 
     avoidUnwantedSituation();
 
@@ -439,8 +440,7 @@ void GameLayer::restart(){
    else if(SettingLayer::getControlMode()==SettingLayer::TOUCH){
          b2Vec2 v = b2Vec2(0,0);
           myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
-   }
-
+    }
  }
 
 
@@ -449,12 +449,6 @@ void GameLayer::restart(){
      b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
      world->SetGravity(gravity);
  }
-
-
-
-
-
-
 
 
 

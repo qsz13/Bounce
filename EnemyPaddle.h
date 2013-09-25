@@ -15,6 +15,7 @@
 // #define ENEMY_PADDLE_SCALE_Y 0.5
 using namespace cocos2d;
 
+
 class EnemyPaddle :public Paddle{
 public:
 
@@ -25,9 +26,9 @@ public:
 
     b2Body* getEnemyPaddleBody();
     void setEnemyPaddleBody(b2Body* enemyPaddleBody);
-    void move(Ball *ball);
+    void move(Ball *ball,Ball *extraBall);
 private:
-    static EnemyPaddle* enemyPaddle;
+    //static EnemyPaddle* enemyPaddle;
     EnemyPaddle();
 	virtual ~EnemyPaddle();
 	b2Body *enemyPaddleBody;

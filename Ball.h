@@ -42,15 +42,16 @@ public:
 
     void frameAddOne();
     int getFrameLasted();
-
+    int getPriority();
 
 private:
-	static Ball *ball;
+	//static Ball *ball;
+
 	Velocity velocity;
 	CCTexture2D ballTexture;
 	b2Body *ballBody;
 	int frameLasted;
-
+	int priority;
 };
 
 #endif /* BALL_H_ */

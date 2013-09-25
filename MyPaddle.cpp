@@ -6,10 +6,12 @@
  */
 
 #include "MyPaddle.h"
-MyPaddle* MyPaddle::myPaddle = NULL;
+
+//MyPaddle* MyPaddle::myPaddle = NULL;
+
 MyPaddle::MyPaddle():Paddle()
 {
-    paddleBodyDef.userData = myPaddle;
+   // paddleBodyDef.userData = myPaddle;
 
 }
 
@@ -29,7 +31,7 @@ MyPaddle* MyPaddle::getMyPaddle(){
 	// }
 	// else
 	 // {
-		myPaddle =new MyPaddle();
+		MyPaddle *myPaddle =new MyPaddle();
 		if(myPaddle && myPaddle->initWithFile("GameLayer/myPaddle.png")){
 				myPaddle->myInit();
 				myPaddle->autorelease();
