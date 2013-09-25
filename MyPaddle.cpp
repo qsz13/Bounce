@@ -7,7 +7,6 @@
 
 #include "MyPaddle.h"
 MyPaddle* MyPaddle::myPaddle = NULL;
-
 MyPaddle::MyPaddle():Paddle()
 {
     paddleBodyDef.userData = myPaddle;
@@ -20,21 +19,25 @@ MyPaddle::~MyPaddle()
 }
 
 MyPaddle* MyPaddle::getMyPaddle(){
-	if(myPaddle != NULL)
-	{
-		return myPaddle;
-	}
-	else
-	{
+	 // if(myPaddle != NULL)
+	// {
+	// 	CCTexture2D * image = CCTextureCache::sharedTextureCache()->addImage("myPaddle.png");
+	// 	myPaddle->setTexture(image);
+		
+	// 			// CCLOG("123123");
+	// 	return myPaddle;
+	// }
+	// else
+	 // {
 		myPaddle =new MyPaddle();
-		if(myPaddle && myPaddle->initWithFile("myPaddle.png")){
+		if(myPaddle && myPaddle->initWithFile("GameLayer/myPaddle.png")){
 				myPaddle->myInit();
 				myPaddle->autorelease();
 				return myPaddle;
 		}
 		CC_SAFE_DELETE(myPaddle);
 		return NULL;
-	}
+	// }
 
 
 
@@ -118,7 +121,7 @@ void MyPaddle::setMyPaddleBody(b2Body* myPaddleBody){
 //
 //void MyPaddle::Drag(CCPoint offSet)
 //{
-//    //计算精灵坐标加上移动偏移量、并设置精灵位置
+//    //���������������������������������������������������������������
 //    CCPoint pos = ccpAdd(this->getPosition(), offSet);
 //    this->setPosition(pos);
 //

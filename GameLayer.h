@@ -16,67 +16,75 @@
 #include "Ball.h"
 #include "SettingLayer.h"
 #include "EnlargeItem.h"
-#include "cstdlib"
-#include "ctime"
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
+#include "ReverseItem.h"
+#include "DoubleItem.h"
 #include "Item.h"
 #include <list>
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
-class GameLayer : public CCLayer {
+class GameLayer: public CCLayer {
 public:
 	virtual bool init();
 	static CCScene* scene();
 	//void menuCloseCallback(CCObject* pSender);
 
+	CREATE_FUNC (GameLayer);
+	void doStep(float delta);
 
-    CREATE_FUNC(GameLayer);
-    void doStep(float delta);
+	CCSize winSize;
 
-    CCSize winSize;
-
-    b2World *world;
-    b2Body *groundBody;
-    b2Fixture *bottomFixture;
+	b2World *world;
+	b2Body *groundBody;
+	b2Fixture *bottomFixture;
 	b2Fixture *ballFixture;
-    
-    Ball *ball;
-    MyPaddle *myPaddle;
-    EnemyPaddle *enemyPaddle;
-    
-    // b2Body *myPaddleBody;
-    // b2Body *enemyPaddleBody;
 
-    b2Fixture *myPaddleFixture;
-    b2Fixture *enemyPaddleFixture;
+	Ball *ball;
+	Ball *extraBall;
+	MyPaddle *myPaddle;
+	EnemyPaddle *enemyPaddle;
 
-    b2MouseJoint *_mouseJoint; 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    // bool MouseDown(const b2Vec2& p);
-    // void MouseMove(const b2Vec2& p);
-    // void MouseUp(const b2Vec2& p);
-    void restartConfirm();
-    void didAccelerate(CCAcceleration* pAccelerationValue);
+	// b2Body *myPaddleBody;
+	// b2Body *enemyPaddleBody;
 
-    void restart();
-    static void* ThreadFunction(void* arg);
-    void CreateThread();
-    void itemInteract();
-    void dropItem();
+	b2Fixture *myPaddleFixture;
+	b2Fixture *enemyPaddleFixture;
 
+	b2MouseJoint *_mouseJoint;
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+	// bool MouseDown(const b2Vec2& p);
+	// void MouseMove(const b2Vec2& p);
+	// void MouseUp(const b2Vec2& p);
+	void restartConfirm();
+	void didAccelerate(CCAcceleration* pAccelerationValue);
 
-
+	void restart();
+	static void* ThreadFunction(void* arg);
+	void CreateThread();
+	void itemIntersects();
+	void dropItem();
 
 private:
-    void initBackground();
-    bool gameIsPaused;
-    bool gameIsEnded;
-     Item* item;
-    // list<Item> itemList;
+	void initBackground();
+	void initTopBar();
 
+	void pause();
 
+	bool gameIsPaused;
+	bool gameIsEnded;
+	Item* item;
+	list<Item *> itemList;
+	void enlargePaddle(Ball *ball);
+	void paddleTimer();
+	void avoidUnwantedSituation();
+	void reverseBallVelocity();
+	void doubleBall();
+	void extraBallTimer();
 };
 
 #endif /* GAMELAYER_H_ */

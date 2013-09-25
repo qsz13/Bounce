@@ -9,8 +9,14 @@
 Ball* Ball::ball = NULL;
 
 Ball::Ball() {
-	velocity = 15;
+	velocity.speed = 20;
 
+	velocity.x = 10+rand()%73205/10000;
+	if (rand()&1) 
+		velocity.x = -velocity.x;
+	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
+
+	frameLasted = 0;
 }
 
 Ball::~Ball() {
@@ -27,10 +33,10 @@ Ball* Ball::getBall(){
 //	{
 		Ball* ball = new Ball();
 
-		if (ball && ball->initWithFile("ball.png"))
+		if (ball && ball->initWithFile("GameLayer/ball.png"))
 		{
 			ball->myInit();
-			ball->autorelease();
+			//ball->autorelease();
 			return ball;
 		}
 			CC_SAFE_DELETE(ball);
@@ -56,11 +62,11 @@ float Ball::getRadius(){
 	return this->getTextureRect().getMaxX()/2;
 }
 
-int Ball::getVelocity(){
+Velocity Ball::getVelocity(){
 	return velocity;
 }
 
-void Ball::setVelocity(int v){
+Velocity Ball::setVelocity(Velocity v){
 	velocity = v;
 }
 
@@ -74,7 +80,17 @@ void Ball::setBallBody(b2Body* ballBody){
 CCRect Ball::rect(){
 
 	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width/2, s.height/2);
+	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
+
 	 
 }
        
+
+void Ball::frameAddOne(){
+	frameLasted++;
+
+}
+int Ball::getFrameLasted(){
+	return frameLasted;
+
+}

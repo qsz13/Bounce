@@ -31,7 +31,7 @@ private:
     EnemyPaddle();
 	virtual ~EnemyPaddle();
 	b2Body *enemyPaddleBody;
-	float velocity;
+	//float velocity;
 
 
 };

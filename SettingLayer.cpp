@@ -7,7 +7,7 @@
 
 #include "SettingLayer.h"
 
-int SettingLayer::controlMode = 1;
+SettingLayer::ControlType SettingLayer::controlMode = TOUCH;
 int SettingLayer::sensitivity = 250;
 
 int SettingLayer::getSensitivity(){
@@ -34,6 +34,6 @@ int SettingLayer::getControlMode(){
 }
 
 
-void SettingLayer::setControlMode(int mode){
+void SettingLayer::setControlMode(SettingLayer::ControlType mode){
 	controlMode = mode;
 }

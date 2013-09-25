@@ -7,11 +7,10 @@
 
 #include "Item.h"
 
-int Item::itemNum = 0;
+//int Item::itemNum = 0;
 
 Item::Item() {
-	// TODO Auto-generated constructor stub
-
+	frameLasted = 0;
 }
 
 Item::~Item() {
@@ -19,9 +18,20 @@ Item::~Item() {
 }
 
 CCRect Item::rect(){
+	 //CCRect myRect = myPaddle->boundingBox();
+	CCSize s = this->boundingBox().size;
+	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
 
-	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x, this->getPosition().y, s.width/2, s.height/2);
-	 
 }
        
+void Item::frameAddOne(){
+	frameLasted++;
+}
+
+int Item::getFrameLasted(){
+	return frameLasted;
+}
+
+string Item::getFunction(){
+	return function;
+}

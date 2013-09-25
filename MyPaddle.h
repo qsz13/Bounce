@@ -32,7 +32,7 @@ protected:
 	MyPaddle();
 	virtual ~MyPaddle();
 	b2Body *myPaddleBody;
-
+	//static CCTexture2D * image ;
 };
 
 #endif /* MYPADDLE_H_ */

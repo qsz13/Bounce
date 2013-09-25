@@ -8,7 +8,7 @@
 #include "EnlargeItem.h"
 
 EnlargeItem::EnlargeItem() {
-	// TODO Auto-generated constructor stub
+	function = "enlarge";
 
 }
 
@@ -19,11 +19,12 @@ EnlargeItem::~EnlargeItem() {
 EnlargeItem* EnlargeItem::getEnlargeItem(){
 
 	EnlargeItem* enlargeItem =new EnlargeItem();
-	if(enlargeItem && enlargeItem->initWithFile("CloseNormal.png")){
-		//enlargeItem->myInit();
-		enlargeItem->autorelease();
-			return enlargeItem;
+	if(enlargeItem && enlargeItem->initWithFile("GameLayer/Items/enlargeItem.png")){
+		enlargeItem->setScale(0.2);
+		//enlargeItem->autorelease();
+		return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);
 	return NULL;
 }
+
