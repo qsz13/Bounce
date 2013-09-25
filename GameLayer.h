@@ -18,6 +18,7 @@
 #include "EnlargeItem.h"
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include "ReverseItem.h"
 #include "Item.h"
 #include <list>

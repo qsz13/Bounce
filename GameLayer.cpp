@@ -41,7 +41,7 @@ bool GameLayer::init()
         return false;
     }
 
-    
+
     if(SettingLayer::getControlMode()==0){
         setAccelerometerEnabled(true);
         setTouchEnabled(false);
@@ -195,7 +195,7 @@ bool GameLayer::init()
             enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
        world->CreateJoint(&jointDef);
 
-       
+
 
 
 
@@ -222,7 +222,7 @@ void GameLayer::doStep(float delta)
             {
                 case b2Shape::e_circle:
                 {
-                    b2CircleShape* circle = (b2CircleShape*) f->GetShape();                    
+                    b2CircleShape* circle = (b2CircleShape*) f->GetShape();
                     /* Do stuff with a circle shape */
                 }
                 break;
@@ -265,7 +265,7 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
            // ball->removeFromParentAndCleanup(true);
-            
+
         }
         restartConfirm();
     }
@@ -296,7 +296,7 @@ void GameLayer::restartConfirm(){
  void GameLayer::ccTouchesBegan(CCSet *pTouches,CCEvent *event)
  {
      if (_mouseJoint != NULL) return;
-    
+
      CCTouch *myTouch = (CCTouch*)pTouches->anyObject();
      CCPoint location = myTouch->getLocationInView();
 
@@ -312,21 +312,21 @@ void GameLayer::restartConfirm(){
      md.maxForce =1000.0f*myPaddle->getMyPaddleBody()->GetMass();
      _mouseJoint = (b2MouseJoint *)world->CreateJoint(&md);
      }
-      
+
  }
-  
+
  void GameLayer::ccTouchesMoved(CCSet *pTouches, CCEvent* event)
  {
      CCTouch* myTouch = (CCTouch*)pTouches->anyObject();
- 
+
       CCPoint location = myTouch->getLocationInView();
       location = CCDirector::sharedDirector()->convertToGL(location);
       b2Vec2 locationWorld = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
       if (_mouseJoint)   //判断 否则会找不到  然后报错
           _mouseJoint->SetTarget(locationWorld);
-      
+
  }
-  
+
  void GameLayer::ccTouchesEnded(CCSet *pTouches,CCEvent* event)
  {
      if (_mouseJoint)  //判断 否则会找不到  然后报错
@@ -334,7 +334,7 @@ void GameLayer::restartConfirm(){
          world->DestroyJoint(_mouseJoint);   //摧毁关节
          _mouseJoint = NULL;
      }
-     
+
  }
 
 
@@ -358,7 +358,7 @@ void GameLayer::restart(){
 
 void GameLayer::dropItem(){
 
-    int drop = rand()%60;
+    int drop = rand()%600;
 
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
@@ -388,33 +388,27 @@ void GameLayer::dropItem(){
 
 void GameLayer::itemIntersects() {
 
-	if (!gameIsEnded && !gameIsPaused && itemList.size() > 0 ) {
+	if (!gameIsEnded && !gameIsPaused && itemList.size() > 0) {
 
 		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();) {
 
-            (*it)->frameAddOne();
-            if((*it)->getFrameLasted()>600){
-                CCLOG("remove");
-                ((*it)-> removeFromParentAndCleanup(true));
-                it = itemList.erase(it);
-            }
-			else if ((*it)->rect().intersectsRect(ball->rect())) {
+			(*it)->frameAddOne();
+			if ((*it)->getFrameLasted() > 600) {
+				CCLOG("remove");
+				((*it)->removeFromParentAndCleanup(true));
+				it = itemList.erase(it);
+			} else if ((*it)->rect().intersectsRect(ball->rect()) && (*it)->getFrameLasted()>10) {
 
+				if ((*it)->getFunction() == "enlarge") {
+					enlargePaddle(ball);
+				} else if ((*it)->getFunction() == "reverse") {
+					reverseBallVelocity();
+				}
 
-				if((*it)->getFunction() == "enlarge"){
-            enlargePaddle(ball);
-        }
-        else if((*it)->getFunction() == "reverse"){
-            reverseBallVelocity();
-        }
-				
-
-
-				((*it)-> removeFromParentAndCleanup(true));
+				((*it)->removeFromParentAndCleanup(true));
 				it = itemList.erase(it);
 
-			}
-			else{
+			} else {
 				it++;
 			}
 		}
@@ -427,11 +421,13 @@ void GameLayer::itemIntersects() {
 void GameLayer::enlargePaddle(Ball* ball){
     CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
     b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
-    
-
+    CCRect myRect = myPaddle->boundingBox();
+    CCRect enemyRect = enemyPaddle->boundingBox();
     if(v.y<0){
 
-       if(enemyPaddle->getLengthState() == Paddle::shortPaddle){
+       if(enemyPaddle->getLengthState() == Paddle::shortPaddle
+    		   && enemyRect.size.width <= enemyPaddle->getWidth()
+    		   ){
         enemyPaddle->toggleLengthState();
         enemyPaddle->runAction(actionBy);
 
@@ -442,7 +438,9 @@ void GameLayer::enlargePaddle(Ball* ball){
     }
     else if(v.y>0) {
 
-      if(myPaddle->getLengthState() == Paddle::shortPaddle){
+      if(myPaddle->getLengthState() == Paddle::shortPaddle
+    		  && myRect.size.width <= myPaddle->getWidth()
+    		  ){
              myPaddle->toggleLengthState();
              myPaddle->runAction(actionBy);
 
@@ -456,7 +454,7 @@ void GameLayer::enlargePaddle(Ball* ball){
      //actionBy release
 
 
-       
+
     }
 
 }
@@ -508,7 +506,53 @@ void GameLayer::reverseBallVelocity(){
 //===============================================================================
 
 void GameLayer::avoidUnwantedSituation(){
+    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+    float s = v.x*v.x + v.y*v.y;
+
+    if(v.y*v.y  < s/4){
+    	if(v.y < 0){
+        	v.y = -sqrt(s)/2;
+    	}
+    	else{
+    		v.y = sqrt(s)/2;
+    	}
+
+    	if(v.x < 0){
+    		v.x = -sqrt(s-v.y*v.y);
+    	}
+    	else{
+    		v.x = sqrt(s-v.y*v.y);
+    	}
 
 
+    }
+
+
+    //if(s > )
+//
+//    if(v.y > 0 && v.y < 3){
+//
+//
+//    	v.y += 3;
+//    	if(v.x < 0){
+//        	v.x = -sqrt(s-v.y*v.y);
+//    	}
+//    	else{
+//    		(v.x = sqrt(s-v.y*v.y));
+//    	}
+//
+//
+//    }
+//    else if(v.y >-3 && v.y < 0){
+//
+//        v.y -= 3;
+//            	if(v.x < 0){
+//                	v.x = -sqrt(s-v.y*v.y);
+//            	}
+//            	else{
+//            		(v.x = sqrt(s-v.y*v.y));
+//            	}
+//    }
+    ball->getBallBody()->SetLinearVelocity(v);
 
 }

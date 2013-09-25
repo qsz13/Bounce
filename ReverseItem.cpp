@@ -19,12 +19,11 @@ ReverseItem::~ReverseItem() {
 
 ReverseItem* ReverseItem::getReverseItem(){
 
-	ReverseItem* enlargeItem =new ReverseItem();
-	if(enlargeItem && enlargeItem->initWithFile("reverseItem.png")){
-		//enlargeItem->myInit();
-		//enlargeItem->autorelease();
-			return enlargeItem;
+	ReverseItem* reverseItem =new ReverseItem();
+	if(reverseItem && reverseItem->initWithFile("reverseItem.png")){
+		reverseItem -> setScale(0.3);
+		return reverseItem;
 	}
-	CC_SAFE_DELETE(enlargeItem);
+	CC_SAFE_DELETE(reverseItem);
 	return NULL;
 }

@@ -20,10 +20,11 @@ EnlargeItem* EnlargeItem::getEnlargeItem(){
 
 	EnlargeItem* enlargeItem =new EnlargeItem();
 	if(enlargeItem && enlargeItem->initWithFile("enlargeItem.png")){
-		//enlargeItem->myInit();
+		enlargeItem->setScale(0.2);
 		//enlargeItem->autorelease();
 			return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);
 	return NULL;
 }
+

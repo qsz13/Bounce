@@ -18,8 +18,8 @@ Item::~Item() {
 }
 
 CCRect Item::rect(){
-
-	CCSize s = this->getContentSize();
+	 //CCRect myRect = myPaddle->boundingBox();
+	CCSize s = this->boundingBox().size;
 	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
 
 }
