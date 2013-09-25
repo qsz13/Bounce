@@ -240,7 +240,7 @@ void GameLayer::doStep(float delta)
 
 
 
-    enemyPaddle->move(ball);
+    enemyPaddle->move(ball,extraBall);
 
     avoidUnwantedSituation();
 

@@ -6,7 +6,7 @@
  */
 
 #include "Ball.h"
-Ball* Ball::ball = NULL;
+//Ball* Ball::ball = NULL;
 
 Ball::Ball() {
 	velocity.speed = 20;
@@ -93,4 +93,10 @@ void Ball::frameAddOne(){
 int Ball::getFrameLasted(){
 	return frameLasted;
 
+}
+
+int Ball::getPriority(){
+	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
+	priority += ballBody->GetLinearVelocity().y;
+	return priority;
 }

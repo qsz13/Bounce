@@ -28,7 +28,7 @@ public:
 
 	
 protected:
-	static MyPaddle *myPaddle;
+	//static MyPaddle *myPaddle;
 	MyPaddle();
 	virtual ~MyPaddle();
 	b2Body *myPaddleBody;
