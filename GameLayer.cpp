@@ -501,7 +501,7 @@ void GameLayer::itemIntersects() {
 
 				if ((*it)->getFunction() == "enlarge") {
 					enlargePaddle(ball);
-				} else if ((*it)->getFunction() == "reverse") {
+				} else if ((*it)->getFunction() == "reverseX") {
 					reverseBallVelocity();
 				} else if((*it)->getFunction() == "double"){
           doubleBall();
