@@ -17,7 +17,7 @@ DoubleItem::~DoubleItem() {
 }
 
 
-DoubleItem* DoubleItem::getReverseItem(){
+DoubleItem* DoubleItem::getDoubleItem(){
 
 	DoubleItem* doubleItem =new DoubleItem();
 	if(doubleItem && doubleItem->initWithFile("doubleItem.png")){
