@@ -433,21 +433,22 @@ void GameLayer::dropItem(){
 
     int drop = rand()%6;
 
-
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
          if(drop ==0){
-            int type= rand()%3;
+            int type= rand()%4;
             if(type == 0){
             	item = EnlargeItem::getEnlargeItem();
 
             }
             else if(type == 1){
-            	item = ReverseItem::getReverseItem();
+            	item = ReverseXItem::getReverseXItem();
             }
-            else if(type = 3){
+            else if(type == 2){
               item = DoubleItem::getDoubleItem();
             }
-
+            else if(type == 3){
+            	item = ReverseYItem::getReverseYItem();
+            }
 
             int x=rand()%(int)winSize.width;
             int y=340+rand()%700;
