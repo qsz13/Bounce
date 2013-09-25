@@ -39,32 +39,19 @@ public:
     b2Body* getBallBody();
     void setBallBody(b2Body* ballBody);
     CCRect rect();
-<<<<<<< HEAD
-=======
-
-    void frameAddOne();
-    int getFrameLasted();
->>>>>>> hst
 
     void frameAddOne();
     int getFrameLasted();
     int getPriority();
 
 private:
-<<<<<<< HEAD
 	//static Ball *ball;
-=======
-	static Ball *ball;
->>>>>>> hst
+
 	Velocity velocity;
 	CCTexture2D ballTexture;
 	b2Body *ballBody;
 	int frameLasted;
-<<<<<<< HEAD
 	int priority;
-=======
-
->>>>>>> hst
 };
 
 #endif /* BALL_H_ */

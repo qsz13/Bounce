@@ -43,13 +43,8 @@ void MenuLayer::initMenu()
 
 	//Setting
 	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
-<<<<<<< HEAD
-														  "Setting.png",
-														  "Setting_Pressed.png",
-=======
 														  "MenuLayer/Setting.png",
 														  "MenuLayer/Setting_Pressed.png",
->>>>>>> hst
 														  this,
 														  menu_selector(MenuLayer::menuSetting));
 	pSettingItem -> setPosition( ccp(0, 0) );
@@ -72,13 +67,8 @@ void MenuLayer::initMenu()
 
 	//Scores
 	CCMenuItemImage *pScoresItem = CCMenuItemImage::create(
-<<<<<<< HEAD
-														  "Scores.png",
-														  "Scores_Pressed.png",
-=======
 														  "MenuLayer/Scores.png",
 														  "MenuLayer/Scores_Pressed.png",
->>>>>>> hst
 														  this,
 														  menu_selector(MenuLayer::menuScores));
 	pScoresItem -> setPosition( ccp(0, 0) );

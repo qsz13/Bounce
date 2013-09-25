@@ -41,17 +41,6 @@ public:
 	b2Body *groundBody;
 	b2Fixture *bottomFixture;
 	b2Fixture *ballFixture;
-<<<<<<< HEAD
-    
-    Ball *ball;
-    Ball *extraBall;
-    MyPaddle *myPaddle;
-    EnemyPaddle *enemyPaddle;
-    
-    // b2Body *myPaddleBody;
-    // b2Body *enemyPaddleBody;
-=======
->>>>>>> hst
 
 	Ball *ball;
 	Ball *extraBall;
@@ -61,23 +50,6 @@ public:
 	// b2Body *myPaddleBody;
 	// b2Body *enemyPaddleBody;
 
-<<<<<<< HEAD
-    b2MouseJoint *_mouseJoint; 
-    virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    // bool MouseDown(const b2Vec2& p);
-    // void MouseMove(const b2Vec2& p);
-    // void MouseUp(const b2Vec2& p);
-    void restartConfirm();
-    void didAccelerate(CCAcceleration* pAccelerationValue);
-
-    void restart();
-    static void* ThreadFunction(void* arg);
-    void CreateThread();
-    void itemIntersects();
-    void dropItem();
-=======
 	b2Fixture *myPaddleFixture;
 	b2Fixture *enemyPaddleFixture;
 
@@ -90,7 +62,6 @@ public:
 	// void MouseUp(const b2Vec2& p);
 	void restartConfirm();
 	void didAccelerate(CCAcceleration* pAccelerationValue);
->>>>>>> hst
 
 	void restart();
 	static void* ThreadFunction(void* arg);
@@ -99,19 +70,6 @@ public:
 	void dropItem();
 
 private:
-<<<<<<< HEAD
-    void initBackground();
-    bool gameIsPaused;
-    bool gameIsEnded;
-    Item* item;
-    list<Item *> itemList;
-    void enlargePaddle(Ball *ball);
-    void paddleTimer();
-    void avoidUnwantedSituation();
-    void reverseBallVelocity();
-    void doubleBall();
-    void extraBallTimer();
-=======
 	void initBackground();
 	void initTopBar();
 
@@ -127,7 +85,6 @@ private:
 	void reverseBallVelocity();
 	void doubleBall();
 	void extraBallTimer();
->>>>>>> hst
 };
 
 #endif /* GAMELAYER_H_ */

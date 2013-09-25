@@ -19,15 +19,6 @@ void GameLayer::initBackground()
 
     //Background
     // 创建图片精灵
-<<<<<<< HEAD
-    CCSprite* pSprite = CCSprite::create("GameSceneBackground.png");
-
-    // 设置图片精灵的位置
-    pSprite->setPosition(ccp(size.width/2, size.height/2));
-
-    // 把图片精灵放置在图层中
-    this->addChild(pSprite, 0);
-=======
     CCSprite* gameLayerBackground = CCSprite::create("GameLayer/GameSceneBackground.png");
 
     // 设置图片精灵的位置
@@ -62,24 +53,16 @@ void GameLayer::initTopBar()
 
     // 把图片精灵放置在图层中
     this->addChild(scoresLabel, 1);
->>>>>>> hst
 }
 
 // on "init" you need to initialize your instance
 bool GameLayer::init()
 {
     initBackground();
-<<<<<<< HEAD
-    extraBall = NULL;
-
-
-=======
     initTopBar();
 
     extraBall = NULL;
 
-
->>>>>>> hst
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -285,13 +268,9 @@ void GameLayer::doStep(float delta)
 
 
 
-<<<<<<< HEAD
     enemyPaddle->move(ball,extraBall);
 
     avoidUnwantedSituation();
-=======
-    enemyPaddle->move(ball);
->>>>>>> hst
 
     avoidUnwantedSituation();
 
@@ -354,13 +333,8 @@ void GameLayer::restartConfirm(){
 //        restartButton->setScale(0.4);
 //        this->addChild(restartButton,2,0);
 //        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
-<<<<<<< HEAD
-        CCMenuItemImage *restartButton = CCMenuItemImage::create( "restart.png",
-				  "restart.png",
-=======
         CCMenuItemImage *restartButton = CCMenuItemImage::create( "GameLayer/restart.png",
 				  "GameLayer/restart.png",
->>>>>>> hst
 				  this,
 				  menu_selector(GameLayer::restart));
         restartButton -> setPosition( ccp(0, 0) );
@@ -466,9 +440,7 @@ void GameLayer::restart(){
    else if(SettingLayer::getControlMode()==SettingLayer::TOUCH){
          b2Vec2 v = b2Vec2(0,0);
           myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
-   }
-
-<<<<<<< HEAD
+    }
  }
 
 
@@ -477,24 +449,6 @@ void GameLayer::restart(){
      b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
      world->SetGravity(gravity);
  }
-
-
-=======
- }
-
-
- void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
- {
-     b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
-     world->SetGravity(gravity);
- }
-
-
->>>>>>> hst
-
-
-
-
 
 
 
@@ -759,11 +713,8 @@ void GameLayer::extraBallTimer(){
 
 
 }
-<<<<<<< HEAD
-=======
 
 void GameLayer::pause()
 {
     //Empty for the time being
 }
->>>>>>> hst

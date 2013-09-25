@@ -20,11 +20,7 @@ ReverseItem::~ReverseItem() {
 ReverseItem* ReverseItem::getReverseItem(){
 
 	ReverseItem* reverseItem =new ReverseItem();
-<<<<<<< HEAD
-	if(reverseItem && reverseItem->initWithFile("reverseItem.png")){
-=======
 	if(reverseItem && reverseItem->initWithFile("GameLayer/Items/reverseItem.png")){
->>>>>>> hst
 		reverseItem -> setScale(0.3);
 		return reverseItem;
 	}

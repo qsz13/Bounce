@@ -94,12 +94,9 @@ int Ball::getFrameLasted(){
 	return frameLasted;
 
 }
-<<<<<<< HEAD
 
 int Ball::getPriority(){
 	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
 	priority += ballBody->GetLinearVelocity().y;
 	return priority;
 }
-=======
->>>>>>> hst

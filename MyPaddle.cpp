@@ -6,11 +6,9 @@
  */
 
 #include "MyPaddle.h"
-<<<<<<< HEAD
+
 //MyPaddle* MyPaddle::myPaddle = NULL;
-=======
-MyPaddle* MyPaddle::myPaddle = NULL;
->>>>>>> hst
+
 MyPaddle::MyPaddle():Paddle()
 {
    // paddleBodyDef.userData = myPaddle;
