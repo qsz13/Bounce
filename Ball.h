@@ -40,11 +40,16 @@ public:
     void setBallBody(b2Body* ballBody);
     CCRect rect();
 
+    void frameAddOne();
+    int getFrameLasted();
+
+
 private:
 	static Ball *ball;
 	Velocity velocity;
 	CCTexture2D ballTexture;
 	b2Body *ballBody;
+	int frameLasted;
 
 };
 

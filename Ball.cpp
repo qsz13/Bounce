@@ -16,6 +16,7 @@ Ball::Ball() {
 		velocity.x = -velocity.x;
 	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
 
+	frameLasted = 0;
 }
 
 Ball::~Ball() {
@@ -35,7 +36,7 @@ Ball* Ball::getBall(){
 		if (ball && ball->initWithFile("ball.png"))
 		{
 			ball->myInit();
-			ball->autorelease();
+			//ball->autorelease();
 			return ball;
 		}
 			CC_SAFE_DELETE(ball);
@@ -84,3 +85,12 @@ CCRect Ball::rect(){
 	 
 }
        
+
+void Ball::frameAddOne(){
+	frameLasted++;
+
+}
+int Ball::getFrameLasted(){
+	return frameLasted;
+
+}

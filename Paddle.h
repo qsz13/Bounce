@@ -23,7 +23,7 @@ public:
 	void toggleLengthState();
 	void setFrameLastedTo0();
 	int getFrameLasted();
-	void frameLastedAddOne();
+	void frameAddOne();
 protected:
 	b2BodyDef paddleBodyDef;
 	lengthType lengthState;

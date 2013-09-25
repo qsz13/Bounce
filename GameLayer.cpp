@@ -32,7 +32,7 @@ void GameLayer::initBackground()
 bool GameLayer::init()
 {
     initBackground();
-
+    extraBall = NULL;
 
 
     srand(time(NULL));
@@ -123,10 +123,6 @@ bool GameLayer::init()
 
 
 
-
-
-
-
 //my paddle;
     myPaddle = MyPaddle::getMyPaddle();
     this->addChild(myPaddle,1);
@@ -204,6 +200,8 @@ bool GameLayer::init()
     schedule(schedule_selector(GameLayer::dropItem));
     schedule(schedule_selector(GameLayer::itemIntersects));
     schedule(schedule_selector(GameLayer::paddleTimer));
+    schedule(schedule_selector(GameLayer::extraBallTimer));
+
     return true;
 }
 
@@ -257,14 +255,39 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
-            //ball->removeFromParentAndCleanup(true);
-        }
+            ball->removeFromParentAndCleanup(true);
+
         else if(ball->getPosition().y > winSize.height){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
+           ball->removeFromParentAndCleanup(true);
+
+        }
+
+        if(extraBall!=NULL){
+            if(extraBall->getPosition().y<0){
+          //CCLOG("!!!!!");
+//                  char temp[30];
+//                  sprintf(temp,"%f",sprite->getPosition().y);
+//                    CCLOG(temp);
+            CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
+            label->setPosition(ccp(winSize.width/2,winSize.height/2));
+            addChild(label,1,0);
+            gameIsEnded = true;
+            //ball->removeFromParentAndCleanup(true);
+        }
+        else if(extraBall->getPosition().y > winSize.height){
+            CCLabelTTF *label = CCLabelTTF::create("you win","",123);
+            label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
+            addChild(label,1,0);
+            gameIsEnded = true;
            // ball->removeFromParentAndCleanup(true);
+
+        }
+
+
 
         }
         restartConfirm();
@@ -358,18 +381,21 @@ void GameLayer::restart(){
 
 void GameLayer::dropItem(){
 
-    int drop = rand()%600;
+    int drop = rand()%6;
 
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
          if(drop ==0){
-            int pos= rand()&1;
-            if(pos < 1){
+            int type= rand()%3;
+            if(type == 0){
             	item = EnlargeItem::getEnlargeItem();
 
             }
-            else if(pos ==1){
+            else if(type == 1){
             	item = ReverseItem::getReverseItem();
+            }
+            else if(type = 3){
+              item = DoubleItem::getDoubleItem();
             }
 
 
@@ -403,6 +429,8 @@ void GameLayer::itemIntersects() {
 					enlargePaddle(ball);
 				} else if ((*it)->getFunction() == "reverse") {
 					reverseBallVelocity();
+				} else if((*it)->getFunction() == "double"){
+          doubleBall();
 				}
 
 				((*it)->removeFromParentAndCleanup(true));
@@ -461,28 +489,30 @@ void GameLayer::enlargePaddle(Ball* ball){
 
 
 void GameLayer::paddleTimer(){
-  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+ 
   if(myPaddle->getLengthState() == Paddle::longPaddle){
+     CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
     if(myPaddle->getFrameLasted() > 600){
       myPaddle->setFrameLastedTo0();
       myPaddle->toggleLengthState();
       myPaddle->runAction(actionBy);
     }
     else{
-      myPaddle->frameLastedAddOne();
+      myPaddle->frameAddOne();
 
     }
 
   }
 
   if(enemyPaddle->getLengthState() == Paddle::longPaddle){
+     CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
     if(enemyPaddle->getFrameLasted() > 600){
       enemyPaddle->setFrameLastedTo0();
       enemyPaddle->toggleLengthState();
       enemyPaddle->runAction(actionBy);
     }
     else{
-      enemyPaddle->frameLastedAddOne();
+      enemyPaddle->frameAddOne();
 
     }
 
@@ -554,5 +584,59 @@ void GameLayer::avoidUnwantedSituation(){
 //            	}
 //    }
     ball->getBallBody()->SetLinearVelocity(v);
+
+}
+
+
+void GameLayer::doubleBall(){
+  if(extraBall == NULL){
+    extraBall = Ball::getBall();
+  this->addChild(extraBall, 1,0);
+  extraBall->setPosition(ccp(winSize.width/2,winSize.height/2));
+
+  b2BodyDef ballBodyDef;
+    ballBodyDef.type = b2_dynamicBody;
+    ballBodyDef.position.Set(extraBall->getPosition().x/PTM_RATIO, extraBall->getPosition().y/PTM_RATIO);
+    ballBodyDef.userData = extraBall;
+    ballBodyDef.gravityScale = 0.0f;
+    extraBall->setBallBody(world->CreateBody(&ballBodyDef));
+    extraBall->getBallBody()->SetUserData(extraBall);
+//circle shape
+
+    b2CircleShape circle;
+    circle.m_radius = extraBall->getRadius()/PTM_RATIO;
+
+//ball shape
+    b2FixtureDef ballFixtureDef;
+    ballFixtureDef.shape = &circle;
+    ballFixtureDef.density = 1.0f;
+    ballFixtureDef.friction = 0.0f;
+    ballFixtureDef.restitution = 1.0f;
+    b2Fixture *ballFixture = extraBall->getBallBody()->CreateFixture(&ballFixtureDef);
+    b2Vec2 v = b2Vec2(extraBall->getVelocity().x,extraBall->getVelocity().y);
+    extraBall->getBallBody()->SetLinearVelocity(v);
+
+  }
+
+
+}
+
+void GameLayer::extraBallTimer(){
+
+  if(extraBall != NULL){
+      if(extraBall->getFrameLasted() > 60){
+    	  CCLOG("time out!!!");
+      extraBall->removeFromParentAndCleanup(true);
+      extraBall = NULL;
+    }
+    else{
+      extraBall->frameAddOne();
+    }
+
+
+  }
+
+
+
 
 }

@@ -48,6 +48,6 @@ void Paddle::setFrameLastedTo0(){
 int Paddle::getFrameLasted(){
 	return frameLasted;
 }
-void Paddle::frameLastedAddOne(){
+void Paddle::frameAddOne(){
 	frameLasted++;
 }

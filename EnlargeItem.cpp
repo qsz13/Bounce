@@ -22,7 +22,7 @@ EnlargeItem* EnlargeItem::getEnlargeItem(){
 	if(enlargeItem && enlargeItem->initWithFile("enlargeItem.png")){
 		enlargeItem->setScale(0.2);
 		//enlargeItem->autorelease();
-			return enlargeItem;
+		return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);
 	return NULL;

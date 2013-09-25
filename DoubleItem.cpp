@@ -8,8 +8,7 @@
 #include "DoubleItem.h"
 
 DoubleItem::DoubleItem() {
-	// TODO Auto-generated constructor stub
-
+	function = "double";
 }
 
 DoubleItem::~DoubleItem() {
@@ -21,7 +20,7 @@ DoubleItem* DoubleItem::getDoubleItem(){
 
 	DoubleItem* doubleItem =new DoubleItem();
 	if(doubleItem && doubleItem->initWithFile("doubleItem.png")){
-		doubleItem -> setScale(0.3);
+		doubleItem -> setScale(0.5);
 		return doubleItem;
 	}
 	CC_SAFE_DELETE(doubleItem);

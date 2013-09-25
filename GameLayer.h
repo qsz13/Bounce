@@ -20,6 +20,7 @@
 #include <ctime>
 #include <cmath>
 #include "ReverseItem.h"
+#include "DoubleItem.h"
 #include "Item.h"
 #include <list>
 #define PTM_RATIO 32.0
@@ -43,6 +44,7 @@ public:
 	b2Fixture *ballFixture;
     
     Ball *ball;
+    Ball *extraBall;
     MyPaddle *myPaddle;
     EnemyPaddle *enemyPaddle;
     
@@ -67,18 +69,20 @@ public:
     void CreateThread();
     void itemIntersects();
     void dropItem();
-    void enlargePaddle(Ball *ball);
-    void paddleTimer();
-    void avoidUnwantedSituation();
-    void reverseBallVelocity();
+
+
 private:
     void initBackground();
     bool gameIsPaused;
     bool gameIsEnded;
     Item* item;
     list<Item *> itemList;
-
-
+    void enlargePaddle(Ball *ball);
+    void paddleTimer();
+    void avoidUnwantedSituation();
+    void reverseBallVelocity();
+    void doubleBall();
+    void extraBallTimer();
 };
 
 #endif /* GAMELAYER_H_ */
