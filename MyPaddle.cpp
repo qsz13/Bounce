@@ -31,13 +31,8 @@ MyPaddle* MyPaddle::getMyPaddle(){
 	// }
 	// else
 	 // {
-<<<<<<< HEAD
-		MyPaddle* myPaddle =new MyPaddle();
-		if(myPaddle && myPaddle->initWithFile("myPaddle.png")){
-=======
-		myPaddle =new MyPaddle();
+		MyPaddle *myPaddle =new MyPaddle();
 		if(myPaddle && myPaddle->initWithFile("GameLayer/myPaddle.png")){
->>>>>>> hst
 				myPaddle->myInit();
 				myPaddle->autorelease();
 				return myPaddle;

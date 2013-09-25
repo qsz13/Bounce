@@ -38,7 +38,7 @@ EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
 	// }
 	//  // else
 
-		enemyPaddle =new EnemyPaddle();
+		EnemyPaddle *enemyPaddle =new EnemyPaddle();
 		if(enemyPaddle && enemyPaddle->initWithFile("GameLayer/enemyPaddle.png")){
 				enemyPaddle->myInit();
 				enemyPaddle->autorelease();
@@ -90,39 +90,6 @@ void EnemyPaddle::move(Ball *ball, Ball *extraBall){
 
 	int possibility = rand()%100;
 
-	b2Vec2 v;
-	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
-		
-		if(possibility < 2){
-			 v = b2Vec2(0,0);
-		}
-		else if(possibility > 50){
-			 v = b2Vec2(-1000,0);
-		}
-		else{
-			 v = b2Vec2(-3000,0);
-		}
-		
-    	enemyPaddleBody->ApplyForceToCenter(v);
-	}
-	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
-				if(possibility < 2){
-			 v = b2Vec2(0,0);
-		}
-		else if(possibility > 80){
-			 v = b2Vec2(1000,0);
-		}
-		else{
-			 v = b2Vec2(3000,0);
-		}
-    	enemyPaddleBody->ApplyForceToCenter(v);
-	}
-
-	// else{
-	// 	 v = b2Vec2(0,0);
- //    	enemyPaddleBody->SetLinearVelocity(v);
-	// }
-	//this->setPosition(ccp(ballPosition.x,this->getPosition().y));
 	b2Vec2 v;
 	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
 		
