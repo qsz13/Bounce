@@ -7,7 +7,7 @@
 
 #include "SettingLayer.h"
 
-SettingLayer::ControlType SettingLayer::controlMode = Drag;
+SettingLayer::ControlType SettingLayer::controlMode = TOUCH;
 int SettingLayer::sensitivity = 250;
 
 int SettingLayer::getSensitivity(){

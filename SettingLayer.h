@@ -17,7 +17,7 @@ class SettingLayer : public CCLayer{
 public:
 	SettingLayer();
 	virtual ~SettingLayer();
-	enum ControlType{Gravity,Drag,Touch};
+	enum ControlType{GRAVITY,DRAG,TOUCH};
 	static int getControlMode();
 	static void setControlMode(ControlType mode);
 	static int getSensitivity();

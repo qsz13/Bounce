@@ -42,7 +42,7 @@ bool GameLayer::init()
     }
 
 
-    if(SettingLayer::getControlMode()==0){
+    if(SettingLayer::getControlMode()==SettingLayer::GRAVITY){
         setAccelerometerEnabled(true);
         setTouchEnabled(false);
 
@@ -247,43 +247,44 @@ void GameLayer::doStep(float delta)
 	if(!gameIsEnded){
 		Ball *ball= (Ball*)this->getChildByTag(0);
         if(ball->getPosition().y<0){
-        	//CCLOG("!!!!!");
-//                  char temp[30];
-//                  sprintf(temp,"%f",sprite->getPosition().y);
-//                    CCLOG(temp);
+
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
             ball->removeFromParentAndCleanup(true);
-
+            if(extraBall!=NULL){
+            	extraBall->removeFromParentAndCleanup(true);
+            	extraBall = NULL;
+            }
+        }
         else if(ball->getPosition().y > winSize.height){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
            ball->removeFromParentAndCleanup(true);
-
+           if(extraBall!=NULL){
+               extraBall->removeFromParentAndCleanup(true);
+               extraBall = NULL;
+           }
         }
 
         if(extraBall!=NULL){
             if(extraBall->getPosition().y<0){
-          //CCLOG("!!!!!");
-//                  char temp[30];
-//                  sprintf(temp,"%f",sprite->getPosition().y);
-//                    CCLOG(temp);
+
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
-            //ball->removeFromParentAndCleanup(true);
+            ball->removeFromParentAndCleanup(true);
         }
         else if(extraBall->getPosition().y > winSize.height){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
-           // ball->removeFromParentAndCleanup(true);
+            ball->removeFromParentAndCleanup(true);
 
         }
 
@@ -316,30 +317,65 @@ void GameLayer::restartConfirm(){
 }
 
 
+void GameLayer::restart(){
+   //Item::itemNum = 0;
+
+	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+
+}
+
+
+
+
+
+
+
+
+
+
  void GameLayer::ccTouchesBegan(CCSet *pTouches,CCEvent *event)
  {
-     if (_mouseJoint != NULL) return;
+    if(SettingLayer::getControlMode()==SettingLayer::DRAG){
+		   if (_mouseJoint != NULL) return;
 
-     CCTouch *myTouch = (CCTouch*)pTouches->anyObject();
-     CCPoint location = myTouch->getLocationInView();
+		 CCTouch *myTouch = (CCTouch*)pTouches->anyObject();
+		 CCPoint location = myTouch->getLocationInView();
 
- 	location = CCDirector::sharedDirector()->convertToGL(location);
-     b2Vec2 locationWorld = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
+	  location = CCDirector::sharedDirector()->convertToGL(location);
+		 b2Vec2 locationWorld = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
 
-     if (myPaddleFixture->TestPoint(locationWorld)) {
-     b2MouseJointDef md;
-     md.bodyA = groundBody;
-     md.bodyB = myPaddle->getMyPaddleBody();
-     md.target = locationWorld;
-     md.collideConnected =true;
-     md.maxForce =1000.0f*myPaddle->getMyPaddleBody()->GetMass();
-     _mouseJoint = (b2MouseJoint *)world->CreateJoint(&md);
-     }
+		 if (myPaddleFixture->TestPoint(locationWorld)) {
+		 b2MouseJointDef md;
+		 md.bodyA = groundBody;
+		 md.bodyB = myPaddle->getMyPaddleBody();
+		 md.target = locationWorld;
+		 md.collideConnected =true;
+		 md.maxForce =1000.0f*myPaddle->getMyPaddleBody()->GetMass();
+		 _mouseJoint = (b2MouseJoint *)world->CreateJoint(&md);
+		 }
+    }
+    else if(SettingLayer::getControlMode()==SettingLayer::TOUCH){
+    	 CCTouch *myTouch = (CCTouch*)pTouches->anyObject();
+    	CCPoint touchPosition = myTouch->getLocation();
+    	if(touchPosition.x < winSize.width/2){
+          b2Vec2 v = b2Vec2(-20,0);
+    	    myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+    	}
+    	else{
+    		 b2Vec2 v = b2Vec2(20,0);
+          myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+    	}
+
+
+
+    }
 
  }
 
  void GameLayer::ccTouchesMoved(CCSet *pTouches, CCEvent* event)
  {
+	 if(SettingLayer::getControlMode()==SettingLayer::DRAG){
+
      CCTouch* myTouch = (CCTouch*)pTouches->anyObject();
 
       CCPoint location = myTouch->getLocationInView();
@@ -347,16 +383,34 @@ void GameLayer::restartConfirm(){
       b2Vec2 locationWorld = b2Vec2(location.x/PTM_RATIO, location.y/PTM_RATIO);
       if (_mouseJoint)   //判断 否则会找不到  然后报错
           _mouseJoint->SetTarget(locationWorld);
+	 }else if(SettingLayer::getControlMode()==SettingLayer::TOUCH){
+		 CCTouch *myTouch = (CCTouch*)pTouches->anyObject();
+		 CCPoint touchPosition = myTouch->getLocation();
+		 if(touchPosition.x < winSize.width/2){
+	    		 b2Vec2 v = b2Vec2(-20,0);
+          myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+	    	}
+	    	else{
+	    		 b2Vec2 v = b2Vec2(20,0);
+          myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+	    	}
+	 }
 
  }
 
  void GameLayer::ccTouchesEnded(CCSet *pTouches,CCEvent* event)
  {
+	 if(SettingLayer::getControlMode()==SettingLayer::DRAG){
      if (_mouseJoint)  //判断 否则会找不到  然后报错
      {
          world->DestroyJoint(_mouseJoint);   //摧毁关节
          _mouseJoint = NULL;
      }
+	 }
+   else if(SettingLayer::getControlMode()==SettingLayer::TOUCH){
+         b2Vec2 v = b2Vec2(0,0);
+          myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+   }
 
  }
 
@@ -369,12 +423,8 @@ void GameLayer::restartConfirm(){
 
 
 
-void GameLayer::restart(){
-   //Item::itemNum = 0;
 
-	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
 
-}
 
 
 
@@ -489,7 +539,7 @@ void GameLayer::enlargePaddle(Ball* ball){
 
 
 void GameLayer::paddleTimer(){
- 
+
   if(myPaddle->getLengthState() == Paddle::longPaddle){
      CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
     if(myPaddle->getFrameLasted() > 600){
@@ -624,7 +674,7 @@ void GameLayer::doubleBall(){
 void GameLayer::extraBallTimer(){
 
   if(extraBall != NULL){
-      if(extraBall->getFrameLasted() > 60){
+      if(extraBall->getFrameLasted() > 600){
     	  CCLOG("time out!!!");
       extraBall->removeFromParentAndCleanup(true);
       extraBall = NULL;
