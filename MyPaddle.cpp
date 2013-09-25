@@ -6,7 +6,11 @@
  */
 
 #include "MyPaddle.h"
+<<<<<<< HEAD
 //MyPaddle* MyPaddle::myPaddle = NULL;
+=======
+MyPaddle* MyPaddle::myPaddle = NULL;
+>>>>>>> hst
 MyPaddle::MyPaddle():Paddle()
 {
    // paddleBodyDef.userData = myPaddle;
@@ -29,8 +33,13 @@ MyPaddle* MyPaddle::getMyPaddle(){
 	// }
 	// else
 	 // {
+<<<<<<< HEAD
 		MyPaddle* myPaddle =new MyPaddle();
 		if(myPaddle && myPaddle->initWithFile("myPaddle.png")){
+=======
+		myPaddle =new MyPaddle();
+		if(myPaddle && myPaddle->initWithFile("GameLayer/myPaddle.png")){
+>>>>>>> hst
 				myPaddle->myInit();
 				myPaddle->autorelease();
 				return myPaddle;
@@ -121,7 +130,7 @@ void MyPaddle::setMyPaddleBody(b2Body* myPaddleBody){
 //
 //void MyPaddle::Drag(CCPoint offSet)
 //{
-//    //计算精灵坐标加上移动偏移量、并设置精灵位置
+//    //���������������������������������������������������������������
 //    CCPoint pos = ccpAdd(this->getPosition(), offSet);
 //    this->setPosition(pos);
 //

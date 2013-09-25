@@ -33,7 +33,7 @@ Ball* Ball::getBall(){
 //	{
 		Ball* ball = new Ball();
 
-		if (ball && ball->initWithFile("ball.png"))
+		if (ball && ball->initWithFile("GameLayer/ball.png"))
 		{
 			ball->myInit();
 			//ball->autorelease();
@@ -94,9 +94,12 @@ int Ball::getFrameLasted(){
 	return frameLasted;
 
 }
+<<<<<<< HEAD
 
 int Ball::getPriority(){
 	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
 	priority += ballBody->GetLinearVelocity().y;
 	return priority;
 }
+=======
+>>>>>>> hst

@@ -15,13 +15,13 @@ void MenuLayer::initBackground()
 
 	//Background
 	// 创建图片精灵
-	CCSprite* pSprite = CCSprite::create("Background.png");
+	CCSprite* menuLayerBackground = CCSprite::create("MenuLayer/Background.png");
 
 	// 设置图片精灵的位置
-	pSprite->setPosition(ccp(size.width/2, size.height/2));
+	menuLayerBackground->setPosition(ccp(size.width/2, size.height/2));
 
 	// 把图片精灵放置在图层中
-	this->addChild(pSprite, 0);
+	this->addChild(menuLayerBackground, 0);
 }
 
 void MenuLayer::initMenu()
@@ -31,8 +31,8 @@ void MenuLayer::initMenu()
 
 	//Start
 	CCMenuItemImage *pStartItem = CCMenuItemImage::create(
-														  "Start.png",
-														  "Start_Pressed.png",
+														  "MenuLayer/Start.png",
+														  "MenuLayer/Start_Pressed.png",
 														  this,
 														  menu_selector(MenuLayer::menuStart));
 	pStartItem -> setPosition( ccp(0, 0) );
@@ -43,8 +43,13 @@ void MenuLayer::initMenu()
 
 	//Setting
 	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
+<<<<<<< HEAD
 														  "Setting.png",
 														  "Setting_Pressed.png",
+=======
+														  "MenuLayer/Setting.png",
+														  "MenuLayer/Setting_Pressed.png",
+>>>>>>> hst
 														  this,
 														  menu_selector(MenuLayer::menuSetting));
 	pSettingItem -> setPosition( ccp(0, 0) );
@@ -55,8 +60,8 @@ void MenuLayer::initMenu()
 
 	//Help
 	CCMenuItemImage *pHelpItem = CCMenuItemImage::create(
-														  "Help.png",
-														  "Help_Pressed.png",
+														  "MenuLayer/Help.png",
+														  "MenuLayer/Help_Pressed.png",
 														  this,
 														  menu_selector(MenuLayer::menuHelp));
 	pHelpItem -> setPosition( ccp(0, 0) );
@@ -67,8 +72,13 @@ void MenuLayer::initMenu()
 
 	//Scores
 	CCMenuItemImage *pScoresItem = CCMenuItemImage::create(
+<<<<<<< HEAD
 														  "Scores.png",
 														  "Scores_Pressed.png",
+=======
+														  "MenuLayer/Scores.png",
+														  "MenuLayer/Scores_Pressed.png",
+>>>>>>> hst
 														  this,
 														  menu_selector(MenuLayer::menuScores));
 	pScoresItem -> setPosition( ccp(0, 0) );
@@ -79,8 +89,8 @@ void MenuLayer::initMenu()
 
 	//Quit
 	CCMenuItemImage *pQuitItem = CCMenuItemImage::create(
-														  "Quit.png",
-														  "Quit_Pressed.png",
+														  "MenuLayer/Quit.png",
+														  "MenuLayer/Quit_Pressed.png",
 														  this,
 														  menu_selector(MenuLayer::menuCloseCallback));
 	pQuitItem -> setPosition( ccp(0, 0) );

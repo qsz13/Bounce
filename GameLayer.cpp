@@ -19,6 +19,7 @@ void GameLayer::initBackground()
 
     //Background
     // 创建图片精灵
+<<<<<<< HEAD
     CCSprite* pSprite = CCSprite::create("GameSceneBackground.png");
 
     // 设置图片精灵的位置
@@ -26,15 +27,59 @@ void GameLayer::initBackground()
 
     // 把图片精灵放置在图层中
     this->addChild(pSprite, 0);
+=======
+    CCSprite* gameLayerBackground = CCSprite::create("GameLayer/GameSceneBackground.png");
+
+    // 设置图片精灵的位置
+    gameLayerBackground->setPosition(ccp(size.width/2, size.height/2));
+
+    // 把图片精灵放置在图层中
+    this->addChild(gameLayerBackground, 0);
+}
+
+void GameLayer::initTopBar()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    //Pause Button
+    CCMenuItemImage *pauseButtonImage = CCMenuItemImage::create(
+                                                          "GameLayer/Pause.png",
+                                                          "GameLayer/Pause_Pressed.png",
+                                                          this,
+                                                          menu_selector(GameLayer::pause));
+    pauseButtonImage -> setPosition( ccp(0, 0) );
+
+    CCMenu* pauseButton = CCMenu::create(pauseButtonImage, NULL);
+    pauseButton -> setPosition( ccp(size.width / 4, size.height - 50) );
+    this -> addChild(pauseButton, 1);
+
+    //Scores Label
+    // 创建图片精灵
+    CCSprite* scoresLabel = CCSprite::create("GameLayer/ScoresLabel.png");
+
+    // 设置图片精灵的位置
+    scoresLabel->setPosition(ccp(size.width*3/4, size.height - 50));
+
+    // 把图片精灵放置在图层中
+    this->addChild(scoresLabel, 1);
+>>>>>>> hst
 }
 
 // on "init" you need to initialize your instance
 bool GameLayer::init()
 {
     initBackground();
+<<<<<<< HEAD
     extraBall = NULL;
 
 
+=======
+    initTopBar();
+
+    extraBall = NULL;
+
+
+>>>>>>> hst
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -240,7 +285,13 @@ void GameLayer::doStep(float delta)
 
 
 
+<<<<<<< HEAD
     enemyPaddle->move(ball,extraBall);
+
+    avoidUnwantedSituation();
+=======
+    enemyPaddle->move(ball);
+>>>>>>> hst
 
     avoidUnwantedSituation();
 
@@ -303,8 +354,13 @@ void GameLayer::restartConfirm(){
 //        restartButton->setScale(0.4);
 //        this->addChild(restartButton,2,0);
 //        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+<<<<<<< HEAD
         CCMenuItemImage *restartButton = CCMenuItemImage::create( "restart.png",
 				  "restart.png",
+=======
+        CCMenuItemImage *restartButton = CCMenuItemImage::create( "GameLayer/restart.png",
+				  "GameLayer/restart.png",
+>>>>>>> hst
 				  this,
 				  menu_selector(GameLayer::restart));
         restartButton -> setPosition( ccp(0, 0) );
@@ -412,6 +468,7 @@ void GameLayer::restart(){
           myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
    }
 
+<<<<<<< HEAD
  }
 
 
@@ -422,6 +479,18 @@ void GameLayer::restart(){
  }
 
 
+=======
+ }
+
+
+ void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
+ {
+     b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
+     world->SetGravity(gravity);
+ }
+
+
+>>>>>>> hst
 
 
 
@@ -690,3 +759,11 @@ void GameLayer::extraBallTimer(){
 
 
 }
+<<<<<<< HEAD
+=======
+
+void GameLayer::pause()
+{
+    //Empty for the time being
+}
+>>>>>>> hst

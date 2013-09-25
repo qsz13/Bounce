@@ -13,8 +13,14 @@
 
 
 
+
+
 EnemyPaddle::EnemyPaddle():Paddle() {
+<<<<<<< HEAD
 	//paddleBodyDef.userData = enemyPaddle;
+=======
+	paddleBodyDef.userData = enemyPaddle;
+>>>>>>> hst
 	//velocity = 100;
 
 }
@@ -36,8 +42,13 @@ EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
 	// }
 	//  // else
 
+<<<<<<< HEAD
 		EnemyPaddle * enemyPaddle =new EnemyPaddle();
 		if(enemyPaddle && enemyPaddle->initWithFile("enemyPaddle.png")){
+=======
+		enemyPaddle =new EnemyPaddle();
+		if(enemyPaddle && enemyPaddle->initWithFile("GameLayer/enemyPaddle.png")){
+>>>>>>> hst
 				enemyPaddle->myInit();
 				enemyPaddle->autorelease();
 				return enemyPaddle;
@@ -70,6 +81,7 @@ void EnemyPaddle::setEnemyPaddleBody(b2Body* enemyPaddleBody){
 
 }
 
+<<<<<<< HEAD
 void EnemyPaddle::move(Ball *ball, Ball *extraBall){
 	CCPoint ballPosition;
 	if(extraBall != NULL){
@@ -121,5 +133,43 @@ void EnemyPaddle::move(Ball *ball, Ball *extraBall){
  //    	enemyPaddleBody->SetLinearVelocity(v);
 	// }
 	//this->setPosition(ccp(ballPosition.x,this->getPosition().y));
+=======
+void EnemyPaddle::move(Ball *ball){
+	CCPoint ballPosition = ball->getPosition();
 
+	int possibility = rand()%100;
+>>>>>>> hst
+
+	b2Vec2 v;
+	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
+		
+		if(possibility < 2){
+			 v = b2Vec2(0,0);
+		}
+		else if(possibility > 50){
+			 v = b2Vec2(-1000,0);
+		}
+		else{
+			 v = b2Vec2(-2000,0);
+		}
+		
+    	enemyPaddleBody->ApplyForceToCenter(v);
+	}
+	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
+				if(possibility < 2){
+			 v = b2Vec2(0,0);
+		}
+		else if(possibility > 80){
+			 v = b2Vec2(1000,0);
+		}
+		else{
+			 v = b2Vec2(2000,0);
+		}
+    	enemyPaddleBody->ApplyForceToCenter(v);
+	}
+	// else{
+	// 	 v = b2Vec2(0,0);
+ //    	enemyPaddleBody->SetLinearVelocity(v);
+	// }
+	//this->setPosition(ccp(ballPosition.x,this->getPosition().y));
 }
