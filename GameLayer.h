@@ -19,7 +19,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
-#include "ReverseItem.h"
+#include "ReverseXItem.h"
+#include "ReverseYItem.h"
 #include "DoubleItem.h"
 #include "Item.h"
 #include <list>
