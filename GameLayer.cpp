@@ -4,14 +4,23 @@
 using namespace cocos2d;
 using namespace CocosDenshion;
 
+GameLayer* GameLayer::layer;
+Ball* GameLayer::ball;
+Ball* GameLayer::ghostBall;
+MyPaddle* GameLayer::myPaddle;
+EnemyPaddle* GameLayer::enemyPaddle;
+
 CCScene* GameLayer::scene()
 {
     CCScene *scene = CCScene::create();
-    GameLayer *layer = GameLayer::create();
+    layer = GameLayer::create();
     scene->addChild(layer);
     return scene;
 }
 
+GameLayer* GameLayer::getLayer(){
+  return layer;
+}
 
 void GameLayer::initBackground()
 {
@@ -63,6 +72,8 @@ bool GameLayer::init()
 
     ghostBall = NULL;
     freezeMode = false;
+    gameIsPaused = false;
+    gameIsEnded = false;
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -70,26 +81,44 @@ bool GameLayer::init()
     }
 
 
-    if(SettingLayer::getControlMode()==SettingLayer::GRAVITY){
+    if(SettingLayer::getControlMode()==SettingLayer::GRAVITY) {
         setAccelerometerEnabled(true);
         setTouchEnabled(false);
 
     }
-    else //if(SettingLayer::getControlMode()==1||
-         //   SettingLayer::getControlMode()= 0;)
-    {
+    else {
         setTouchEnabled(true);
         setAccelerometerEnabled(false);
     }
 
 
-    gameIsPaused = false;
+
     winSize = CCDirector::sharedDirector()->getWinSize();
 
 
     b2Vec2 gravity(0.0f, 0.0f);
     world = new b2World(gravity);
 
+
+
+    buildGround();
+    buildBall();
+    buildMyPaddle();
+    buildEnemyPaddle();
+    restrictPaddleMovement();
+
+    schedule(schedule_selector(GameLayer::doStep));
+    schedule(schedule_selector(GameLayer::dropItem));
+    schedule(schedule_selector(GameLayer::itemIntersects));
+    schedule(schedule_selector(GameLayer::paddleTimer));
+    schedule(schedule_selector(GameLayer::ghostBallTimer));
+    schedule(schedule_selector(GameLayer::freezeTimer));
+
+    return true;
+}
+
+
+void GameLayer::buildGround(){
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
 
@@ -101,28 +130,22 @@ bool GameLayer::init()
     boxShapeDef.shape = &groundEdge;
 
      //wall definitions
-     //bottom
-    // groundEdge.Set(b2Vec2(0,0), b2Vec2(winSize.width /PTM_RATIO, 0));
-    // groundBody->CreateFixture(&boxShapeDef);
-
      // left
      groundEdge.Set(b2Vec2(0,0), b2Vec2(0,winSize.height/PTM_RATIO));
      groundBody->CreateFixture(&boxShapeDef);
-
-     // top
-//     groundEdge.Set(b2Vec2(0, winSize.height/PTM_RATIO),
-//     b2Vec2(winSize.width/PTM_RATIO, winSize.height/PTM_RATIO));
-//     groundBody->CreateFixture(&boxShapeDef);
 
      // right
      groundEdge.Set(b2Vec2(winSize.width/PTM_RATIO, winSize.height/PTM_RATIO),
      b2Vec2(winSize.width/PTM_RATIO, 0));
      groundBody->CreateFixture(&boxShapeDef);
 
+}
 
 
 
-    ball = Ball::getBall();
+
+void GameLayer::buildBall(){
+      ball = Ball::createBall();
     this->addChild(ball, 2,0);
     ball->setPosition(ccp(winSize.width/2,winSize.height/2));
 
@@ -149,38 +172,45 @@ bool GameLayer::init()
     b2Vec2 v = b2Vec2(ball->getVelocity().x,ball->getVelocity().y);
     ball->getBallBody()->SetLinearVelocity(v);
 
+}
 
 
-//my paddle;
-    myPaddle = MyPaddle::getMyPaddle();
+
+
+void GameLayer::buildMyPaddle(){
+
+  //my paddle;
+    myPaddle = MyPaddle::createMyPaddle();
     this->addChild(myPaddle,2);
     myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
 
 
 //my paddle body
     b2BodyDef myPaddleBodyDef;
-	myPaddleBodyDef.type = b2_dynamicBody;
-	myPaddleBodyDef.position.Set(myPaddle->getPosition().x/PTM_RATIO,myPaddle->getPosition().y/PTM_RATIO);
-	myPaddleBodyDef.userData = myPaddle;
-	myPaddle->setMyPaddleBody( world->CreateBody(&myPaddleBodyDef));
+  myPaddleBodyDef.type = b2_dynamicBody;
+  myPaddleBodyDef.position.Set(myPaddle->getPosition().x/PTM_RATIO,myPaddle->getPosition().y/PTM_RATIO);
+  myPaddleBodyDef.userData = myPaddle;
+  myPaddle->setMyPaddleBody( world->CreateBody(&myPaddleBodyDef));
 
 //my paddle fixture
-	b2FixtureDef myPaddleFixtureDef;
-	b2PolygonShape myPaddleShape;
-	myPaddleShape.SetAsBox(myPaddle->getWidth()/2/PTM_RATIO,myPaddle->getHeight()/2/PTM_RATIO);
-	myPaddleFixtureDef.shape = &myPaddleShape;
-	myPaddleFixtureDef.density = 10.0f;
-	myPaddleFixtureDef.friction = 0.4f;
-	myPaddleFixtureDef.restitution = 0.1f;
+  b2FixtureDef myPaddleFixtureDef;
+  b2PolygonShape myPaddleShape;
+  myPaddleShape.SetAsBox(myPaddle->getWidth()/2/PTM_RATIO,myPaddle->getHeight()/2/PTM_RATIO);
+  myPaddleFixtureDef.shape = &myPaddleShape;
+  myPaddleFixtureDef.density = 10.0f;
+  myPaddleFixtureDef.friction = 0.4f;
+  myPaddleFixtureDef.restitution = 0.1f;
 
-	myPaddleFixture = myPaddle->getMyPaddleBody()->CreateFixture(&myPaddleFixtureDef);
+  myPaddleFixture = myPaddle->getMyPaddleBody()->CreateFixture(&myPaddleFixtureDef);
+
+}
 
 
-
+void GameLayer::buildEnemyPaddle(){
 
 
 //enemy paddle;
-    enemyPaddle = EnemyPaddle::getEnemyPaddle();
+    enemyPaddle = EnemyPaddle::createEnemyPaddle();
     this->addChild(enemyPaddle,2);
     enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-150));
 
@@ -205,9 +235,12 @@ bool GameLayer::init()
     enemyPaddleFixture = enemyPaddle->getEnemyPaddleBody()->CreateFixture(&enemyPaddleFixtureDef);
 
 
+}
 
 
-//restrict paddle's movement
+
+void GameLayer::restrictPaddleMovement(){
+  //restrict paddle's movement
     b2PrismaticJointDef jointDef;
     b2Vec2 worldAxis(1.0f, 0.0f);
     jointDef.collideConnected =true;
@@ -217,22 +250,24 @@ bool GameLayer::init()
 
     jointDef.Initialize(enemyPaddle->getEnemyPaddleBody(), groundBody,
             enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
-       world->CreateJoint(&jointDef);
+    world->CreateJoint(&jointDef);
 
 
-
-
-
-
-    schedule(schedule_selector(GameLayer::doStep));
-    schedule(schedule_selector(GameLayer::dropItem));
-    schedule(schedule_selector(GameLayer::itemIntersects));
-    schedule(schedule_selector(GameLayer::paddleTimer));
-    schedule(schedule_selector(GameLayer::ghostBallTimer));
-    schedule(schedule_selector(GameLayer::freezeTimer));
-
-    return true;
 }
+
+Ball* GameLayer::getBall(){
+  return ball;
+}
+Ball* GameLayer::getGhostBall(){
+  return ghostBall;
+}
+MyPaddle* GameLayer::getMyPaddle(){
+  return myPaddle;
+}
+EnemyPaddle* GameLayer::getEnemyPaddle(){
+  return enemyPaddle;
+}
+
 
 
 
@@ -268,10 +303,7 @@ void GameLayer::doStep(float delta)
     }
 
 
-
     enemyPaddle->move(ball,ghostBall);
-
-    //avoidUnwantedSituation();
 
     avoidUnwantedSituation();
 
@@ -330,10 +362,7 @@ void GameLayer::doStep(float delta)
 
 void GameLayer::restartConfirm(){
     if(gameIsEnded){
-//        CCSprite *restartButton = CCSprite::create("restart.png");
-//        restartButton->setScale(0.4);
-//        this->addChild(restartButton,2,0);
-//        restartButton->setPosition(ccp(winSize.width/2,winSize.height/4));
+
         CCMenuItemImage *restartButton = CCMenuItemImage::create( "GameLayer/restart.png",
 				  "GameLayer/restart.png",
 				  this,
@@ -349,16 +378,8 @@ void GameLayer::restartConfirm(){
 
 
 void GameLayer::restart(){
-   //Item::itemNum = 0;
-
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
-
 }
-
-
-
-
-
 
 
  void GameLayer::ccTouchesBegan(CCSet *pTouches,CCEvent *event)
@@ -458,23 +479,23 @@ void GameLayer::dropItem(){
          if(drop ==0){
             int type= rand()%6;
             if(type == 0){
-            	item = EnlargeItem::getEnlargeItem();
+            	item = EnlargeItem::createEnlargeItem();
 
             }
             else if(type == 1){
-            	item = ReverseXItem::getReverseXItem();
+            	item = ReverseXItem::createReverseXItem();
             }
             else if(type == 2){
-              item = DoubleItem::getDoubleItem();
+              item = DoubleItem::createDoubleItem();
             }
             else if(type == 3){
-            	item = ReverseYItem::getReverseYItem();
+            	item = ReverseYItem::createReverseYItem();
             }
             else if(type == 4){
-              item = FreezeItem::getFreezeItem();
+              item = FreezeItem::createFreezeItem();
             }
             else if(type == 5){
-              item = ShortenItem::getShortenItem();
+              item = ShortenItem::createShortenItem();
             }
 
             int x=rand()%(int)winSize.width;
@@ -482,7 +503,6 @@ void GameLayer::dropItem(){
             item->setPosition(ccp(x,y));
             addChild(item,1,0);
             itemList.push_back(item);
-            //Item::itemNum++;
         }
     }
 }
@@ -571,13 +591,6 @@ void GameLayer::enlargePaddle(Ball* ball){
     }
   }
 }
-
-
-
-
-
-
-
 
 
 void GameLayer::shortenPaddle(Ball *ball){
@@ -673,8 +686,6 @@ void GameLayer::paddleTimer(){
 
   }
 
- // actionBy->autorelease();
-
 
 }
 
@@ -767,7 +778,7 @@ void GameLayer::avoidUnwantedSituation(){
 
 void GameLayer::doubleBall(){
   if(ghostBall == NULL){
-    ghostBall = Ball::getGhostBall();
+    ghostBall = Ball::createGhostBall();
   this->addChild(ghostBall, 2,0);
   ghostBall->setPosition(ccp(winSize.width/2,winSize.height/2));
 
@@ -815,19 +826,13 @@ void GameLayer::ghostBallTimer(){
 
   if(ghostBall != NULL){
       if(ghostBall->getFrameLasted() > 600){
-    	 // CCLOG("time out!!!");
       ghostBall->removeFromParentAndCleanup(true);
       ghostBall = NULL;
     }
     else{
       ghostBall->frameAddOne();
     }
-
-
   }
-
-
-
 
 }
 

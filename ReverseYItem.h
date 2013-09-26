@@ -15,7 +15,7 @@ class ReverseYItem :public Item{
 public:
 	ReverseYItem();
 	virtual ~ReverseYItem();
-	static ReverseYItem* getReverseYItem();
+	static ReverseYItem* createReverseYItem();
 };
 
 #endif /* REVERSEYITEM_H_ */

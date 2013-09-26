@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "Box2D.h"
+
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
@@ -24,6 +25,8 @@ public:
 	void setFrameLastedTo0();
 	int getFrameLasted();
 	void frameAddOne();
+
+
 protected:
 	b2BodyDef paddleBodyDef;
 	lengthType lengthState;

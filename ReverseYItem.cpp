@@ -15,7 +15,7 @@ ReverseYItem::~ReverseYItem() {
 	// TODO Auto-generated destructor stub
 }
 
-ReverseYItem* ReverseYItem::getReverseYItem(){
+ReverseYItem* ReverseYItem::createReverseYItem(){
 
 	ReverseYItem* reverseYItem =new ReverseYItem();
 	if(reverseYItem && reverseYItem->initWithFile("GameLayer/Items/reverseYItem.png")){

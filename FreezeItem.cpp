@@ -17,7 +17,7 @@ FreezeItem::~FreezeItem() {
 }
 
 
-FreezeItem* FreezeItem::getFreezeItem(){
+FreezeItem* FreezeItem::createFreezeItem(){
 
 	FreezeItem* freezeItem =new FreezeItem();
 	if(freezeItem && freezeItem->initWithFile("GameLayer/Items/freezeItem.png")){

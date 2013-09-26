@@ -25,22 +25,11 @@ EnemyPaddle::~EnemyPaddle() {
 	// TODO Auto-generated destructor stub
 }
 
-EnemyPaddle* EnemyPaddle::getEnemyPaddle(){
-	//  if(enemyPaddle != NULL)
-	//  {
-	// // 	//enemyPaddle->initWithFile("enemyPaddle.png");
-	// // 	//CCLOG("123123");
-	// // 	CCTexture2D * image = CCTextureCache::sharedTextureCache()->addImage("enemyPaddle.png");
-	// // 	enemyPaddle->setTexture(image);
-	// // 	CCLOG("set image");
-	// // 	return enemyPaddle;
-	 
-	// }
-	//  // else
+EnemyPaddle* EnemyPaddle::createEnemyPaddle(){
 
 		EnemyPaddle *enemyPaddle =new EnemyPaddle();
 		if(enemyPaddle && enemyPaddle->initWithFile("GameLayer/enemyPaddle.png")){
-				enemyPaddle->myInit();
+				//enemyPaddle->myInit();
 				enemyPaddle->autorelease();
 				return enemyPaddle;
 		}

@@ -13,11 +13,12 @@ using namespace cocos2d;
 // #define MY_PADDLE_SCALE_X 0.3
 // #define MY_PADDLE_SCALE_Y 0.5
 
+
 class MyPaddle : public Paddle {
 public:
 
 
-	static MyPaddle* getMyPaddle();
+	static MyPaddle* createMyPaddle();
 
 	void myInit();
 	float getWidth();

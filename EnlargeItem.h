@@ -17,7 +17,7 @@ class EnlargeItem : public Item {
 public:
 	EnlargeItem();
 	virtual ~EnlargeItem();
-	static EnlargeItem* getEnlargeItem();
+	static EnlargeItem* createEnlargeItem();
 
 
 

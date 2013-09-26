@@ -18,7 +18,7 @@ class DoubleItem :public Item {
 public:
 	DoubleItem();
 	virtual ~DoubleItem();
-	static DoubleItem* getDoubleItem();
+	static DoubleItem* createDoubleItem();
 };
 
 #endif /* DOUBLEITEM_H_ */

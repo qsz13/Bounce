@@ -16,7 +16,7 @@ ShortenItem::~ShortenItem() {
 	// TODO Auto-generated destructor stub
 }
 
-ShortenItem* ShortenItem::getShortenItem(){
+ShortenItem* ShortenItem::createShortenItem(){
 
 	ShortenItem* shortenItem =new ShortenItem();
 	if(shortenItem && shortenItem->initWithFile("GameLayer/Items/shortenItem.png")){

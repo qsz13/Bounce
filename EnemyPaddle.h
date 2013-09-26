@@ -19,7 +19,7 @@ using namespace cocos2d;
 class EnemyPaddle :public Paddle{
 public:
 
-	static EnemyPaddle* getEnemyPaddle();
+	static EnemyPaddle* createEnemyPaddle();
 	void myInit();
 	float getWidth();
 	float getHeight();

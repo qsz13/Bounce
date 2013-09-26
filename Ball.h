@@ -25,8 +25,8 @@ class Ball :public CCSprite{
 public:
 	Ball();
 	virtual ~Ball();
-	static Ball* getBall();
-	static Ball* getGhostBall();
+	static Ball* createBall();
+	static Ball* createGhostBall();
 	void myInit();
 	void createBody(b2World &world);
     b2Body* getBody();

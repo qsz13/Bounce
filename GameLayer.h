@@ -31,54 +31,57 @@ using namespace cocos2d;
 
 class GameLayer: public CCLayer {
 public:
+
+
+
+
 	virtual bool init();
 	static CCScene* scene();
-	//void menuCloseCallback(CCObject* pSender);
-
 	CREATE_FUNC (GameLayer);
+	static GameLayer *getLayer();
+
+
 	void doStep(float delta);
 
 	CCSize winSize;
+
+
+	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+	void restartConfirm();
+	void didAccelerate(CCAcceleration* pAccelerationValue);
+
+	void restart();
+	void itemIntersects();
+	void dropItem();
+	Ball* getBall();
+	Ball* getGhostBall();
+	MyPaddle* getMyPaddle();
+	EnemyPaddle* getEnemyPaddle();
+
+
+
+
+private:
+	static GameLayer *layer;
+	static Ball *ball;
+	static Ball *ghostBall;
+	static MyPaddle *myPaddle;
+	static EnemyPaddle* enemyPaddle;
 
 	b2World *world;
 	b2Body *groundBody;
 	b2Fixture *bottomFixture;
 	b2Fixture *ballFixture;
-
-	Ball *ball;
-	Ball *ghostBall;
-	MyPaddle *myPaddle;
-	EnemyPaddle *enemyPaddle;
-
-	// b2Body *myPaddleBody;
-	// b2Body *enemyPaddleBody;
-
 	b2Fixture *myPaddleFixture;
 	b2Fixture *enemyPaddleFixture;
-
 	b2MouseJoint *_mouseJoint;
-	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-	// bool MouseDown(const b2Vec2& p);
-	// void MouseMove(const b2Vec2& p);
-	// void MouseUp(const b2Vec2& p);
-	void restartConfirm();
-	void didAccelerate(CCAcceleration* pAccelerationValue);
 
-	void restart();
-	static void* ThreadFunction(void* arg);
-	void CreateThread();
-	void itemIntersects();
-	void dropItem();
-
-private:
 	bool freezeMode;
 	void initBackground();
 	void initTopBar();
-
 	void pause();
-
 	bool gameIsPaused;
 	bool gameIsEnded;
 	Item* item;
@@ -94,6 +97,13 @@ private:
 	void freezeTimer();
 	void shortenPaddle(Ball *ball);
 	b2Vec2 velocityBeforeFrozen;
+
+	void buildBall();
+	void buildMyPaddle();
+	void buildEnemyPaddle();
+	void buildGround();
+	void restrictPaddleMovement();
+
 };
 
 #endif /* GAMELAYER_H_ */

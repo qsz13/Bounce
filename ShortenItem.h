@@ -17,7 +17,7 @@ class ShortenItem : public Item{
 public:
 	ShortenItem();
 	virtual ~ShortenItem();
-	static ShortenItem* getShortenItem();
+	static ShortenItem* createShortenItem();
 
 
 

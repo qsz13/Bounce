@@ -16,7 +16,7 @@ DoubleItem::~DoubleItem() {
 }
 
 
-DoubleItem* DoubleItem::getDoubleItem(){
+DoubleItem* DoubleItem::createDoubleItem(){
 
 	DoubleItem* doubleItem =new DoubleItem();
 	if(doubleItem && doubleItem->initWithFile("GameLayer/Items/doubleItem.png")){

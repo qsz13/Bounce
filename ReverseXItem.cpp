@@ -17,7 +17,7 @@ ReverseXItem::~ReverseXItem() {
 }
 
 
-ReverseXItem* ReverseXItem::getReverseXItem(){
+ReverseXItem* ReverseXItem::createReverseXItem(){
 
 	ReverseXItem* reverseXItem =new ReverseXItem();
 	if(reverseXItem && reverseXItem->initWithFile("GameLayer/Items/reverseXItem.png")){

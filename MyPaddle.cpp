@@ -20,7 +20,7 @@ MyPaddle::~MyPaddle()
 	// TODO Auto-generated destructor stub
 }
 
-MyPaddle* MyPaddle::getMyPaddle(){
+MyPaddle* MyPaddle::createMyPaddle(){
 	 // if(myPaddle != NULL)
 	// {
 	// 	CCTexture2D * image = CCTextureCache::sharedTextureCache()->addImage("myPaddle.png");

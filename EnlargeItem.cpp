@@ -16,7 +16,7 @@ EnlargeItem::~EnlargeItem() {
 	// TODO Auto-generated destructor stub
 }
 
-EnlargeItem* EnlargeItem::getEnlargeItem(){
+EnlargeItem* EnlargeItem::createEnlargeItem(){
 
 	EnlargeItem* enlargeItem =new EnlargeItem();
 	if(enlargeItem && enlargeItem->initWithFile("GameLayer/Items/enlargeItem.png")){

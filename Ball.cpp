@@ -24,7 +24,7 @@ Ball::~Ball() {
 	// TODO Auto-generated destructor stub
 }
 
-Ball* Ball::getBall(){
+Ball* Ball::createBall(){
 
 		Ball* ball = new Ball();
 
@@ -39,7 +39,7 @@ Ball* Ball::getBall(){
 
 }
 
-Ball* Ball::getGhostBall(){
+Ball* Ball::createGhostBall(){
 
 	Ball* ball = new Ball();
 

@@ -16,7 +16,7 @@ class ReverseXItem : public Item{
 public:
 	ReverseXItem();
 	virtual ~ReverseXItem();
-	static ReverseXItem* getReverseXItem();
+	static ReverseXItem* createReverseXItem();
 	
 };
 

@@ -15,7 +15,7 @@ public:
 	FreezeItem();
 	virtual ~FreezeItem();
 
-	static FreezeItem* getFreezeItem();
+	static FreezeItem* createFreezeItem();
 };
 
 #endif /* FreezeItem_H_ */
