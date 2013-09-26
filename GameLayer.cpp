@@ -502,9 +502,11 @@ void GameLayer::itemIntersects() {
 				if ((*it)->getFunction() == "enlarge") {
 					enlargePaddle(ball);
 				} else if ((*it)->getFunction() == "reverseX") {
-					reverseBallVelocity();
-				} else if((*it)->getFunction() == "double"){
-          doubleBall();
+					reverseBallXVelocity();
+				}else if ((*it)->getFunction() == "reverseY") {
+          reverseBallYVelocity();
+        } else if((*it)->getFunction() == "double"){
+					doubleBall();
 				}
 
 				((*it)->removeFromParentAndCleanup(true));
@@ -598,11 +600,21 @@ void GameLayer::paddleTimer(){
 }
 
 
-void GameLayer::reverseBallVelocity(){
+void GameLayer::reverseBallXVelocity(){
     b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
     v.x = - v.x;
     CCLOG("reverse");
     ball->getBallBody()->SetLinearVelocity(v);
+
+}
+
+void GameLayer::reverseBallYVelocity(){
+
+  b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+    v.y = - v.y;
+    CCLOG("reverse");
+    ball->getBallBody()->SetLinearVelocity(v);
+
 
 }
 

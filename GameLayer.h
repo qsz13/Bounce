@@ -83,7 +83,8 @@ private:
 	void enlargePaddle(Ball *ball);
 	void paddleTimer();
 	void avoidUnwantedSituation();
-	void reverseBallVelocity();
+	void reverseBallXVelocity();
+	void reverseBallYVelocity();
 	void doubleBall();
 	void extraBallTimer();
 };
