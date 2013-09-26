@@ -271,7 +271,7 @@ void GameLayer::doStep(float delta)
 
     enemyPaddle->move(ball,ghostBall);
 
-    avoidUnwantedSituation();
+    //avoidUnwantedSituation();
 
     avoidUnwantedSituation();
 
@@ -716,7 +716,7 @@ void GameLayer::avoidUnwantedSituation(){
      }
     }
 
-    else if(bs > 225){
+    if(bs > 1000){
     	CCLOG("fast,%f,%f",bv.x,bv.y);
     	b2Vec2 *bf = new b2Vec2(-bv.x,-bv.y);
 
