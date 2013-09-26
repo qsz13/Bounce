@@ -26,12 +26,6 @@ Ball::~Ball() {
 
 Ball* Ball::getBall(){
 
-//	if(ball != NULL)
-//	{
-//		return ball;
-//	}
-//	else
-//	{
 		Ball* ball = new Ball();
 
 		if (ball && ball->initWithFile("GameLayer/ball.png"))
@@ -42,7 +36,23 @@ Ball* Ball::getBall(){
 		}
 			CC_SAFE_DELETE(ball);
 			return NULL;
-	//}
+
+}
+
+Ball* Ball::getGhostBall(){
+
+	Ball* ball = new Ball();
+
+	if (ball && ball->initWithFile("GameLayer/ghostBall.png"))
+	{
+		ball->myInit();
+		//ball->autorelease();
+		return ball;
+	}
+		CC_SAFE_DELETE(ball);
+		return NULL;
+
+
 }
 
 

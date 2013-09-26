@@ -596,10 +596,9 @@ void GameLayer::shortenPaddle(Ball *ball){
         enemyPaddle->setLengthState(Paddle::normalPaddle);
       }
     }
-
-
-    else if(v.y<0) {
-
+  }
+  else if(v.y<0) {
+      CCLOG("123123");
       if(myRect.size.width >= myPaddle->getWidth()){
         myPaddle->runAction(actionBy);
         myPaddle->setFrameLastedTo0();
@@ -611,7 +610,6 @@ void GameLayer::shortenPaddle(Ball *ball){
         }
       }
     }
-  }
 }
 
 
@@ -794,7 +792,7 @@ void GameLayer::avoidUnwantedSituation(){
 
 void GameLayer::doubleBall(){
   if(ghostBall == NULL){
-    ghostBall = Ball::getBall();
+    ghostBall = Ball::getGhostBall();
   this->addChild(ghostBall, 2,0);
   ghostBall->setPosition(ccp(winSize.width/2,winSize.height/2));
 
@@ -828,8 +826,8 @@ void GameLayer::freezeBall(){
   if(!freezeMode){
     b2Vec2 bv = ball->getBallBody()->GetLinearVelocity();
     velocityBeforeFrozen = bv;
-  bv.x = 0.2 *bv.x;
-  bv.y = 0.2*bv.y;
+  bv.x = 0.2 * bv.x;
+  bv.y = 0.2 * bv.y;
   ball->getBallBody()->SetLinearVelocity(bv);
   freezeMode = true;
   }
