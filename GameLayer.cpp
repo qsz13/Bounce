@@ -716,7 +716,7 @@ void GameLayer::avoidUnwantedSituation(){
      }
     }
 
-    else if(bs > 1000){
+    else if(bs > 225){
     	CCLOG("fast,%f,%f",bv.x,bv.y);
     	b2Vec2 *bf = new b2Vec2(-bv.x,-bv.y);
 
@@ -866,7 +866,7 @@ void GameLayer::freezeTimer(){
     	b2Vec2 currentVelocity = ball->getBallBody()->GetLinearVelocity();
     	float previousSpeed = velocityBeforeFrozen.x*velocityBeforeFrozen.x + velocityBeforeFrozen.y*velocityBeforeFrozen.y;
     	float currentSpeed = currentVelocity.x*currentVelocity.x + currentVelocity.y*currentVelocity.y;
-    	float rate = previousSpeed/currentSpeed;
+    	float rate = sqrt(previousSpeed/currentSpeed);
     	b2Vec2 newVelocity= ball->getBallBody()->GetLinearVelocity();
     	newVelocity.x = currentVelocity.x*rate;
     	newVelocity.y = currentVelocity.y*rate;
