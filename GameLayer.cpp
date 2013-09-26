@@ -39,7 +39,7 @@ void GameLayer::initTopBar()
                                                           this,
                                                           menu_selector(GameLayer::pause));
     pauseButtonImage -> setPosition( ccp(0, 0) );
-
+    //CCLOG("%f",pauseButtonImage->getContentSize().height);
     CCMenu* pauseButton = CCMenu::create(pauseButtonImage, NULL);
     pauseButton -> setPosition( ccp(size.width / 4, size.height - 50) );
     this -> addChild(pauseButton, 3);
@@ -277,7 +277,7 @@ void GameLayer::doStep(float delta)
 
 	if(!gameIsEnded){
 		//Ball *ball= (Ball*)this->getChildByTag(0);
-        if(ball->getPosition().y<0){
+        if(ball->getPosition().y<-ball->getHeight()/2){
 
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
@@ -289,7 +289,7 @@ void GameLayer::doStep(float delta)
             	ghostBall = NULL;
             }
         }
-        else if(ball->getPosition().y > winSize.height){
+        else if(ball->getPosition().y > winSize.height-100 + ball->getHeight()/2){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
@@ -302,7 +302,7 @@ void GameLayer::doStep(float delta)
         }
 
         if(ghostBall!=NULL){
-            if(ghostBall->getPosition().y<0){
+            if(ghostBall->getPosition().y<ball->getHeight()/2){
 
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
@@ -310,7 +310,7 @@ void GameLayer::doStep(float delta)
             gameIsEnded = true;
             ball->removeFromParentAndCleanup(true);
         }
-        else if(ghostBall->getPosition().y > winSize.height){
+        else if(ghostBall->getPosition().y > winSize.height-100+ball->getHeight()/2){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
@@ -540,55 +540,106 @@ void GameLayer::itemIntersects() {
 
 //-------------------------- can be put in paddle class
 void GameLayer::enlargePaddle(Ball* ball){
-    CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
-    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
-    CCRect myRect = myPaddle->boundingBox();
-    CCRect enemyRect = enemyPaddle->boundingBox();
-    if(v.y<0){
-
-       if(enemyPaddle->getLengthState() == Paddle::shortPaddle
-    		   && enemyRect.size.width <= enemyPaddle->getWidth()
-    		   ){
-        enemyPaddle->toggleLengthState();
-        enemyPaddle->runAction(actionBy);
-
+  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
+  b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+  CCRect myRect = myPaddle->boundingBox();
+  CCRect enemyRect = enemyPaddle->boundingBox();
+  if(v.y<0){
+    if(enemyRect.size.width <= enemyPaddle->getWidth()){
+      enemyPaddle->runAction(actionBy);
+      if(enemyPaddle->getLengthState() == Paddle::shortPaddle){
+        enemyPaddle->setLengthState(Paddle::normalPaddle);
       }
-      else{
-
+      else if(enemyPaddle->getLengthState() == Paddle::normalPaddle){
+        enemyPaddle->setLengthState(Paddle::longPaddle);
       }
     }
-    else if(v.y>0) {
-
-      if(myPaddle->getLengthState() == Paddle::shortPaddle
-    		  && myRect.size.width <= myPaddle->getWidth()
-    		  ){
-             myPaddle->toggleLengthState();
-             myPaddle->runAction(actionBy);
+  }
 
 
+
+  else if(v.y>0) {
+
+    if(myRect.size.width <= myPaddle->getWidth()){
+      myPaddle->runAction(actionBy);
+      if(myPaddle->getLengthState() == Paddle::shortPaddle){
+        myPaddle->setLengthState(Paddle::normalPaddle);
       }
-      else{
-
-        //increase time
+      else if(myPaddle->getLengthState() == Paddle::normalPaddle){
+        myPaddle->setLengthState(Paddle::longPaddle);
       }
-
-     //actionBy release
-
-
-
     }
-
+  }
 }
+
+
+
+
+
+
+
+
+
+void GameLayer::shortenPaddle(Ball *ball){
+  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+  b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+  CCRect myRect = myPaddle->boundingBox();
+  CCRect enemyRect = enemyPaddle->boundingBox();
+  if(v.y>0){
+    if(enemyRect.size.width >= enemyPaddle->getWidth()){
+      enemyPaddle->runAction(actionBy);
+      enemyPaddle->setFrameLastedTo0();
+      if(enemyPaddle->getLengthState() == Paddle::normalPaddle){
+        enemyPaddle->setLengthState(Paddle::shortPaddle);
+      }
+      else if(enemyPaddle->getLengthState() == Paddle::longPaddle){
+        enemyPaddle->setLengthState(Paddle::normalPaddle);
+      }
+    }
+
+
+    else if(v.y<0) {
+
+      if(myRect.size.width >= myPaddle->getWidth()){
+        myPaddle->runAction(actionBy);
+        myPaddle->setFrameLastedTo0();
+        if(myPaddle->getLengthState() == Paddle::normalPaddle){
+          myPaddle->setLengthState(Paddle::shortPaddle);
+        }
+        else if(myPaddle->getLengthState() == Paddle::longPaddle){
+          myPaddle->setLengthState(Paddle::normalPaddle);
+        }
+      }
+    }
+  }
+}
+
+
+
+
 
 
 void GameLayer::paddleTimer(){
 
   if(myPaddle->getLengthState() == Paddle::longPaddle){
-     CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+    CCActionInterval*  shortenActionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
     if(myPaddle->getFrameLasted() > 600){
       myPaddle->setFrameLastedTo0();
-      myPaddle->toggleLengthState();
-      myPaddle->runAction(actionBy);
+      myPaddle->setLengthState(Paddle::normalPaddle);
+      myPaddle->runAction(shortenActionBy);
+    }
+    else{
+      myPaddle->frameAddOne();
+
+    }
+
+  }
+  else if(myPaddle->getLengthState() == Paddle::shortPaddle){
+    CCActionInterval*  enlargeActionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
+    if(myPaddle->getFrameLasted() > 600){
+      myPaddle->setFrameLastedTo0();
+      myPaddle->setLengthState(Paddle::normalPaddle);
+      myPaddle->runAction(enlargeActionBy);
     }
     else{
       myPaddle->frameAddOne();
@@ -598,11 +649,24 @@ void GameLayer::paddleTimer(){
   }
 
   if(enemyPaddle->getLengthState() == Paddle::longPaddle){
-     CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+    CCActionInterval*  shortenActionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
     if(enemyPaddle->getFrameLasted() > 600){
       enemyPaddle->setFrameLastedTo0();
-      enemyPaddle->toggleLengthState();
-      enemyPaddle->runAction(actionBy);
+      enemyPaddle->setLengthState(Paddle::normalPaddle);
+      enemyPaddle->runAction(shortenActionBy);
+    }
+    else{
+      enemyPaddle->frameAddOne();
+
+    }
+
+  }
+  else if(enemyPaddle->getLengthState() == Paddle::shortPaddle){
+    CCActionInterval*  enlargeActionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
+    if(enemyPaddle->getFrameLasted() > 600){
+      enemyPaddle->setFrameLastedTo0();
+      enemyPaddle->setLengthState(Paddle::normalPaddle);
+      enemyPaddle->runAction(enlargeActionBy);
     }
     else{
       enemyPaddle->frameAddOne();
@@ -799,9 +863,15 @@ void GameLayer::ghostBallTimer(){
 void GameLayer::freezeTimer(){
   if(freezeMode){
     if(ball->getFrozenFrameLasted() > 300){
-     
-      ball->getBallBody()->SetLinearVelocity(velocityBeforeFrozen);
-      freezeMode = false;
+    	b2Vec2 currentVelocity = ball->getBallBody()->GetLinearVelocity();
+    	float previousSpeed = velocityBeforeFrozen.x*velocityBeforeFrozen.x + velocityBeforeFrozen.y*velocityBeforeFrozen.y;
+    	float currentSpeed = currentVelocity.x*currentVelocity.x + currentVelocity.y*currentVelocity.y;
+    	float rate = previousSpeed/currentSpeed;
+    	b2Vec2 newVelocity= ball->getBallBody()->GetLinearVelocity();
+    	newVelocity.x = currentVelocity.x*rate;
+    	newVelocity.y = currentVelocity.y*rate;
+    	ball->getBallBody()->SetLinearVelocity(newVelocity);
+    	freezeMode = false;
     }
     else{
       ball->frozenFrameAddOne();
@@ -812,46 +882,6 @@ void GameLayer::freezeTimer(){
 }
 
 
-void GameLayer::shortenPaddle(Ball *ball){
-  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
-    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
-    CCRect myRect = myPaddle->boundingBox();
-    CCRect enemyRect = enemyPaddle->boundingBox();
-    if(v.y<0){
-
-       if(enemyPaddle->getLengthState() == Paddle::shortPaddle
-           && enemyRect.size.width <= enemyPaddle->getWidth()
-           ){
-        enemyPaddle->toggleLengthState();
-        enemyPaddle->runAction(actionBy);
-
-      }
-      else{
-
-      }
-    }
-    else if(v.y>0) {
-
-      if(myPaddle->getLengthState() == Paddle::shortPaddle
-          && myRect.size.width <= myPaddle->getWidth()
-          ){
-             myPaddle->toggleLengthState();
-             myPaddle->runAction(actionBy);
-
-
-      }
-      else{
-
-        //increase time
-      }
-
-     //actionBy release
-
-
-
-    }
-
-}
 
 
 
