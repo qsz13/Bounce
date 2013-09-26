@@ -17,6 +17,7 @@ Ball::Ball() {
 	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
 
 	frameLasted = 0;
+	frozenFrameLasted = 0;
 }
 
 Ball::~Ball() {
@@ -99,4 +100,15 @@ int Ball::getPriority(){
 	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
 	priority += ballBody->GetLinearVelocity().y;
 	return priority;
+}
+
+
+ void Ball::frozenFrameAddOne(){
+	 frozenFrameLasted++;
+ }
+int Ball::getFrozenFrameLasted(){
+	return frozenFrameLasted;
+}
+void Ball::setFrozenFrameTo0(){
+	frozenFrameLasted = 0;
 }

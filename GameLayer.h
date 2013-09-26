@@ -23,6 +23,8 @@
 #include "ReverseYItem.h"
 #include "DoubleItem.h"
 #include "Item.h"
+#include "FreezeItem.h"
+#include "ShortenItem.h"
 #include <list>
 #define PTM_RATIO 32.0
 using namespace cocos2d;
@@ -44,7 +46,7 @@ public:
 	b2Fixture *ballFixture;
 
 	Ball *ball;
-	Ball *extraBall;
+	Ball *ghostBall;
 	MyPaddle *myPaddle;
 	EnemyPaddle *enemyPaddle;
 
@@ -71,6 +73,7 @@ public:
 	void dropItem();
 
 private:
+	bool freezeMode;
 	void initBackground();
 	void initTopBar();
 
@@ -86,7 +89,11 @@ private:
 	void reverseBallXVelocity();
 	void reverseBallYVelocity();
 	void doubleBall();
-	void extraBallTimer();
+	void ghostBallTimer();
+	void freezeBall();
+	void freezeTimer();
+	void shortenPaddle(Ball *ball);
+	b2Vec2 velocityBeforeFrozen;
 };
 
 #endif /* GAMELAYER_H_ */

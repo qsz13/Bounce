@@ -42,7 +42,7 @@ void GameLayer::initTopBar()
 
     CCMenu* pauseButton = CCMenu::create(pauseButtonImage, NULL);
     pauseButton -> setPosition( ccp(size.width / 4, size.height - 50) );
-    this -> addChild(pauseButton, 1);
+    this -> addChild(pauseButton, 3);
 
     //Scores Label
     // 创建图片精灵
@@ -52,7 +52,7 @@ void GameLayer::initTopBar()
     scoresLabel->setPosition(ccp(size.width*3/4, size.height - 50));
 
     // 把图片精灵放置在图层中
-    this->addChild(scoresLabel, 1);
+    this->addChild(scoresLabel, 3);
 }
 
 // on "init" you need to initialize your instance
@@ -61,8 +61,8 @@ bool GameLayer::init()
     initBackground();
     initTopBar();
 
-    extraBall = NULL;
-
+    ghostBall = NULL;
+    freezeMode = false;
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -123,7 +123,7 @@ bool GameLayer::init()
 
 
     ball = Ball::getBall();
-    this->addChild(ball, 1,0);
+    this->addChild(ball, 2,0);
     ball->setPosition(ccp(winSize.width/2,winSize.height/2));
 
     //ball body
@@ -153,7 +153,7 @@ bool GameLayer::init()
 
 //my paddle;
     myPaddle = MyPaddle::getMyPaddle();
-    this->addChild(myPaddle,1);
+    this->addChild(myPaddle,2);
     myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
 
 
@@ -181,7 +181,7 @@ bool GameLayer::init()
 
 //enemy paddle;
     enemyPaddle = EnemyPaddle::getEnemyPaddle();
-    this->addChild(enemyPaddle,1);
+    this->addChild(enemyPaddle,2);
     enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-150));
 
 
@@ -228,7 +228,8 @@ bool GameLayer::init()
     schedule(schedule_selector(GameLayer::dropItem));
     schedule(schedule_selector(GameLayer::itemIntersects));
     schedule(schedule_selector(GameLayer::paddleTimer));
-    schedule(schedule_selector(GameLayer::extraBallTimer));
+    schedule(schedule_selector(GameLayer::ghostBallTimer));
+    schedule(schedule_selector(GameLayer::freezeTimer));
 
     return true;
 }
@@ -268,14 +269,14 @@ void GameLayer::doStep(float delta)
 
 
 
-    enemyPaddle->move(ball,extraBall);
+    enemyPaddle->move(ball,ghostBall);
 
     avoidUnwantedSituation();
 
     avoidUnwantedSituation();
 
 	if(!gameIsEnded){
-		Ball *ball= (Ball*)this->getChildByTag(0);
+		//Ball *ball= (Ball*)this->getChildByTag(0);
         if(ball->getPosition().y<0){
 
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
@@ -283,9 +284,9 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
             ball->removeFromParentAndCleanup(true);
-            if(extraBall!=NULL){
-            	extraBall->removeFromParentAndCleanup(true);
-            	extraBall = NULL;
+            if(ghostBall!=NULL){
+            	ghostBall->removeFromParentAndCleanup(true);
+            	ghostBall = NULL;
             }
         }
         else if(ball->getPosition().y > winSize.height){
@@ -294,14 +295,14 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
            ball->removeFromParentAndCleanup(true);
-           if(extraBall!=NULL){
-               extraBall->removeFromParentAndCleanup(true);
-               extraBall = NULL;
+           if(ghostBall!=NULL){
+               ghostBall->removeFromParentAndCleanup(true);
+               ghostBall = NULL;
            }
         }
 
-        if(extraBall!=NULL){
-            if(extraBall->getPosition().y<0){
+        if(ghostBall!=NULL){
+            if(ghostBall->getPosition().y<0){
 
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
@@ -309,7 +310,7 @@ void GameLayer::doStep(float delta)
             gameIsEnded = true;
             ball->removeFromParentAndCleanup(true);
         }
-        else if(extraBall->getPosition().y > winSize.height){
+        else if(ghostBall->getPosition().y > winSize.height){
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
@@ -353,9 +354,6 @@ void GameLayer::restart(){
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
 
 }
-
-
-
 
 
 
@@ -458,7 +456,7 @@ void GameLayer::dropItem(){
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
          if(drop ==0){
-            int type= rand()%4;
+            int type= rand()%6;
             if(type == 0){
             	item = EnlargeItem::getEnlargeItem();
 
@@ -471,6 +469,12 @@ void GameLayer::dropItem(){
             }
             else if(type == 3){
             	item = ReverseYItem::getReverseYItem();
+            }
+            else if(type == 4){
+              item = FreezeItem::getFreezeItem();
+            }
+            else if(type == 5){
+              item = ShortenItem::getShortenItem();
             }
 
             int x=rand()%(int)winSize.width;
@@ -493,11 +497,20 @@ void GameLayer::itemIntersects() {
 		for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();) {
 
 			(*it)->frameAddOne();
+
+      bool exrtaBallIntersects;
+    if(ghostBall != NULL){
+        exrtaBallIntersects = (*it)->rect().intersectsRect(ghostBall->rect());
+    }
+    else{
+      exrtaBallIntersects = false;
+    }
+
+
 			if ((*it)->getFrameLasted() > 600) {
-				CCLOG("remove");
 				((*it)->removeFromParentAndCleanup(true));
 				it = itemList.erase(it);
-			} else if ((*it)->rect().intersectsRect(ball->rect()) && (*it)->getFrameLasted()>10) {
+			} else if ((*it)->rect().intersectsRect(ball->rect())&& (*it)->getFrameLasted()>20) {
 
 				if ((*it)->getFunction() == "enlarge") {
 					enlargePaddle(ball);
@@ -507,7 +520,11 @@ void GameLayer::itemIntersects() {
           reverseBallYVelocity();
         } else if((*it)->getFunction() == "double"){
 					doubleBall();
-				}
+				} else if((*it)->getFunction() == "freeze"){
+          freezeBall();
+        } else if((*it)->getFunction() == "shorten"){
+          shortenPaddle(ball);
+        }
 
 				((*it)->removeFromParentAndCleanup(true));
 				it = itemList.erase(it);
@@ -622,26 +639,63 @@ void GameLayer::reverseBallYVelocity(){
 //===============================================================================
 
 void GameLayer::avoidUnwantedSituation(){
-    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
-    float s = v.x*v.x + v.y*v.y;
+    b2Vec2 bv = ball->getBallBody()->GetLinearVelocity();
 
-    if(v.y*v.y  < s/4){
-    	if(v.y < 0){
-        	v.y = -sqrt(s)/2;
-    	}
-    	else{
-    		v.y = sqrt(s)/2;
-    	}
+    float bs = bv.x*bv.x + bv.y*bv.y;
 
-    	if(v.x < 0){
-    		v.x = -sqrt(s-v.y*v.y);
-    	}
-    	else{
-    		v.x = sqrt(s-v.y*v.y);
-    	}
-
-
+    if(!freezeMode){
+      if(bs < 225){
+      CCLOG("slow");
+      b2Vec2 *bf = new b2Vec2(bv.x,bv.y);
+       //v.y *= 1000;
+       ball->getBallBody()->ApplyForceToCenter(*bf);
+     }
     }
+
+    else if(bs > 1000){
+    	CCLOG("fast,%f,%f",bv.x,bv.y);
+    	b2Vec2 *bf = new b2Vec2(-bv.x,-bv.y);
+
+    	ball->getBallBody()->ApplyForceToCenter(*bf);
+    }
+
+    if(ghostBall != NULL){
+    	b2Vec2 gv = ghostBall->getBallBody()->GetLinearVelocity();
+    	float gs = gv.x*gv.x + gv.y*gv.y;
+    	if(gs < 225){
+			CCLOG("slow");
+			b2Vec2 *gf = new b2Vec2(gv.x,gv.y);
+			 //v.y *= 1000;
+			ghostBall->getBallBody()->ApplyForceToCenter(*gf);
+		}
+
+		else if(bs > 1000){
+			CCLOG("fast,%f,%f",gv.x,gv.y);
+			b2Vec2 *gf = new b2Vec2(-gv.x,-gv.y);
+
+			ghostBall->getBallBody()->ApplyForceToCenter(*gf);
+		  }
+    }
+
+//    if(v.y*v.y  < s/4){
+//    	if(v.y < 0){
+//        	v.y = -sqrt(s)/2;
+//    	}
+//    	else{
+//    		v.y = sqrt(s)/2;
+//    	}
+//
+//    	if(v.x < 0){
+//    		v.x = -sqrt(s-v.y*v.y);
+//    	}
+//    	else{
+//    		v.x = sqrt(s-v.y*v.y);
+//    	}
+//
+//
+//    }
+//
+//    ball->getBallBody()->SetLinearVelocity(v);
 
 
     //if(s > )
@@ -669,28 +723,28 @@ void GameLayer::avoidUnwantedSituation(){
 //            		(v.x = sqrt(s-v.y*v.y));
 //            	}
 //    }
-    ball->getBallBody()->SetLinearVelocity(v);
+
 
 }
 
 
 void GameLayer::doubleBall(){
-  if(extraBall == NULL){
-    extraBall = Ball::getBall();
-  this->addChild(extraBall, 1,0);
-  extraBall->setPosition(ccp(winSize.width/2,winSize.height/2));
+  if(ghostBall == NULL){
+    ghostBall = Ball::getBall();
+  this->addChild(ghostBall, 2,0);
+  ghostBall->setPosition(ccp(winSize.width/2,winSize.height/2));
 
   b2BodyDef ballBodyDef;
     ballBodyDef.type = b2_dynamicBody;
-    ballBodyDef.position.Set(extraBall->getPosition().x/PTM_RATIO, extraBall->getPosition().y/PTM_RATIO);
-    ballBodyDef.userData = extraBall;
+    ballBodyDef.position.Set(ghostBall->getPosition().x/PTM_RATIO, ghostBall->getPosition().y/PTM_RATIO);
+    ballBodyDef.userData = ghostBall;
     ballBodyDef.gravityScale = 0.0f;
-    extraBall->setBallBody(world->CreateBody(&ballBodyDef));
-    extraBall->getBallBody()->SetUserData(extraBall);
+    ghostBall->setBallBody(world->CreateBody(&ballBodyDef));
+    ghostBall->getBallBody()->SetUserData(ghostBall);
 //circle shape
 
     b2CircleShape circle;
-    circle.m_radius = extraBall->getRadius()/PTM_RATIO;
+    circle.m_radius = ghostBall->getRadius()/PTM_RATIO;
 
 //ball shape
     b2FixtureDef ballFixtureDef;
@@ -698,25 +752,38 @@ void GameLayer::doubleBall(){
     ballFixtureDef.density = 1.0f;
     ballFixtureDef.friction = 0.0f;
     ballFixtureDef.restitution = 1.0f;
-    b2Fixture *ballFixture = extraBall->getBallBody()->CreateFixture(&ballFixtureDef);
-    b2Vec2 v = b2Vec2(extraBall->getVelocity().x,extraBall->getVelocity().y);
-    extraBall->getBallBody()->SetLinearVelocity(v);
+    b2Fixture *ballFixture = ghostBall->getBallBody()->CreateFixture(&ballFixtureDef);
+    b2Vec2 v = b2Vec2(ghostBall->getVelocity().x,ghostBall->getVelocity().y);
+    ghostBall->getBallBody()->SetLinearVelocity(v);
 
   }
 
+}
+
+void GameLayer::freezeBall(){
+  if(!freezeMode){
+    b2Vec2 bv = ball->getBallBody()->GetLinearVelocity();
+    velocityBeforeFrozen = bv;
+  bv.x = 0.2 *bv.x;
+  bv.y = 0.2*bv.y;
+  ball->getBallBody()->SetLinearVelocity(bv);
+  freezeMode = true;
+  }
 
 }
 
-void GameLayer::extraBallTimer(){
 
-  if(extraBall != NULL){
-      if(extraBall->getFrameLasted() > 600){
-    	  CCLOG("time out!!!");
-      extraBall->removeFromParentAndCleanup(true);
-      extraBall = NULL;
+
+void GameLayer::ghostBallTimer(){
+
+  if(ghostBall != NULL){
+      if(ghostBall->getFrameLasted() > 600){
+    	 // CCLOG("time out!!!");
+      ghostBall->removeFromParentAndCleanup(true);
+      ghostBall = NULL;
     }
     else{
-      extraBall->frameAddOne();
+      ghostBall->frameAddOne();
     }
 
 
@@ -726,8 +793,70 @@ void GameLayer::extraBallTimer(){
 
 
 }
+
+
+
+void GameLayer::freezeTimer(){
+  if(freezeMode){
+    if(ball->getFrozenFrameLasted() > 300){
+     
+      ball->getBallBody()->SetLinearVelocity(velocityBeforeFrozen);
+      freezeMode = false;
+    }
+    else{
+      ball->frozenFrameAddOne();
+    }
+
+  }
+
+}
+
+
+void GameLayer::shortenPaddle(Ball *ball){
+  CCActionInterval*  actionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
+    b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+    CCRect myRect = myPaddle->boundingBox();
+    CCRect enemyRect = enemyPaddle->boundingBox();
+    if(v.y<0){
+
+       if(enemyPaddle->getLengthState() == Paddle::shortPaddle
+           && enemyRect.size.width <= enemyPaddle->getWidth()
+           ){
+        enemyPaddle->toggleLengthState();
+        enemyPaddle->runAction(actionBy);
+
+      }
+      else{
+
+      }
+    }
+    else if(v.y>0) {
+
+      if(myPaddle->getLengthState() == Paddle::shortPaddle
+          && myRect.size.width <= myPaddle->getWidth()
+          ){
+             myPaddle->toggleLengthState();
+             myPaddle->runAction(actionBy);
+
+
+      }
+      else{
+
+        //increase time
+      }
+
+     //actionBy release
+
+
+
+    }
+
+}
+
+
 
 void GameLayer::pause()
 {
     //Empty for the time being
 }
+
