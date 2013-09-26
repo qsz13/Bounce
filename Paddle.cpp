@@ -12,7 +12,7 @@ Paddle::Paddle() {
 
 	 paddleBodyDef.type = b2_dynamicBody;
 	 paddleBodyDef.position.Set(500/PTM_RATIO,500/PTM_RATIO);
-	 lengthState = shortPaddle;
+	 lengthState = normalPaddle;
 	 frameLasted = 0;
 
 }
@@ -33,13 +33,8 @@ Paddle::lengthType Paddle::getLengthState(){
 	return lengthState;
 }
 
-void Paddle::toggleLengthState(){
-	if(lengthState==shortPaddle){
-		lengthState = longPaddle;
-	}
-	else if(lengthState==longPaddle){
-		lengthState = shortPaddle;
-	}
+void Paddle::setLengthState(lengthType length){
+	lengthState = length;
 }
 
 void Paddle::setFrameLastedTo0(){

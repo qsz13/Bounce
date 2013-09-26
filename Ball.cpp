@@ -17,6 +17,7 @@ Ball::Ball() {
 	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
 
 	frameLasted = 0;
+	frozenFrameLasted = 0;
 }
 
 Ball::~Ball() {
@@ -25,12 +26,6 @@ Ball::~Ball() {
 
 Ball* Ball::getBall(){
 
-//	if(ball != NULL)
-//	{
-//		return ball;
-//	}
-//	else
-//	{
 		Ball* ball = new Ball();
 
 		if (ball && ball->initWithFile("GameLayer/ball.png"))
@@ -41,7 +36,23 @@ Ball* Ball::getBall(){
 		}
 			CC_SAFE_DELETE(ball);
 			return NULL;
-	//}
+
+}
+
+Ball* Ball::getGhostBall(){
+
+	Ball* ball = new Ball();
+
+	if (ball && ball->initWithFile("GameLayer/ghostBall.png"))
+	{
+		ball->myInit();
+		//ball->autorelease();
+		return ball;
+	}
+		CC_SAFE_DELETE(ball);
+		return NULL;
+
+
 }
 
 
@@ -99,4 +110,15 @@ int Ball::getPriority(){
 	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
 	priority += ballBody->GetLinearVelocity().y;
 	return priority;
+}
+
+
+ void Ball::frozenFrameAddOne(){
+	 frozenFrameLasted++;
+ }
+int Ball::getFrozenFrameLasted(){
+	return frozenFrameLasted;
+}
+void Ball::setFrozenFrameTo0(){
+	frozenFrameLasted = 0;
 }

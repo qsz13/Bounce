@@ -26,7 +26,7 @@ public:
 	Ball();
 	virtual ~Ball();
 	static Ball* getBall();
-
+	static Ball* getGhostBall();
 	void myInit();
 	void createBody(b2World &world);
     b2Body* getBody();
@@ -44,6 +44,10 @@ public:
     int getFrameLasted();
     int getPriority();
 
+    void frozenFrameAddOne();
+    int getFrozenFrameLasted();
+    void setFrozenFrameTo0();
+
 private:
 	//static Ball *ball;
 
@@ -51,6 +55,8 @@ private:
 	CCTexture2D ballTexture;
 	b2Body *ballBody;
 	int frameLasted;
+	int frozenFrameLasted;
+
 	int priority;
 };
 

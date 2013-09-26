@@ -18,9 +18,9 @@ public:
 	Paddle();
 	virtual ~Paddle();
 	b2BodyDef* getBodyDef();
-	enum lengthType{shortPaddle,longPaddle};
+	enum lengthType{shortPaddle,normalPaddle,longPaddle};
 	lengthType getLengthState();
-	void toggleLengthState();
+	void setLengthState(lengthType length);
 	void setFrameLastedTo0();
 	int getFrameLasted();
 	void frameAddOne();
