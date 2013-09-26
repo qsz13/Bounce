@@ -595,10 +595,10 @@ void GameLayer::shortenPaddle(Ball *ball){
       else if(enemyPaddle->getLengthState() == Paddle::longPaddle){
         enemyPaddle->setLengthState(Paddle::normalPaddle);
       }
-    }
+    } 
   }
   else if(v.y<0) {
-      CCLOG("123123");
+      
       if(myRect.size.width >= myPaddle->getWidth()){
         myPaddle->runAction(actionBy);
         myPaddle->setFrameLastedTo0();
@@ -739,52 +739,27 @@ void GameLayer::avoidUnwantedSituation(){
 		  }
     }
 
-//    if(v.y*v.y  < s/4){
-//    	if(v.y < 0){
-//        	v.y = -sqrt(s)/2;
-//    	}
-//    	else{
-//    		v.y = sqrt(s)/2;
-//    	}
-//
-//    	if(v.x < 0){
-//    		v.x = -sqrt(s-v.y*v.y);
-//    	}
-//    	else{
-//    		v.x = sqrt(s-v.y*v.y);
-//    	}
-//
-//
-//    }
-//
-//    ball->getBallBody()->SetLinearVelocity(v);
+   if(bv.y*bv.y  < bs/4){
+   	if(bv.y < 0){
+       	bv.y = -sqrt(bs)/2;
+   	}
+   	else{
+   		bv.y = sqrt(bs)/2;
+   	}
+
+   	if(bv.x < 0){
+   		bv.x = -sqrt(bs-bv.y*bv.y);
+   	}
+   	else{
+   		bv.x = sqrt(bs-bv.y*bv.y);
+   	}
 
 
-    //if(s > )
-//
-//    if(v.y > 0 && v.y < 3){
-//
-//
-//    	v.y += 3;
-//    	if(v.x < 0){
-//        	v.x = -sqrt(s-v.y*v.y);
-//    	}
-//    	else{
-//    		(v.x = sqrt(s-v.y*v.y));
-//    	}
-//
-//
-//    }
-//    else if(v.y >-3 && v.y < 0){
-//
-//        v.y -= 3;
-//            	if(v.x < 0){
-//                	v.x = -sqrt(s-v.y*v.y);
-//            	}
-//            	else{
-//            		(v.x = sqrt(s-v.y*v.y));
-//            	}
-//    }
+   }
+
+   ball->getBallBody()->SetLinearVelocity(bv);
+
+
 
 
 }
@@ -826,10 +801,10 @@ void GameLayer::freezeBall(){
   if(!freezeMode){
     b2Vec2 bv = ball->getBallBody()->GetLinearVelocity();
     velocityBeforeFrozen = bv;
-  bv.x = 0.2 * bv.x;
-  bv.y = 0.2 * bv.y;
-  ball->getBallBody()->SetLinearVelocity(bv);
-  freezeMode = true;
+    bv.x = 0.2 * bv.x;
+    bv.y = 0.2 * bv.y;
+    ball->getBallBody()->SetLinearVelocity(bv);
+    freezeMode = true;
   }
 
 }
@@ -869,6 +844,7 @@ void GameLayer::freezeTimer(){
     	newVelocity.x = currentVelocity.x*rate;
     	newVelocity.y = currentVelocity.y*rate;
     	ball->getBallBody()->SetLinearVelocity(newVelocity);
+      ball->setFrozenFrameTo0();
     	freezeMode = false;
     }
     else{
