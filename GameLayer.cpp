@@ -72,7 +72,7 @@ bool GameLayer::init()
 
     ghostBall = NULL;
     freezeMode = false;
-    gameIsPaused = false;
+    gameIsPaused = true;
     gameIsEnded = false;
     isSkweing = false;
     srand(time(NULL));
@@ -275,6 +275,7 @@ EnemyPaddle* GameLayer::getEnemyPaddle(){
 
 void GameLayer::doStep(float delta)
 {
+  if(!gameIsPaused){
 
     world->Step(delta, 10, 10);
     for(b2Body *b = world->GetBodyList(); b; b=b->GetNext()) {
@@ -309,8 +310,8 @@ void GameLayer::doStep(float delta)
 
     avoidUnwantedSituation();
 
-	if(!gameIsEnded){
-		//Ball *ball= (Ball*)this->getChildByTag(0);
+  if(!gameIsEnded){
+    //Ball *ball= (Ball*)this->getChildByTag(0);
         if(ball->getPosition().y<-ball->getHeight()/2){
 
             CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
@@ -319,8 +320,8 @@ void GameLayer::doStep(float delta)
             gameIsEnded = true;
             ball->removeFromParentAndCleanup(true);
             if(ghostBall!=NULL){
-            	ghostBall->removeFromParentAndCleanup(true);
-            	ghostBall = NULL;
+              ghostBall->removeFromParentAndCleanup(true);
+              ghostBall = NULL;
             }
         }
         else if(ball->getPosition().y > winSize.height-100 + ball->getHeight()/2){
@@ -352,12 +353,12 @@ void GameLayer::doStep(float delta)
             ball->removeFromParentAndCleanup(true);
 
         }
-
-
-
         }
         restartConfirm();
     }
+
+
+  }
 
 }
 
@@ -671,6 +672,8 @@ void GameLayer::shortenPaddle(Ball *ball){
 
 
 void GameLayer::paddleTimer(){
+  if(!gameIsPaused){
+
 
   if(myPaddle->getLengthState() == Paddle::longPaddle){
     CCActionInterval*  shortenActionBy = CCScaleBy::create(0.5f, 0.5f, 1.0f);
@@ -726,6 +729,7 @@ void GameLayer::paddleTimer(){
 
   }
 
+  }
 
 }
 
@@ -864,7 +868,8 @@ void GameLayer::freezeBall(){
 
 void GameLayer::ghostBallTimer(){
 
-  if(ghostBall != NULL){
+ if(!gameIsPaused){
+   if(ghostBall != NULL){
       if(ghostBall->getFrameLasted() > 600){
       ghostBall->removeFromParentAndCleanup(true);
       ghostBall = NULL;
@@ -873,6 +878,7 @@ void GameLayer::ghostBallTimer(){
       ghostBall->frameAddOne();
     }
   }
+ }
 
 }
 
@@ -888,18 +894,19 @@ void GameLayer::stealthBall(){
 
 
 void GameLayer::freezeTimer(){
-  if(freezeMode){
+  if(!gameIsPaused){
+    if(freezeMode){
     if(ball->getFrozenFrameLasted() > 200){
-    	b2Vec2 currentVelocity = ball->getBallBody()->GetLinearVelocity();
-    	float previousSpeed = velocityBeforeFrozen.x*velocityBeforeFrozen.x + velocityBeforeFrozen.y*velocityBeforeFrozen.y;
-    	float currentSpeed = currentVelocity.x*currentVelocity.x + currentVelocity.y*currentVelocity.y;
-    	float rate = sqrt(previousSpeed/currentSpeed);
-    	b2Vec2 newVelocity= ball->getBallBody()->GetLinearVelocity();
-    	newVelocity.x = currentVelocity.x*rate;
-    	newVelocity.y = currentVelocity.y*rate;
-    	ball->getBallBody()->SetLinearVelocity(newVelocity);
+      b2Vec2 currentVelocity = ball->getBallBody()->GetLinearVelocity();
+      float previousSpeed = velocityBeforeFrozen.x*velocityBeforeFrozen.x + velocityBeforeFrozen.y*velocityBeforeFrozen.y;
+      float currentSpeed = currentVelocity.x*currentVelocity.x + currentVelocity.y*currentVelocity.y;
+      float rate = sqrt(previousSpeed/currentSpeed);
+      b2Vec2 newVelocity= ball->getBallBody()->GetLinearVelocity();
+      newVelocity.x = currentVelocity.x*rate;
+      newVelocity.y = currentVelocity.y*rate;
+      ball->getBallBody()->SetLinearVelocity(newVelocity);
       ball->setFrozenFrameTo0();
-    	freezeMode = false;
+      freezeMode = false;
     }
     else{
       ball->frozenFrameAddOne();
@@ -907,6 +914,7 @@ void GameLayer::freezeTimer(){
 
   }
 
+  }
 }
 
 
@@ -921,7 +929,8 @@ void GameLayer::skewBall(){
 }
 
 void GameLayer::skewTimer(){
-    if(isSkweing){
+   if(!gameIsPaused){
+     if(isSkweing){
       if(ball->getSkewFrameLasted() > 30){
         isSkweing = false;
         ball->setSkewFrameLastedTo0();
@@ -943,11 +952,18 @@ void GameLayer::skewTimer(){
       }
 
     }
+   }
 }
 
 
 void GameLayer::pause()
 {
-    //Empty for the time being
-}
+    if(gameIsPaused){
+      gameIsPaused = false;
+    }
+    else{
+      gameIsPaused = true;
+    }
+
+  }
 
