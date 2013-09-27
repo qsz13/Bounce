@@ -914,9 +914,6 @@ void GameLayer::skewTimer(){
       }
 
     }
-    
-
-
 }
 
 
