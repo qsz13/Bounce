@@ -506,11 +506,39 @@ void GameLayer::dropItem(){
               item = SkewingItem::createSkewingItem();
             }
 
-            int x=rand()%(int)winSize.width;
-            int y=340+rand()%700;
-            item->setPosition(ccp(x,y));
+            bool positionCorrect = false;
+
+            while(true){
+
+              int x=40+rand()%((int)winSize.width-80);
+              int y=(winSize.height-100)/2-350+rand()%700;
+              item->setPosition(ccp(x,y));
+
+
+              if(!itemList.empty())
+              {
+              for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();it++) {
+
+                 if (!((*it)->rect().intersectsRect(item->rect()))){
+                  CCLOG("intersects");
+                    positionCorrect = true;
+                 }
+
+              }
+              if(positionCorrect){
+                break;
+              }
+              }
+              else {
+                break;
+              }
+
+            }
             addChild(item,1,0);
             itemList.push_back(item);
+
+
+         
         }
     }
 }
