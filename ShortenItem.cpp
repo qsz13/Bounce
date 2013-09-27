@@ -20,8 +20,6 @@ ShortenItem* ShortenItem::createShortenItem(){
 
 	ShortenItem* shortenItem =new ShortenItem();
 	if(shortenItem && shortenItem->initWithFile("GameLayer/Items/shortenItem.png")){
-		shortenItem->setScale(0.2);
-		//shortenItem->autorelease();
 		return shortenItem;
 	}
 	CC_SAFE_DELETE(shortenItem);

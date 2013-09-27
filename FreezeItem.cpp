@@ -21,7 +21,6 @@ FreezeItem* FreezeItem::createFreezeItem(){
 
 	FreezeItem* freezeItem =new FreezeItem();
 	if(freezeItem && freezeItem->initWithFile("GameLayer/Items/freezeItem.png")){
-		freezeItem -> setScale(0.3);
 		return freezeItem;
 	}
 	CC_SAFE_DELETE(freezeItem);

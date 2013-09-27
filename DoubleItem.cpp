@@ -20,7 +20,6 @@ DoubleItem* DoubleItem::createDoubleItem(){
 
 	DoubleItem* doubleItem =new DoubleItem();
 	if(doubleItem && doubleItem->initWithFile("GameLayer/Items/doubleItem.png")){
-		doubleItem -> setScale(0.5);
 		return doubleItem;
 	}
 	CC_SAFE_DELETE(doubleItem);
