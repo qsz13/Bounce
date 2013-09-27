@@ -20,8 +20,6 @@ EnlargeItem* EnlargeItem::createEnlargeItem(){
 
 	EnlargeItem* enlargeItem =new EnlargeItem();
 	if(enlargeItem && enlargeItem->initWithFile("GameLayer/Items/enlargeItem.png")){
-		enlargeItem->setScale(0.2);
-		//enlargeItem->autorelease();
 		return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);

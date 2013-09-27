@@ -82,28 +82,28 @@ void EnemyPaddle::move(Ball *ball, Ball *extraBall){
 	b2Vec2 v;
 	if(ballPosition.x+ball->getWidth()/2 < this->getPosition().x){
 		
-		if(possibility < 2){
-			 v = b2Vec2(0,0);
-		}
-		else if(possibility > 50){
-			 v = b2Vec2(-1000,0);
-		}
-		else{
+		// if(possibility < 2){
+		// 	 v = b2Vec2(0,0);
+		// }
+		// else if(possibility > 50){
+		// 	 v = b2Vec2(-1000,0);
+		// }
+		// else{
 			 v = b2Vec2(-2000,0);
-		}
+		// }
 		
     	enemyPaddleBody->ApplyForceToCenter(v);
 	}
 	else if(ballPosition.x+ball->getWidth()/2 > this->getPosition().x){
-				if(possibility < 2){
-			 v = b2Vec2(0,0);
-		}
-		else if(possibility > 80){
-			 v = b2Vec2(1000,0);
-		}
-		else{
+		// if(possibility < 2){
+		// 	 v = b2Vec2(0,0);
+		// }
+		// else if(possibility > 80){
+		// 	 v = b2Vec2(1000,0);
+		// }
+		// else{
 			 v = b2Vec2(2000,0);
-		}
+		// }
     	enemyPaddleBody->ApplyForceToCenter(v);
 	}
 	// else{

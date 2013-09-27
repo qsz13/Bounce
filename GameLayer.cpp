@@ -850,8 +850,9 @@ void GameLayer::ghostBallTimer(){
 
 
 void GameLayer::stealthBall(){
-      CCActionInterval*  fadeOut = CCFadeOut::create(1.0f);
+      CCActionInterval*  fadeOut = CCFadeOut::create(2.0f);
       CCActionInterval*  fadeOutBack = fadeOut->reverse();
+
       ball->runAction( CCSequence::create( fadeOut, fadeOutBack, fadeOut, fadeOutBack, NULL));
 
 }
