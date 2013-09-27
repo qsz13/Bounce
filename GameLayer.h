@@ -25,6 +25,8 @@
 #include "Item.h"
 #include "FreezeItem.h"
 #include "ShortenItem.h"
+#include "StealthItem.h"
+#include "SkewingItem.h"
 #include <list>
 #define PTM_RATIO 32.0
 using namespace cocos2d;
@@ -84,6 +86,8 @@ private:
 	void pause();
 	bool gameIsPaused;
 	bool gameIsEnded;
+	bool isSkweing;
+	bool skewDirectionIsRight;
 	Item* item;
 	list<Item *> itemList;
 	void enlargePaddle(Ball *ball);
@@ -96,6 +100,9 @@ private:
 	void freezeBall();
 	void freezeTimer();
 	void shortenPaddle(Ball *ball);
+	void stealthBall();
+	void skewBall();
+	void skewTimer();
 	b2Vec2 velocityBeforeFrozen;
 
 	void buildBall();

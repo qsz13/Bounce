@@ -48,6 +48,9 @@ public:
     int getFrozenFrameLasted();
     void setFrozenFrameTo0();
 
+    void skewFrameAddOne();
+    int getSkewFrameLasted();
+    void setSkewFrameLastedTo0();
 private:
 	//static Ball *ball;
 
@@ -56,7 +59,7 @@ private:
 	b2Body *ballBody;
 	int frameLasted;
 	int frozenFrameLasted;
-
+	int skewFrameLasted;
 	int priority;
 };
 

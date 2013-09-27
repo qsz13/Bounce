@@ -74,6 +74,7 @@ bool GameLayer::init()
     freezeMode = false;
     gameIsPaused = false;
     gameIsEnded = false;
+    isSkweing = false;
     srand(time(NULL));
     if ( !CCLayer::init() )
     {
@@ -113,6 +114,7 @@ bool GameLayer::init()
     schedule(schedule_selector(GameLayer::paddleTimer));
     schedule(schedule_selector(GameLayer::ghostBallTimer));
     schedule(schedule_selector(GameLayer::freezeTimer));
+    schedule(schedule_selector(GameLayer::skewTimer));
 
     return true;
 }
@@ -477,7 +479,7 @@ void GameLayer::dropItem(){
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
          if(drop ==0){
-            int type= rand()%6;
+            int type= rand()%8;
             if(type == 0){
             	item = EnlargeItem::createEnlargeItem();
 
@@ -496,6 +498,12 @@ void GameLayer::dropItem(){
             }
             else if(type == 5){
               item = ShortenItem::createShortenItem();
+            }
+            else if(type == 6){
+              item = StealthItem::createStealthItem();
+            }
+            else if(type <= 7){
+              item = SkewingItem::createSkewingItem();
             }
 
             int x=rand()%(int)winSize.width;
@@ -544,6 +552,10 @@ void GameLayer::itemIntersects() {
           freezeBall();
         } else if((*it)->getFunction() == "shorten"){
           shortenPaddle(ball);
+        }else if((*it)->getFunction() == "stealth"){
+          stealthBall();
+        } else if((*it)->getFunction() == "magnet"){
+          skewBall();
         }
 
 				((*it)->removeFromParentAndCleanup(true));
@@ -727,7 +739,7 @@ void GameLayer::avoidUnwantedSituation(){
 
     if(bs > 1000){
     	CCLOG("fast,%f,%f",bv.x,bv.y);
-    	b2Vec2 *bf = new b2Vec2(-bv.x,-bv.y);
+    	b2Vec2 *bf = new b2Vec2(-bv.x*10,-bv.y*10);
 
     	ball->getBallBody()->ApplyForceToCenter(*bf);
     }
@@ -837,10 +849,18 @@ void GameLayer::ghostBallTimer(){
 }
 
 
+void GameLayer::stealthBall(){
+      CCActionInterval*  fadeOut = CCFadeOut::create(1.0f);
+      CCActionInterval*  fadeOutBack = fadeOut->reverse();
+      ball->runAction( CCSequence::create( fadeOut, fadeOutBack, fadeOut, fadeOutBack, NULL));
+
+}
+
+
 
 void GameLayer::freezeTimer(){
   if(freezeMode){
-    if(ball->getFrozenFrameLasted() > 300){
+    if(ball->getFrozenFrameLasted() > 200){
     	b2Vec2 currentVelocity = ball->getBallBody()->GetLinearVelocity();
     	float previousSpeed = velocityBeforeFrozen.x*velocityBeforeFrozen.x + velocityBeforeFrozen.y*velocityBeforeFrozen.y;
     	float currentSpeed = currentVelocity.x*currentVelocity.x + currentVelocity.y*currentVelocity.y;
@@ -861,7 +881,43 @@ void GameLayer::freezeTimer(){
 }
 
 
+void GameLayer::skewBall(){
+   isSkweing = true;
+   if(rand()&1){
+      skewDirectionIsRight = true;
+   }
+   else{
+    skewDirectionIsRight = false;
+   }
+}
 
+void GameLayer::skewTimer(){
+    if(isSkweing){
+      if(ball->getSkewFrameLasted() > 30){
+        isSkweing = false;
+        ball->setSkewFrameLastedTo0();
+      }
+      else{
+        b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
+      
+        b2Vec2 *f;
+        if(skewDirectionIsRight){
+          f = new b2Vec2(-v.y,v.x);
+        }
+        else{
+          f = new b2Vec2(v.y,-v.x);
+        }
+
+        (*f) *= 15;
+        ball->getBallBody()->ApplyForceToCenter(*f);
+        ball->skewFrameAddOne();
+      }
+
+    }
+    
+
+
+}
 
 
 void GameLayer::pause()

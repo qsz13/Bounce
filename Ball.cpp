@@ -18,6 +18,7 @@ Ball::Ball() {
 
 	frameLasted = 0;
 	frozenFrameLasted = 0;
+	skewFrameLasted = 0;
 }
 
 Ball::~Ball() {
@@ -121,4 +122,14 @@ int Ball::getFrozenFrameLasted(){
 }
 void Ball::setFrozenFrameTo0(){
 	frozenFrameLasted = 0;
+}
+
+void Ball::skewFrameAddOne(){
+	skewFrameLasted++;
+}
+int Ball::getSkewFrameLasted(){
+	return skewFrameLasted;
+}
+void Ball::setSkewFrameLastedTo0(){
+	skewFrameLasted = 0;
 }
