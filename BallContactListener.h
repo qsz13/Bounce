@@ -8,6 +8,7 @@
 #ifndef BALLCONTACTLISTENER_H_
 #define BALLCONTACTLISTENER_H_
 #include "Box2D.h"
+#include "ScoreData.h"
 
 
 class BallContactListener : public b2ContactListener{

@@ -7,6 +7,8 @@
 
 #include "ScoreData.h"
 
+int ScoreData::score;
+int ScoreData::highScore;
 ScoreData::ScoreData() {
 	// TODO Auto-generated constructor stub
 
