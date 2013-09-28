@@ -143,18 +143,20 @@ void MenuLayer::menuStart(CCObject* pSender)
 
 void MenuLayer::menuHelp(CCObject *pSender)
 {
-	CCLabelTTF *testLabel = CCLabelTTF::create("Help", "Jenna Sue", 30);
-	CCSize size=CCDirector::sharedDirector()->getWinSize();
-	testLabel->setPosition(ccp(size.width / 2, size.height / 3));
-	this->addChild(testLabel, 2);
+	// CCLabelTTF *testLabel = CCLabelTTF::create("Help", "Jenna Sue", 30);
+	// CCSize size=CCDirector::sharedDirector()->getWinSize();
+	// testLabel->setPosition(ccp(size.width / 2, size.height / 3));
+	// this->addChild(testLabel, 2);
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, HelpLayer::scene()));
 }
 
 void MenuLayer::menuScores(CCObject *pSender)
 {
-	CCLabelTTF *testLabel = CCLabelTTF::create("Scores", "Jenna Sue", 30);
-	CCSize size=CCDirector::sharedDirector()->getWinSize();
-	testLabel->setPosition(ccp(size.width / 2, size.height / 5));
-	this->addChild(testLabel, 2);
+	// CCLabelTTF *testLabel = CCLabelTTF::create("Scores", "Jenna Sue", 30);
+	// CCSize size=CCDirector::sharedDirector()->getWinSize();
+	// testLabel->setPosition(ccp(size.width / 2, size.height / 5));
+	// this->addChild(testLabel, 2);
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, ScoreLayer::scene()));
 }
 
 void MenuLayer::menuSetting(CCObject *pSender)

@@ -28,15 +28,8 @@ CCScene* ScoreLayer::scene()
 void ScoreLayer::initBackground()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-	//Background
-	// 创建图片精灵
 	CCSprite* settingLayerBackground = CCSprite::create("ScoreLayer/ScoreSceneBackground.png");
-
-	// 设置图片精灵的位置
 	settingLayerBackground->setPosition(ccp(size.width/2, size.height/2));
-
-	// 把图片精灵放置在图层中
 	this->addChild(settingLayerBackground, 0);
 }
 
@@ -50,7 +43,6 @@ bool ScoreLayer::init()
 	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
-	//this->initMenu();
 
 	return true;
 }

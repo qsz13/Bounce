@@ -11,6 +11,8 @@
 #include "cocos2d.h"
 #include "GameLayer.h"
 #include "SettingLayer.h"
+#include "ScoreLayer.h"
+#include "HelpLayer.h"
 
 class MenuLayer : public cocos2d::CCLayer
 {
