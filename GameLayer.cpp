@@ -64,7 +64,10 @@ void GameLayer::initTopBar()
     this->addChild(scoresLabel, 3);
 
     //Scores
-    scores = CCLabelTTF::create("0", "Designer-Notes.ttf", 65);
+
+    char temp[10];
+    sprintf(temp,"%d",ScoreData::getScore());
+    scores = CCLabelTTF::create(temp, "Designer-Notes.ttf", 65);
     scores->setPosition(ccp(size.width*3/4 + 80, size.height - 65));
     this->addChild(scores, 3);
 }
@@ -74,7 +77,7 @@ bool GameLayer::init()
 {
     initBackground();
     initTopBar();
-    if(gameIsOver){
+    if(ScoreData::gameIsOver){
         ScoreData::setScoreTo0();
     }
     ghostBall = NULL;
@@ -82,7 +85,7 @@ bool GameLayer::init()
     gameIsPaused = true;
     gameIsEnded = false;
     isSkweing = false;
-    gameIsOver = false;
+    ScoreData::gameIsOver = false;
     newGame = true;
     srand(time(NULL));
     setKeypadEnabled(true);
@@ -133,8 +136,14 @@ bool GameLayer::init()
 
 
 void GameLayer::onEnterTransitionDidFinish(){
-	  CCLayer::onEnterTransitionDidFinish();
+
+	 CCLayer::onEnterTransitionDidFinish();
+
 	 if(newGame){
+		 if(ScoreData::gameIsOver){
+		      ScoreData::setScoreTo0();
+		      scores->setString("0");
+		  }
 		 countDown();
 	 }
 	 else{
@@ -146,6 +155,7 @@ void GameLayer::onEnterTransitionDidFinish(){
 
 
 void GameLayer::countDown(){
+
 	CCSprite *countDown3 = CCSprite::create("GameLayer/CountDown/countDown3.png");
 			CCSprite *countDown2 = CCSprite::create("GameLayer/CountDown/countDown2.png");
 			CCSprite *countDown1 = CCSprite::create("GameLayer/CountDown/countDown1.png");
@@ -354,7 +364,9 @@ void GameLayer::doStep(float delta)
 
 
     enemyPaddle->move(ball,ghostBall);
-
+    char temp[10];
+    sprintf(temp,"%d",ScoreData::getScore());
+    scores->setString(temp);
     avoidUnwantedSituation();
 
 
@@ -367,7 +379,7 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
             newGame = false;
-            gameIsOver = true;
+            ScoreData::gameIsOver = true;
             setHighScore();
             ball->removeFromParentAndCleanup(true);
             if(ghostBall!=NULL){
@@ -380,7 +392,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
-            gameIsOver = false;
+            ScoreData::gameIsOver = false;
             
             newGame = false;
             ScoreData::winRound();
@@ -400,7 +412,7 @@ void GameLayer::doStep(float delta)
             gameIsEnded = true;
             setHighScore();
             newGame = false;
-            gameIsOver = true;
+            ScoreData::gameIsOver = true;
             ball->removeFromParentAndCleanup(true);
         }
         else if(ghostBall->getPosition().y > winSize.height-100+ball->getHeight()/2){
@@ -409,7 +421,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
-            gameIsOver = false;
+            ScoreData::gameIsOver = false;
             newGame = false;
             ball->removeFromParentAndCleanup(true);
 
@@ -419,6 +431,11 @@ void GameLayer::doStep(float delta)
     }
 
 
+  }
+  else{
+	  char temp[10];
+	      sprintf(temp,"%d",ScoreData::getScore());
+	      scores->setString(temp);
   }
 
 }

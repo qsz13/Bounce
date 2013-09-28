@@ -21,8 +21,6 @@ void BallContactListener::BeginContact(b2Contact* contact)
 			||(spriteA->getTag()==1&&spriteB->getTag()==0)){
             ScoreData::defendScore();
 
-
-
 		}
     }
 }

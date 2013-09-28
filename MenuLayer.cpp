@@ -116,6 +116,8 @@ bool MenuLayer::init()
 	this->initBackground();
 	this->initMenu();
 	this->getHighScoreFromFile();
+	this->getControlModeFromFile();
+	this->getSensitivityFromFile();
 	return true;
 }
 
@@ -143,28 +145,16 @@ void MenuLayer::menuStart(CCObject* pSender)
 
 void MenuLayer::menuHelp(CCObject *pSender)
 {
-	// CCLabelTTF *testLabel = CCLabelTTF::create("Help", "Jenna Sue", 30);
-	// CCSize size=CCDirector::sharedDirector()->getWinSize();
-	// testLabel->setPosition(ccp(size.width / 2, size.height / 3));
-	// this->addChild(testLabel, 2);
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, HelpLayer::scene()));
 }
 
 void MenuLayer::menuScores(CCObject *pSender)
 {
-	// CCLabelTTF *testLabel = CCLabelTTF::create("Scores", "Jenna Sue", 30);
-	// CCSize size=CCDirector::sharedDirector()->getWinSize();
-	// testLabel->setPosition(ccp(size.width / 2, size.height / 5));
-	// this->addChild(testLabel, 2);
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, ScoreLayer::scene()));
 }
 
 void MenuLayer::menuSetting(CCObject *pSender)
 {
-	// CCLabelTTF *testLabel = CCLabelTTF::create("Setting", "Jenna Sue", 30);
-	// CCSize size=CCDirector::sharedDirector()->getWinSize();
-	// testLabel->setPosition(ccp(size.width / 2, size.height / 4));
-	// this->addChild(testLabel, 2);
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, SettingLayer::scene()));
 }
 
@@ -175,6 +165,9 @@ bool MenuLayer::haveSavedFile()
     {  
         CCUserDefault::sharedUserDefault()->setBoolForKey("haveSavedFileXml", true);//写入bool判断位  
         CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore",0);//写入初始分数0  
+        CCUserDefault::sharedUserDefault()->setStringForKey	("ControlMode","TOUCH");
+        CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",200);
+        
         CCUserDefault::sharedUserDefault()->flush();//设置完一定要调用flush，才能从缓冲写入io  
         return false;  
     }  
@@ -188,6 +181,30 @@ void MenuLayer::getHighScoreFromFile()
 {  
     if (haveSavedFile())//如果存在存档  
     {  
-        ScoreData::highScore=CCUserDefault::sharedUserDefault()->getIntegerForKey("HighScore",0); 
+        ScoreData::highScore = CCUserDefault::sharedUserDefault()->getIntegerForKey("HighScore",0); 
     }  
 }  
+
+
+void MenuLayer::getControlModeFromFile(){;
+	if(haveSavedFile()){
+		string cm = CCUserDefault::sharedUserDefault()->getStringForKey("ControlMode");
+		if(cm == "TOUCH"){
+			SettingLayer::setControlMode(SettingLayer::TOUCH);
+		} 
+		else if(cm == "GRAVITY"){
+			SettingLayer::setControlMode(SettingLayer::GRAVITY);
+		}
+		else if(cm == "DRAG"){
+			SettingLayer::setControlMode(SettingLayer::DRAG);
+		}
+	}
+}
+
+void MenuLayer::getSensitivityFromFile(){
+	if(haveSavedFile()){
+		CCLOG("from file : %d",CCUserDefault::sharedUserDefault()->getIntegerForKey("Sensitivity",200));
+		SettingLayer::setSensitivity(CCUserDefault::sharedUserDefault()->getIntegerForKey("Sensitivity",200));
+		CCLOG("%d !!",SettingLayer::getSensitivity());
+	}
+}

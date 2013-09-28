@@ -9,6 +9,7 @@
 
 int ScoreData::score;
 int ScoreData::highScore;
+bool ScoreData::gameIsOver = false;
 ScoreData::ScoreData() {
 	// TODO Auto-generated constructor stub
 

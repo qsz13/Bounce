@@ -19,7 +19,7 @@ public:
 	static void itemScore();
 	static void defendScore();
 	static int highScore;
-
+	static bool gameIsOver;
 private:
 	static int score;
 

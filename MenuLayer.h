@@ -13,16 +13,18 @@
 #include "SettingLayer.h"
 #include "ScoreLayer.h"
 #include "HelpLayer.h"
-
+#include <string>
 class MenuLayer : public cocos2d::CCLayer
 {
 private:
 	void initBackground();
 	void initMenu();
 	void actionCallback();
-	bool haveSavedFile();
-	void getHighScoreFromFile();
+	static bool haveSavedFile();
+	
+
 public:
+
 	virtual bool init();
 
 	static cocos2d::CCScene* scene();
@@ -33,6 +35,9 @@ public:
 	void menuScores(CCObject *pSender);
 	void menuSetting(CCObject *pSender);
 
+	static void getSensitivityFromFile();
+	static void getHighScoreFromFile();
+	static void getControlModeFromFile();
 	CREATE_FUNC(MenuLayer);
 };
 

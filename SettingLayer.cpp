@@ -10,11 +10,10 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 
-SettingLayer::ControlType SettingLayer::controlMode = TOUCH;
-int SettingLayer::sensitivity = 100;
+SettingLayer::ControlType SettingLayer::controlMode;
+int SettingLayer::sensitivity;
 
 SettingLayer::SettingLayer() {
-	// TODO Auto-generated constructor stub
 
 }
 
@@ -37,8 +36,9 @@ bool SettingLayer::init()
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
+	// setTouchPriority(kCCMenuHandlerPriority + 1);
+	// setTouchMode(kCCTouchesOneByOne);
+
 
 	this->initBackground();
 	this->initControlMode();
@@ -50,6 +50,7 @@ bool SettingLayer::init()
 
 void SettingLayer::initBackground()
 {
+
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
@@ -66,6 +67,9 @@ void SettingLayer::initBackButton()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
+
+
+
     //Pause Button
     CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
                                                           "SettingLayer/Back.png",
@@ -73,7 +77,6 @@ void SettingLayer::initBackButton()
                                                           this,
                                                           menu_selector(SettingLayer::backButtonPressed));
     backButtonImage -> setPosition( ccp(0, 0) );
-    //CCLOG("%f",backButtonImage->getContentSize().height);
     CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
     backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
     this -> addChild(backButton, 3);
@@ -151,6 +154,7 @@ void SettingLayer::initGravitySeneitivity()
     // 把图片精灵放置在图层中
     this->addChild(gravitySensitivityLabel, 1);
 
+
 	//Gravity Sensitivity Control 
 	gravitySensitivityControlSlider = this->sliderCtl();
 	gravitySensitivityControlSlider->setPosition(ccp(size.width / 2, size.height - 680.5));
@@ -160,33 +164,39 @@ void SettingLayer::initGravitySeneitivity()
 
 void SettingLayer::backButtonPressed()
 {
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }
 
 void SettingLayer::controlModeToGravity()
 {
 	this->setControlMode(GRAVITY);
+  CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","GRAVITY");
+
 }
 
 void SettingLayer::controlModeToDrag()
 {
 	this->setControlMode(DRAG);
+  CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","DRAG");
 }
 
 void SettingLayer::controlModeToTouch()
 {
 	this->setControlMode(TOUCH);
+   CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","TOUCH");
 }
 
 CCControlSlider* SettingLayer::sliderCtl()
 {
-	CCControlSlider *slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlButton.png");
 
+	CCControlSlider *slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlButton.png");
+    slider->setMinimumValue(100);
+    slider->setMaximumValue(350);
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingLayer::sliderAction), CCControlEventValueChanged);
 
-    slider->setMinimumValue(0.5f);
-    slider->setMaximumValue(1.5f);
-    slider->setValue(1.0f);
+
+    slider->setValue(sensitivity);
 
     return slider;
 }
@@ -194,10 +204,8 @@ CCControlSlider* SettingLayer::sliderCtl()
 void SettingLayer::sliderAction(CCObject* pSender, CCControlEvent controlEvent)
 {
 	CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
-    float scale;
-    scale = pSliderCtl->getValue();
+    sensitivity = pSliderCtl->getValue();
 
-    this->setSensitivity(scale * sensitivity);
 }
 
 
@@ -224,5 +232,6 @@ void SettingLayer::setControlMode(SettingLayer::ControlType mode)
 
 void SettingLayer::keyBackClicked()
 {
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }

@@ -89,7 +89,7 @@ private:
 	void resume();
 	bool gameIsPaused;
 	bool gameIsEnded;
-	bool gameIsOver;
+	//bool gameIsOver;
 	bool newGame;
 	bool isSkweing;
 	bool freezeMode;
