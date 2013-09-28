@@ -10,7 +10,7 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 
-SettingLayer::ControlType SettingLayer::controlMode = GRAVITY;
+SettingLayer::ControlType SettingLayer::controlMode = TOUCH;
 int SettingLayer::sensitivity = 100;
 
 SettingLayer::SettingLayer() {

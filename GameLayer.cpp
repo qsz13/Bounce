@@ -360,6 +360,7 @@ void GameLayer::doStep(float delta)
             gameIsEnded = true;
             newGame = false;
             gameIsOver = true;
+            setHighScore();
             ball->removeFromParentAndCleanup(true);
             if(ghostBall!=NULL){
               ghostBall->removeFromParentAndCleanup(true);
@@ -372,7 +373,7 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
             gameIsOver = false;
-            setHighScore();
+            
             newGame = false;
             ScoreData::winRound();
            ball->removeFromParentAndCleanup(true);
