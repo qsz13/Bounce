@@ -48,25 +48,6 @@ private:
 	CCSprite *controlModeSelector;
 	CCControlSlider *gravitySensitivityControlSlider;
 	
-
-	//0 for Accelerometer 1 for drag 2 for touch
-
-
-
-	/*
-	 * control mode
-	 * music on/off
-	 * volume
-	 * if gravity control{
-	 * 		set sensitivity
-	 * }
-	 *
-	 *
-	 */
-
-
-
-
 };
 
 #endif /* SETTINGLAYER_H_ */

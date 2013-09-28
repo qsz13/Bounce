@@ -50,12 +50,77 @@ bool PauseLayer::init()
 	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
-	//this->initMenu();
+	this->initMenu();
 
 	return true;
 }
 
+
+void PauseLayer::initMenu(){
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
+														  "PauseLayer/Setting.png",
+														  "PauseLayer/Setting_Pressed.png",
+														  this,
+														  menu_selector(PauseLayer::menuSetting));
+	pSettingItem -> setPosition( ccp(0, 0) );
+	//pSettingItem->setOpacity( 0 );
+
+	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
+	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100) );
+	this -> addChild(pMenusSetting, 1);
+
+
+
+
+
+	CCMenuItemImage *pBackToMenuItem = CCMenuItemImage::create(
+														  "PauseLayer/BackToMenu.png",
+														  "PauseLayer/BackToMenu.png",
+														  this,
+														  menu_selector(PauseLayer::menuBackToMenu));
+	pBackToMenuItem -> setPosition( ccp(0, 0) );
+	//pSettingItem->setOpacity( 0 );
+
+	CCMenu* pMenusBackToMenu = CCMenu::create(pBackToMenuItem, NULL);
+	pMenusBackToMenu -> setPosition( ccp(size.width / 2, size.height / 2) );
+	this -> addChild(pMenusBackToMenu, 1);
+
+
+
+
+
+	CCMenuItemImage *pResumeItem = CCMenuItemImage::create(
+														  "PauseLayer/Resume.png",
+														  "PauseLayer/Resume.png",
+														  this,
+														  menu_selector(PauseLayer::menupResume));
+	pResumeItem -> setPosition( ccp(0, 0) );
+	//pSettingItem->setOpacity( 0 );
+
+	CCMenu* pMenusResume = CCMenu::create(pResumeItem, NULL);
+	pMenusResume -> setPosition( ccp(size.width / 2, size.height / 2 + 100) );
+	this -> addChild(pMenusResume, 1);
+
+
+
+}
+
 void PauseLayer::keyBackClicked()
 {
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+}
+
+void PauseLayer::menuSetting(CCObject *pSender){
+
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, SettingLayer::scene()));
+}
+
+void PauseLayer::menuBackToMenu(CCObject *pSender){
+
+	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(0.5, MenuLayer::scene()));
+}
+
+void PauseLayer::menupResume(CCObject *pSender){
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }

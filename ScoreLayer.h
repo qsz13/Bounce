@@ -8,6 +8,7 @@
 #ifndef SCORELAYER_H_
 #define SCORELAYER_H_
 #include "cocos2d.h"
+#include "ScoreData.h"
 using namespace cocos2d;
 
 class ScoreLayer :public CCLayer{
@@ -20,7 +21,11 @@ private:
 	void initBackground();
 	bool init();
 	void keyBackClicked();
-
+	void initBackButton();
+	void backButtonPressed();
+	CCLabelTTF *highScoreLabel;
+	CCLabelTTF *highScore;
+	void initHighScore();
 };
 
 #endif /* SCORELAYER_H_ */
