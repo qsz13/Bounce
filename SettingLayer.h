@@ -8,9 +8,9 @@
 #ifndef SETTINGLAYER_H_
 #define SETTINGLAYER_H_
 
-
 #include "cocos2d.h"
 #include "CCControlSlider.h"
+
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
@@ -35,9 +35,13 @@ private:
 	void keyBackClicked();
 	void backButtonPressed();
 
+	void controlModeToGravity();
+	void controlModeToDrag();
+	void controlModeToTouch();
+
 	CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
-    
+    void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
+
 	static int sensitivity;
 	static ControlType controlMode;
 	CCSprite *controlModeSelector;

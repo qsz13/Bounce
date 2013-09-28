@@ -7,6 +7,7 @@
 
 #include "SettingLayer.h"
 using namespace cocos2d;
+using namespace cocos2d::extension;
 
 
 SettingLayer::ControlType SettingLayer::controlMode = GRAVITY;
@@ -98,7 +99,7 @@ void SettingLayer::initControlMode()
                                                           "SettingLayer/ControlMode/controlModeGravity.png",
                                                           "SettingLayer/ControlMode/controlModeGravity.png",
                                                           this,
-                                                          menu_selector(SettingLayer::backButtonPressed));
+                                                          menu_selector(SettingLayer::controlModeToGravity));
     controlModeGravityImage -> setPosition( ccp(0, 0) );
     CCMenu* controlModeGravity = CCMenu::create(controlModeGravityImage, NULL);
     controlModeGravity -> setPosition( ccp(size.width / 2 - 195, size.height - 456.5) );
@@ -109,7 +110,7 @@ void SettingLayer::initControlMode()
                                                           "SettingLayer/ControlMode/controlModeDrag.png",
                                                           "SettingLayer/ControlMode/controlModeDrag.png",
                                                           this,
-                                                          menu_selector(SettingLayer::backButtonPressed));
+                                                          menu_selector(SettingLayer::controlModeToDrag));
     controlModeDragImage -> setPosition( ccp(0, 0) );
     CCMenu* controlModeDrag = CCMenu::create(controlModeDragImage, NULL);
     controlModeDrag -> setPosition( ccp(size.width / 2, size.height - 456.5) );
@@ -120,7 +121,7 @@ void SettingLayer::initControlMode()
                                                           "SettingLayer/ControlMode/controlModeTouch.png",
                                                           "SettingLayer/ControlMode/controlModeTouch.png",
                                                           this,
-                                                          menu_selector(SettingLayer::backButtonPressed));
+                                                          menu_selector(SettingLayer::controlModeToTouch));
     controlModeTouchImage -> setPosition( ccp(0, 0) );
     CCMenu* controlModeTouch = CCMenu::create(controlModeTouchImage, NULL);
     controlModeTouch -> setPosition( ccp(size.width / 2 + 195, size.height - 456.5) );
@@ -138,12 +139,23 @@ void SettingLayer::initControlMode()
 }
 void SettingLayer::initGravitySeneitivity()
 {
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+	//Gravity Sensitivity Label
+	// 创建图片精灵
+    CCSprite* gravitySensitivityLabel = CCSprite::create("SettingLayer/GravitySensitivity/gravitySensitivityLabel.png");
+
+    // 设置图片精灵的位置
+    gravitySensitivityLabel->setPosition(ccp((523.2 + 46.4) / 2, size.height - (590 + 640) / 2));
+
+    // 把图片精灵放置在图层中
+    this->addChild(gravitySensitivityLabel, 1);
 
 	//Gravity Sensitivity Control 
 	gravitySensitivityControlSlider = this->sliderCtl();
 	gravitySensitivityControlSlider->setPosition(ccp(size.width / 2, size.height - 680.5));
 
-	this->addChild(gravitySensitivityControlSlider, 1);
+	this->addChild(gravitySensitivityControlSlider, 2);
 }
 
 void SettingLayer::backButtonPressed()
@@ -151,9 +163,24 @@ void SettingLayer::backButtonPressed()
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }
 
+void SettingLayer::controlModeToGravity()
+{
+	this->setControlMode(GRAVITY);
+}
+
+void SettingLayer::controlModeToDrag()
+{
+	this->setControlMode(DRAG);
+}
+
+void SettingLayer::controlModeToTouch()
+{
+	this->setControlMode(TOUCH);
+}
+
 CCControlSlider* SettingLayer::sliderCtl()
 {
-	CCControlSlider * slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png" ,"SettingLayer/GravitySensitivity/controlButton.png");
+	CCControlSlider *slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlButton.png");
 
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingLayer::sliderAction), CCControlEventValueChanged);
 
@@ -164,7 +191,7 @@ CCControlSlider* SettingLayer::sliderCtl()
     return slider;
 }
 
-void SettingLayer::sliderAction(CCObject* sender, CCControlEvent controlEvent)
+void SettingLayer::sliderAction(CCObject* pSender, CCControlEvent controlEvent)
 {
 	CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
     float scale;
