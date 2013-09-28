@@ -30,6 +30,23 @@ CCScene* SettingLayer::scene()
     return scene;
 }
 
+bool SettingLayer::init()
+{
+	if (!CCLayer::init())
+		return false;
+	setKeypadEnabled(true);
+	setTouchEnabled(true);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
+	setTouchMode(kCCTouchesOneByOne);
+
+	this->initBackground();
+	this->initControlMode();
+	this->initGravitySeneitivity();
+	this->initBackButton();
+
+	return true;
+}
+
 void SettingLayer::initBackground()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -44,23 +61,6 @@ void SettingLayer::initBackground()
 	// 把图片精灵放置在图层中
 	this->addChild(settingLayerBackground, 0);
 }
-
-bool SettingLayer::init()
-{
-	if (!CCLayer::init())
-		return false;
-	setKeypadEnabled(true);
-	setTouchEnabled(true);
-	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
-
-	this->initBackground();
-	// this->initControlMode();
-	this->initBackButton();
-
-	return true;
-}
-
 void SettingLayer::initBackButton()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -80,11 +80,70 @@ void SettingLayer::initBackButton()
 
 void SettingLayer::initControlMode()
 {
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	
+	//Control Mode Label
+    // 创建图片精灵
+    CCSprite* controlModeLabel = CCSprite::create("SettingLayer/ControlMode/controlModeLabel.png");
 
+    // 设置图片精灵的位置
+    controlModeLabel->setPosition(ccp((401.5 + 46.4) / 2, size.height - (394 + 360) / 2));
+
+    // 把图片精灵放置在图层中
+    this->addChild(controlModeLabel, 1);
+
+    //Control Mode
+    //Gravity
+    CCMenuItemImage *controlModeGravityImage = CCMenuItemImage::create(
+                                                          "SettingLayer/ControlMode/controlModeGravity.png",
+                                                          "SettingLayer/ControlMode/controlModeGravity.png",
+                                                          this,
+                                                          menu_selector(SettingLayer::backButtonPressed));
+    controlModeGravityImage -> setPosition( ccp(0, 0) );
+    CCMenu* controlModeGravity = CCMenu::create(controlModeGravityImage, NULL);
+    controlModeGravity -> setPosition( ccp(size.width / 2 - 195, size.height - 456.5) );
+    this -> addChild(controlModeGravity, 1);
+
+    //Drag
+    CCMenuItemImage *controlModeDragImage = CCMenuItemImage::create(
+                                                          "SettingLayer/ControlMode/controlModeDrag.png",
+                                                          "SettingLayer/ControlMode/controlModeDrag.png",
+                                                          this,
+                                                          menu_selector(SettingLayer::backButtonPressed));
+    controlModeDragImage -> setPosition( ccp(0, 0) );
+    CCMenu* controlModeDrag = CCMenu::create(controlModeDragImage, NULL);
+    controlModeDrag -> setPosition( ccp(size.width / 2, size.height - 456.5) );
+    this -> addChild(controlModeDrag, 1);
+
+    //Touch
+    CCMenuItemImage *controlModeTouchImage = CCMenuItemImage::create(
+                                                          "SettingLayer/ControlMode/controlModeTouch.png",
+                                                          "SettingLayer/ControlMode/controlModeTouch.png",
+                                                          this,
+                                                          menu_selector(SettingLayer::backButtonPressed));
+    controlModeTouchImage -> setPosition( ccp(0, 0) );
+    CCMenu* controlModeTouch = CCMenu::create(controlModeTouchImage, NULL);
+    controlModeTouch -> setPosition( ccp(size.width / 2 + 195, size.height - 456.5) );
+    this -> addChild(controlModeTouch, 1);
+
+    //Selector
+    // 创建图片精灵
+    controlModeSelector = CCSprite::create("SettingLayer/ControlMode/controlModeSelector.png");
+
+    // 设置图片精灵的位置
+    controlModeSelector->setPosition(ccp(size.width / 2, size.height - 456.5));
+
+    // 把图片精灵放置在图层中
+    this->addChild(controlModeSelector, 2);
 }
 void SettingLayer::initGravitySeneitivity()
 {
 
+	//Gravity Sensitivity Control 
+	gravitySensitivityControlSlider = this->sliderCtl();
+	gravitySensitivityControlSlider->setPosition(ccp(size.width / 2, size.height - 680.5));
+
+	this->addChild(gravitySensitivityControlSlider, 1);
 }
 
 void SettingLayer::backButtonPressed()
@@ -92,27 +151,51 @@ void SettingLayer::backButtonPressed()
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }
 
+CCControlSlider* SettingLayer::sliderCtl()
+{
+	CCControlSlider * slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png" ,"SettingLayer/GravitySensitivity/controlButton.png");
 
-int SettingLayer::getSensitivity(){
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingLayer::sliderAction), CCControlEventValueChanged);
+
+    slider->setMinimumValue(0.5f);
+    slider->setMaximumValue(1.5f);
+    slider->setValue(1.0f);
+
+    return slider;
+}
+
+void SettingLayer::sliderAction(CCObject* sender, CCControlEvent controlEvent)
+{
+	CCControlSlider* pSliderCtl = (CCControlSlider*)pSender;
+    float scale;
+    scale = pSliderCtl->getValue();
+
+    this->setSensitivity(scale * sensitivity);
+}
+
+
+int SettingLayer::getSensitivity()
+{
 	return sensitivity;
 
 }
-void SettingLayer::setSensitivity(int s){
+void SettingLayer::setSensitivity(int s)
+{
 	sensitivity = s;
 }
 
-
-
-int SettingLayer::getControlMode(){
+int SettingLayer::getControlMode()
+{
 	return controlMode;
 }
 
 
-void SettingLayer::setControlMode(SettingLayer::ControlType mode){
+void SettingLayer::setControlMode(SettingLayer::ControlType mode)
+{
 	controlMode = mode;
 }
 
-void SettingLayer::keyBackClicked(){
-
+void SettingLayer::keyBackClicked()
+{
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }

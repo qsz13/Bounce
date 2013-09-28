@@ -33,8 +33,14 @@ private:
 	void initGravitySeneitivity();
 	void keyBackClicked();
 	void backButtonPressed();
+
+	CCControlSlider* sliderCtl();
+    void sliderAction(CCObject* sender, CCControlEvent controlEvent);
+    
 	static int sensitivity;
 	static ControlType controlMode;
+	CCSprite *controlModeSelector;
+	CCControlSlider *gravitySensitivityControlSlider;
 	
 
 	//0 for Accelerometer 1 for drag 2 for touch
