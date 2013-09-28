@@ -75,6 +75,7 @@ bool GameLayer::init()
     gameIsPaused = true;
     gameIsEnded = false;
     isSkweing = false;
+    newGame = true;
     srand(time(NULL));
     setKeypadEnabled(true);
     if ( !CCLayer::init() )
@@ -123,39 +124,36 @@ bool GameLayer::init()
 
 void GameLayer::onEnterTransitionDidFinish(){
 	  CCLayer::onEnterTransitionDidFinish();
-	  CCSprite *countDown3 = CCSprite::create("GameLayer/CountDown/countDown3.png");
-	  CCSprite *countDown2 = CCSprite::create("GameLayer/CountDown/countDown2.png");
-	  CCSprite *countDown1 = CCSprite::create("GameLayer/CountDown/countDown1.png");
-	  countDown3->setPosition(ccp(winSize.width/2, winSize.height-542));
-	  countDown2->setPosition(ccp(winSize.width/2, winSize.height-542));
-	  countDown1->setPosition(ccp(winSize.width/2, winSize.height-542));
-	  this->addChild(countDown3);
-	  this->addChild(countDown2);
-	  this->addChild(countDown1);
-	  countDown3->setOpacity( 0 );
-	  countDown2->setOpacity( 0 );
-	  countDown1->setOpacity( 0 );
-	  CCActionInterval*  fadeIn = CCFadeIn::create(0.5f);
-	  countDown3->runAction(CCSequence::create(fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
-	  countDown2->runAction(CCSequence::create(CCDelayTime::create(1),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
-	  countDown1->runAction(CCSequence::create(CCDelayTime::create(2),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),
-	  CCCallFunc::create(this, callfunc_selector(GameLayer::pause)),NULL));
-
-
-
-
-
-  
-
-
-
-
+	 if(newGame){
+		 countDown();
+	 }
+	 else{
+		 resume();
+	 }
 
 
 }
 
 
-
+void GameLayer::countDown(){
+	CCSprite *countDown3 = CCSprite::create("GameLayer/CountDown/countDown3.png");
+			CCSprite *countDown2 = CCSprite::create("GameLayer/CountDown/countDown2.png");
+			CCSprite *countDown1 = CCSprite::create("GameLayer/CountDown/countDown1.png");
+			countDown3->setPosition(ccp(winSize.width/2, winSize.height-542));
+			countDown2->setPosition(ccp(winSize.width/2, winSize.height-542));
+			countDown1->setPosition(ccp(winSize.width/2, winSize.height-542));
+			this->addChild(countDown3);
+			this->addChild(countDown2);
+			this->addChild(countDown1);
+			countDown3->setOpacity( 0 );
+			countDown2->setOpacity( 0 );
+			countDown1->setOpacity( 0 );
+			CCActionInterval*  fadeIn = CCFadeIn::create(0.5f);
+			countDown3->runAction(CCSequence::create(fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+			countDown2->runAction(CCSequence::create(CCDelayTime::create(1),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+			countDown1->runAction(CCSequence::create(CCDelayTime::create(2),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),
+			CCCallFunc::create(this, callfunc_selector(GameLayer::resume)),NULL));
+}
 
 void GameLayer::buildGround(){
     b2BodyDef groundBodyDef;
@@ -355,6 +353,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
+            newGame = false;
             ball->removeFromParentAndCleanup(true);
             if(ghostBall!=NULL){
               ghostBall->removeFromParentAndCleanup(true);
@@ -366,6 +365,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
+            newGame = false;
            ball->removeFromParentAndCleanup(true);
            if(ghostBall!=NULL){
                ghostBall->removeFromParentAndCleanup(true);
@@ -380,6 +380,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
+            newGame = false;
             ball->removeFromParentAndCleanup(true);
         }
         else if(ghostBall->getPosition().y > winSize.height-100+ball->getHeight()/2){
@@ -387,6 +388,7 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
+            newGame = false;
             ball->removeFromParentAndCleanup(true);
 
         }
@@ -419,6 +421,7 @@ void GameLayer::restartConfirm(){
 
 void GameLayer::restart(){
 	CCDirector::sharedDirector()->replaceScene(GameLayer::scene());
+	newGame = true;
 }
 
 
@@ -997,17 +1000,17 @@ void GameLayer::skewTimer(){
 
 void GameLayer::pause()
 {
+	if(!gameIsPaused){
+		gameIsPaused = true;
+		CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, PauseLayer::scene()));
+	}
 
-  if(gameIsPaused){
-    gameIsPaused = false;
-  }
-  else{
-    gameIsPaused = true;
-    CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, PauseLayer::scene()));
+}
 
-
-  }
-
+void GameLayer::resume(){
+	if(gameIsPaused){
+		gameIsPaused = false;
+	}
 }
 
 void GameLayer::keyBackClicked() 

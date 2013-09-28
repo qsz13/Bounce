@@ -83,8 +83,10 @@ private:
 	void initBackground();
 	void initTopBar();
 	void pause();
+	void resume();
 	bool gameIsPaused;
 	bool gameIsEnded;
+	bool newGame;
 	bool isSkweing;
 	bool freezeMode;
 	bool skewDirectionIsRight;
@@ -110,6 +112,7 @@ private:
 	void buildEnemyPaddle();
 	void buildGround();
 	void restrictPaddleMovement();
+	void countDown();
 
 };
 
