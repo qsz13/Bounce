@@ -9,8 +9,8 @@
 using namespace cocos2d;
 
 
-SettingLayer::ControlType SettingLayer::controlMode = TOUCH;
-int SettingLayer::sensitivity = 250;
+SettingLayer::ControlType SettingLayer::controlMode = GRAVITY;
+int SettingLayer::sensitivity = 100;
 
 SettingLayer::SettingLayer() {
 	// TODO Auto-generated constructor stub

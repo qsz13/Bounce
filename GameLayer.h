@@ -17,6 +17,7 @@
 #include "SettingLayer.h"
 #include "PauseLayer.h"
 #include "EnlargeItem.h"
+#include "BallContactListener.h"
 #include <cstdlib>
 #include <ctime>
 #include <cmath>

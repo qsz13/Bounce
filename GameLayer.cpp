@@ -102,6 +102,8 @@ bool GameLayer::init()
     b2Vec2 gravity(0.0f, 0.0f);
     world = new b2World(gravity);
 
+    BallContactListener* contactListener = new BallContactListener();
+    world->SetContactListener(contactListener);
 
 
     buildGround();
@@ -183,6 +185,7 @@ void GameLayer::buildGround(){
 
 void GameLayer::buildBall(){
       ball = Ball::createBall();
+      ball->setTag(0);
     this->addChild(ball, 2,0);
     ball->setPosition(ccp(winSize.width/2,(winSize.height-100)/2));
 
@@ -218,7 +221,8 @@ void GameLayer::buildMyPaddle(){
 
   //my paddle;
     myPaddle = MyPaddle::createMyPaddle();
-    this->addChild(myPaddle,2);
+    myPaddle->setTag(1);
+    this->addChild(myPaddle,2,1);
     myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
 
 
@@ -508,7 +512,7 @@ void GameLayer::restart(){
 
  void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue)
  {
-     b2Vec2 gravity(pAccelerationValue->x * 100,pAccelerationValue->y * 100);
+     b2Vec2 gravity(pAccelerationValue->x * SettingLayer::getSensitivity(),pAccelerationValue->y * SettingLayer::getSensitivity());
      world->SetGravity(gravity);
  }
 
@@ -865,6 +869,7 @@ void GameLayer::avoidUnwantedSituation(){
 void GameLayer::doubleBall(){
   if(ghostBall == NULL){
     ghostBall = Ball::createGhostBall();
+    ghostBall->setTag(0);
   this->addChild(ghostBall, 2,0);
   ghostBall->setPosition(ccp(winSize.width/2,winSize.height/2));
 
