@@ -134,8 +134,16 @@ void SettingLayer::initControlMode()
     // 创建图片精灵
     controlModeSelector = CCSprite::create("SettingLayer/ControlMode/controlModeSelector.png");
 
-    // 设置图片精灵的位置
-    controlModeSelector->setPosition(ccp(size.width / 2, size.height - 456.5));
+    if(controlMode == GRAVITY){
+      controlModeSelector->setPosition(controlModeGravity->getPosition());
+    }
+    else if( controlMode == TOUCH){
+      controlModeSelector->setPosition(controlModeTouch->getPosition());
+    }
+    else if( controlMode == DRAG){
+      controlModeSelector->setPosition(controlModeDrag->getPosition());
+    }
+
 
     // 把图片精灵放置在图层中
     this->addChild(controlModeSelector, 2);
@@ -177,24 +185,8 @@ void SettingLayer::controlModeToGravity()
 
   CCActionInterval* move = CCMoveBy::create(1, delta);
   CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
- // CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
   controlModeSelector->runAction( CCSequence::create(move_ease_out, NULL));
 
-
-
-}
-
-void SettingLayer::controlModeToDrag()
-{
-	this->setControlMode(DRAG);
-  CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","DRAG");
-
-  CCPoint delta = controlModeDrag->getPosition() - controlModeSelector->getPosition();
-
-  CCActionInterval* move = CCMoveBy::create(1, delta);
-  CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
- // CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
-  controlModeSelector->runAction(CCSequence::create(move_ease_out, NULL));
 }
 
 void SettingLayer::controlModeToTouch()
@@ -206,9 +198,23 @@ void SettingLayer::controlModeToTouch()
 
   CCActionInterval* move = CCMoveBy::create(1, delta);
   CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
-  //CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
+
   controlModeSelector->runAction( CCSequence::create(move_ease_out, NULL));
 }
+
+void SettingLayer::controlModeToDrag()
+{
+	this->setControlMode(DRAG);
+  CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","DRAG");
+
+  CCPoint delta = controlModeDrag->getPosition() - controlModeSelector->getPosition();
+
+  CCActionInterval* move = CCMoveBy::create(1, delta);
+  CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
+  controlModeSelector->runAction(CCSequence::create(move_ease_out, NULL));
+}
+
+
 
 CCControlSlider* SettingLayer::sliderCtl()
 {

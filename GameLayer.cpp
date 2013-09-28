@@ -444,14 +444,29 @@ void GameLayer::doStep(float delta)
 void GameLayer::restartConfirm(){
     if(gameIsEnded){
 
-        CCMenuItemImage *restartButton = CCMenuItemImage::create( "GameLayer/restart.png",
-				  "GameLayer/restart.png",
-				  this,
-				  menu_selector(GameLayer::restart));
+      if(ScoreData::gameIsOver){
+          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/restart.png",
+          "GameLayer/restart.png",
+          this,
+          menu_selector(GameLayer::restart));
         restartButton -> setPosition( ccp(0, 0) );
         CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
-        	pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/4));
-        	this -> addChild(pMenusSetting, 1);
+          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/3));
+          this -> addChild(pMenusSetting, 1);
+
+      }
+      else{
+          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/continue.png",
+          "GameLayer/continue.png",
+          this,
+          menu_selector(GameLayer::restart));
+        restartButton -> setPosition( ccp(0, 0) );
+        CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
+          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/3));
+          this -> addChild(pMenusSetting, 1);
+
+      }
+      
 
     }
 
@@ -555,7 +570,7 @@ void GameLayer::restart(){
 
  void GameLayer::dropItem(){
 
-    int drop = rand()%6;
+    int drop = rand()%300;
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
         if(drop ==0){
