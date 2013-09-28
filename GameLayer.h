@@ -77,6 +77,7 @@ private:
 	b2Fixture *enemyPaddleFixture;
 	b2MouseJoint *_mouseJoint;
 
+	void onEnterTransitionDidFinish();
 	bool freezeMode;
 	void initBackground();
 	void initTopBar();

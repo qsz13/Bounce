@@ -120,6 +120,17 @@ bool GameLayer::init()
 }
 
 
+void GameLayer::onEnterTransitionDidFinish(){
+  CCLayer::onEnterTransitionDidFinish();
+  pause();
+
+
+
+}
+
+
+
+
 void GameLayer::buildGround(){
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0,0);
