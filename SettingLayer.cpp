@@ -71,7 +71,6 @@ void SettingLayer::setSensitivity(int s){
 
 
 
-
 int SettingLayer::getControlMode(){
 	return controlMode;
 }
