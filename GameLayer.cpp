@@ -972,12 +972,14 @@ void GameLayer::skewTimer(){
 
 void GameLayer::pause()
 {
+
   if(gameIsPaused){
     gameIsPaused = false;
   }
   else{
     gameIsPaused = true;
     CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, PauseLayer::scene()));
+
 
   }
 

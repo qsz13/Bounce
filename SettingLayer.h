@@ -28,6 +28,11 @@ public:
 private:
 	void initBackground();
 	bool init();
+	void initBackButton();
+	void initControlMode();
+	void initGravitySeneitivity();
+
+	void backButtonPressed();
 	static int sensitivity;
 	static ControlType controlMode;
 	

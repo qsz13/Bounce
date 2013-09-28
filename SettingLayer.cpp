@@ -55,9 +55,41 @@ bool SettingLayer::init()
 	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
-	//this->initMenu();
+	// this->initControlMode();
+	this->initBackButton();
 
 	return true;
+}
+
+void SettingLayer::initBackButton()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    //Pause Button
+    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
+                                                          "SettingLayer/Back.png",
+                                                          "SettingLayer/Back_Pressed.png",
+                                                          this,
+                                                          menu_selector(SettingLayer::backButtonPressed));
+    backButtonImage -> setPosition( ccp(0, 0) );
+    //CCLOG("%f",backButtonImage->getContentSize().height);
+    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
+    backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
+    this -> addChild(backButton, 3);
+}
+
+void SettingLayer::initControlMode()
+{
+
+}
+void SettingLayer::initGravitySeneitivity()
+{
+
+}
+
+void SettingLayer::backButtonPressed()
+{
+	CCDirector::sharedDirector()->popScene();
 }
 
 
