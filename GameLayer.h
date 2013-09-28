@@ -77,6 +77,7 @@ private:
 	b2Fixture *myPaddleFixture;
 	b2Fixture *enemyPaddleFixture;
 	b2MouseJoint *_mouseJoint;
+	CCLabelTTF *scores;
 
 	void onEnterTransitionDidFinish();
 	void keyBackClicked();
