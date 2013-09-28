@@ -976,7 +976,7 @@ void GameLayer::pause()
     }
     else{
       gameIsPaused = true;
-      CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(1, SettingLayer::scene()));
+      CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(1, SettingLayer::scene()));
 
     }
 
