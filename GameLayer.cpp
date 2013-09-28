@@ -69,7 +69,9 @@ bool GameLayer::init()
 {
     initBackground();
     initTopBar();
-
+    if(gameIsOver){
+        ScoreData::setScoreTo0();
+    }
     ghostBall = NULL;
     freezeMode = false;
     gameIsPaused = true;
@@ -349,6 +351,7 @@ void GameLayer::doStep(float delta)
     enemyPaddle->move(ball,ghostBall);
 
     avoidUnwantedSituation();
+
 
   if(!gameIsEnded){
     //Ball *ball= (Ball*)this->getChildByTag(0);
@@ -1045,7 +1048,7 @@ CCLOG("score %d",ScoreData::getScore());
       ScoreData::highScore=ScoreData::getScore();
 
   }
-  ScoreData::setScoreTo0();
+
 }
 
 
