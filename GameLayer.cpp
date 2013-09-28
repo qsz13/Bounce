@@ -122,7 +122,32 @@ bool GameLayer::init()
 
 
 void GameLayer::onEnterTransitionDidFinish(){
-  CCLayer::onEnterTransitionDidFinish();
+	  CCLayer::onEnterTransitionDidFinish();
+	  CCSprite *countDown3 = CCSprite::create("GameLayer/CountDown/countDown3.png");
+	  CCSprite *countDown2 = CCSprite::create("GameLayer/CountDown/countDown2.png");
+	  CCSprite *countDown1 = CCSprite::create("GameLayer/CountDown/countDown1.png");
+	  countDown3->setPosition(ccp(winSize.width/2, 542));
+	  countDown2->setPosition(ccp(winSize.width/2, 542));
+	  countDown1->setPosition(ccp(winSize.width/2, 542));
+	  this->addChild(countDown3);
+	  this->addChild(countDown2);
+	  this->addChild(countDown1);
+	  countDown3->setOpacity( 0 );
+	  countDown2->setOpacity( 0 );
+	  countDown1->setOpacity( 0 );
+	  CCActionInterval*  fadeIn = CCFadeIn::create(0.5f);
+	  countDown3->runAction(CCSequence::create(fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+	  countDown2->runAction(CCSequence::create(CCDelayTime::create(1),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+	  countDown1->runAction(CCSequence::create(CCDelayTime::create(2),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+
+
+
+
+
+  
+
+
+
   pause();
 
 
