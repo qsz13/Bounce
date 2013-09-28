@@ -62,6 +62,11 @@ void GameLayer::initTopBar()
 
     // 把图片精灵放置在图层中
     this->addChild(scoresLabel, 3);
+
+    //Scores
+    scores = CCLabelTTF::create("0", "Designer-Notes.ttf", 65);
+    scores->setPosition(ccp(size.width*3/4 + 80, size.height - 65));
+    this->addChild(scores, 3);
 }
 
 // on "init" you need to initialize your instance
