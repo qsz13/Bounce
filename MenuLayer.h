@@ -16,7 +16,8 @@ class MenuLayer : public cocos2d::CCLayer
 private:
 	void initBackground();
 	void initMenu();
-
+	void actionCallback();
+	
 public:
 	virtual bool init();
 

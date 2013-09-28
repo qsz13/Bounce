@@ -36,6 +36,7 @@ void MenuLayer::initMenu()
 														  this,
 														  menu_selector(MenuLayer::menuStart));
 	pStartItem -> setPosition( ccp(0, 0) );
+	pStartItem->setOpacity( 0 );
 
 	CCMenu* pMenusStart = CCMenu::create(pStartItem, NULL);
 	pMenusStart -> setPosition( ccp(size.width / 2, size.height / 2 - 171) );
@@ -48,6 +49,7 @@ void MenuLayer::initMenu()
 														  this,
 														  menu_selector(MenuLayer::menuSetting));
 	pSettingItem -> setPosition( ccp(0, 0) );
+	pSettingItem->setOpacity( 0 );
 
 	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
 	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100) );
@@ -60,6 +62,7 @@ void MenuLayer::initMenu()
 														  this,
 														  menu_selector(MenuLayer::menuHelp));
 	pHelpItem -> setPosition( ccp(0, 0) );
+	pHelpItem->setOpacity( 0 );
 
 	CCMenu* pMenusHelp = CCMenu::create(pHelpItem, NULL);
 	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80) );
@@ -72,6 +75,7 @@ void MenuLayer::initMenu()
 														  this,
 														  menu_selector(MenuLayer::menuScores));
 	pScoresItem -> setPosition( ccp(0, 0) );
+	pScoresItem->setOpacity( 0 );
 
 	CCMenu* pScoresHelp = CCMenu::create(pScoresItem, NULL);
 	pScoresHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 2) );
@@ -84,7 +88,8 @@ void MenuLayer::initMenu()
 														  this,
 														  menu_selector(MenuLayer::menuCloseCallback));
 	pQuitItem -> setPosition( ccp(0, 0) );
-
+	pQuitItem->setOpacity( 0 );
+	
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
 	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) );
 	this -> addChild(pMenusQuit, 1);
