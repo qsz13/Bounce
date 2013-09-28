@@ -76,6 +76,7 @@ bool GameLayer::init()
     gameIsEnded = false;
     isSkweing = false;
     srand(time(NULL));
+    setKeypadEnabled(true);
     if ( !CCLayer::init() )
     {
         return false;
@@ -971,14 +972,20 @@ void GameLayer::skewTimer(){
 
 void GameLayer::pause()
 {
-    if(gameIsPaused){
-      gameIsPaused = false;
-    }
-    else{
-      gameIsPaused = true;
-      CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(1, SettingLayer::scene()));
-
-    }
+  if(gameIsPaused){
+    gameIsPaused = false;
+  }
+  else{
+    gameIsPaused = true;
+    CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, PauseLayer::scene()));
 
   }
 
+}
+
+void GameLayer::keyBackClicked() 
+{
+
+	pause();
+
+}

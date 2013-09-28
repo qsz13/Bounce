@@ -15,6 +15,7 @@
 #include "EnemyPaddle.h"
 #include "Ball.h"
 #include "SettingLayer.h"
+#include "PauseLayer.h"
 #include "EnlargeItem.h"
 #include <cstdlib>
 #include <ctime>
@@ -33,8 +34,6 @@ using namespace cocos2d;
 
 class GameLayer: public CCLayer {
 public:
-
-
 
 
 	virtual bool init();
@@ -78,13 +77,16 @@ private:
 	b2MouseJoint *_mouseJoint;
 
 	void onEnterTransitionDidFinish();
-	bool freezeMode;
+	void keyBackClicked();
+
+
 	void initBackground();
 	void initTopBar();
 	void pause();
 	bool gameIsPaused;
 	bool gameIsEnded;
 	bool isSkweing;
+	bool freezeMode;
 	bool skewDirectionIsRight;
 	Item* item;
 	list<Item *> itemList;
