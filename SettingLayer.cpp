@@ -89,7 +89,7 @@ void SettingLayer::initGravitySeneitivity()
 
 void SettingLayer::backButtonPressed()
 {
-	CCDirector::sharedDirector()->popScene();
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }
 
 
@@ -114,5 +114,5 @@ void SettingLayer::setControlMode(SettingLayer::ControlType mode){
 
 void SettingLayer::keyBackClicked(){
 
-		CCDirector::sharedDirector()->popScene();
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 }

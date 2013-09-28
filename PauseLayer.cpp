@@ -58,6 +58,6 @@ bool PauseLayer::init()
 void PauseLayer::keyBackClicked()
 {
 
-	CCDirector::sharedDirector()->popScene();
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
 
 }

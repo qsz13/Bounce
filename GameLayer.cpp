@@ -126,9 +126,9 @@ void GameLayer::onEnterTransitionDidFinish(){
 	  CCSprite *countDown3 = CCSprite::create("GameLayer/CountDown/countDown3.png");
 	  CCSprite *countDown2 = CCSprite::create("GameLayer/CountDown/countDown2.png");
 	  CCSprite *countDown1 = CCSprite::create("GameLayer/CountDown/countDown1.png");
-	  countDown3->setPosition(ccp(winSize.width/2, 542));
-	  countDown2->setPosition(ccp(winSize.width/2, 542));
-	  countDown1->setPosition(ccp(winSize.width/2, 542));
+	  countDown3->setPosition(ccp(winSize.width/2, winSize.height-542));
+	  countDown2->setPosition(ccp(winSize.width/2, winSize.height-542));
+	  countDown1->setPosition(ccp(winSize.width/2, winSize.height-542));
 	  this->addChild(countDown3);
 	  this->addChild(countDown2);
 	  this->addChild(countDown1);
@@ -138,7 +138,8 @@ void GameLayer::onEnterTransitionDidFinish(){
 	  CCActionInterval*  fadeIn = CCFadeIn::create(0.5f);
 	  countDown3->runAction(CCSequence::create(fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
 	  countDown2->runAction(CCSequence::create(CCDelayTime::create(1),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
-	  countDown1->runAction(CCSequence::create(CCDelayTime::create(2),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),NULL));
+	  countDown1->runAction(CCSequence::create(CCDelayTime::create(2),fadeIn,CCDelayTime::create(0.5), CCFadeOut::create(0.0f),
+	  CCCallFunc::create(this, callfunc_selector(GameLayer::pause)),NULL));
 
 
 
@@ -148,7 +149,6 @@ void GameLayer::onEnterTransitionDidFinish(){
 
 
 
-  pause();
 
 
 
@@ -186,7 +186,7 @@ void GameLayer::buildGround(){
 void GameLayer::buildBall(){
       ball = Ball::createBall();
     this->addChild(ball, 2,0);
-    ball->setPosition(ccp(winSize.width/2,winSize.height/2));
+    ball->setPosition(ccp(winSize.width/2,(winSize.height-100)/2));
 
     //ball body
     b2BodyDef ballBodyDef;

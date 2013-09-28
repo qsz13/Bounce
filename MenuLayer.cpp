@@ -163,5 +163,5 @@ void MenuLayer::menuSetting(CCObject *pSender)
 	// CCSize size=CCDirector::sharedDirector()->getWinSize();
 	// testLabel->setPosition(ccp(size.width / 2, size.height / 4));
 	// this->addChild(testLabel, 2);
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, SettingLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, SettingLayer::scene()));
 }
