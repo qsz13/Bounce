@@ -13,19 +13,21 @@
 #include "GameLayer.h"
 using namespace cocos2d;
 
-class SettingLayer : public CCLayer{
+class SettingLayer : public cocos2d::CCLayer{
 public:
 	SettingLayer();
 	virtual ~SettingLayer();
+	static CCScene* scene();
 	enum ControlType{GRAVITY,DRAG,TOUCH};
 	static int getControlMode();
 	static void setControlMode(ControlType mode);
 	static int getSensitivity();
 	static void setSensitivity(int sensitivity);
-
+	CREATE_FUNC (SettingLayer);
 
 private:
-
+	void initBackground();
+	bool init();
 	static int sensitivity;
 	static ControlType controlMode;
 	

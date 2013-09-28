@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "GameLayer.h"
+#include "SettingLayer.h"
 
 class MenuLayer : public cocos2d::CCLayer
 {
@@ -17,7 +18,7 @@ private:
 	void initBackground();
 	void initMenu();
 	void actionCallback();
-	
+
 public:
 	virtual bool init();
 

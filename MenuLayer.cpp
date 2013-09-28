@@ -89,7 +89,7 @@ void MenuLayer::initMenu()
 														  menu_selector(MenuLayer::menuCloseCallback));
 	pQuitItem -> setPosition( ccp(0, 0) );
 	pQuitItem->setOpacity( 0 );
-	
+
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
 	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) );
 	this -> addChild(pMenusQuit, 1);
@@ -159,8 +159,9 @@ void MenuLayer::menuScores(CCObject *pSender)
 
 void MenuLayer::menuSetting(CCObject *pSender)
 {
-	CCLabelTTF *testLabel = CCLabelTTF::create("Setting", "Jenna Sue", 30);
-	CCSize size=CCDirector::sharedDirector()->getWinSize();
-	testLabel->setPosition(ccp(size.width / 2, size.height / 4));
-	this->addChild(testLabel, 2);
+	// CCLabelTTF *testLabel = CCLabelTTF::create("Setting", "Jenna Sue", 30);
+	// CCSize size=CCDirector::sharedDirector()->getWinSize();
+	// testLabel->setPosition(ccp(size.width / 2, size.height / 4));
+	// this->addChild(testLabel, 2);
+	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(1, SettingLayer::scene()));
 }
