@@ -48,6 +48,12 @@ private:
 	CCSprite *controlModeSelector;
 	CCControlSlider *gravitySensitivityControlSlider;
 	
+	CCMenu* controlModeGravity;
+	CCMenu* controlModeDrag;
+	CCMenu* controlModeTouch;
+
+
+
 };
 
 #endif /* SETTINGLAYER_H_ */

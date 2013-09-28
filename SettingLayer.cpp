@@ -104,7 +104,7 @@ void SettingLayer::initControlMode()
                                                           this,
                                                           menu_selector(SettingLayer::controlModeToGravity));
     controlModeGravityImage -> setPosition( ccp(0, 0) );
-    CCMenu* controlModeGravity = CCMenu::create(controlModeGravityImage, NULL);
+    controlModeGravity = CCMenu::create(controlModeGravityImage, NULL);
     controlModeGravity -> setPosition( ccp(size.width / 2 - 195, size.height - 456.5) );
     this -> addChild(controlModeGravity, 1);
 
@@ -115,8 +115,8 @@ void SettingLayer::initControlMode()
                                                           this,
                                                           menu_selector(SettingLayer::controlModeToDrag));
     controlModeDragImage -> setPosition( ccp(0, 0) );
-    CCMenu* controlModeDrag = CCMenu::create(controlModeDragImage, NULL);
-    controlModeDrag -> setPosition( ccp(size.width / 2, size.height - 456.5) );
+    controlModeDrag = CCMenu::create(controlModeDragImage, NULL);
+    controlModeDrag -> setPosition( ccp(size.width / 2  + 195, size.height - 456.5) );
     this -> addChild(controlModeDrag, 1);
 
     //Touch
@@ -126,8 +126,8 @@ void SettingLayer::initControlMode()
                                                           this,
                                                           menu_selector(SettingLayer::controlModeToTouch));
     controlModeTouchImage -> setPosition( ccp(0, 0) );
-    CCMenu* controlModeTouch = CCMenu::create(controlModeTouchImage, NULL);
-    controlModeTouch -> setPosition( ccp(size.width / 2 + 195, size.height - 456.5) );
+    controlModeTouch = CCMenu::create(controlModeTouchImage, NULL);
+    controlModeTouch -> setPosition( ccp(size.width / 2, size.height - 456.5) );
     this -> addChild(controlModeTouch, 1);
 
     //Selector
@@ -173,18 +173,41 @@ void SettingLayer::controlModeToGravity()
 	this->setControlMode(GRAVITY);
   CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","GRAVITY");
 
+  CCPoint delta = controlModeGravity->getPosition() - controlModeSelector->getPosition();
+
+  CCActionInterval* move = CCMoveBy::create(1, delta);
+  CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
+ // CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
+  controlModeSelector->runAction( CCSequence::create(move_ease_out, NULL));
+
+
+
 }
 
 void SettingLayer::controlModeToDrag()
 {
 	this->setControlMode(DRAG);
   CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","DRAG");
+
+  CCPoint delta = controlModeDrag->getPosition() - controlModeSelector->getPosition();
+
+  CCActionInterval* move = CCMoveBy::create(1, delta);
+  CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
+ // CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
+  controlModeSelector->runAction(CCSequence::create(move_ease_out, NULL));
 }
 
 void SettingLayer::controlModeToTouch()
 {
 	this->setControlMode(TOUCH);
-   CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","TOUCH");
+  CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode","TOUCH");
+
+  CCPoint delta = controlModeTouch->getPosition() - controlModeSelector->getPosition();
+
+  CCActionInterval* move = CCMoveBy::create(1, delta);
+  CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()));
+  //CCSequence* seq1 = CCSequence::create(move_ease_in, NULL);
+  controlModeSelector->runAction( CCSequence::create(move_ease_out, NULL));
 }
 
 CCControlSlider* SettingLayer::sliderCtl()
