@@ -14,11 +14,11 @@ public:
 	virtual ~ScoreData();
 
 	static void setScoreTo0();
-	static int getscaore();
+	static int getScore();
 	static void winRound();
 	static void itemScore();
 	static void defendScore();
-
+	static int highScore;
 
 private:
 	static int score;

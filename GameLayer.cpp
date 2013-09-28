@@ -75,6 +75,7 @@ bool GameLayer::init()
     gameIsPaused = true;
     gameIsEnded = false;
     isSkweing = false;
+    gameIsOver = false;
     newGame = true;
     srand(time(NULL));
     setKeypadEnabled(true);
@@ -358,6 +359,7 @@ void GameLayer::doStep(float delta)
             addChild(label,1,0);
             gameIsEnded = true;
             newGame = false;
+            gameIsOver = true;
             ball->removeFromParentAndCleanup(true);
             if(ghostBall!=NULL){
               ghostBall->removeFromParentAndCleanup(true);
@@ -369,7 +371,10 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
+            gameIsOver = false;
+            setHighScore();
             newGame = false;
+            ScoreData::winRound();
            ball->removeFromParentAndCleanup(true);
            if(ghostBall!=NULL){
                ghostBall->removeFromParentAndCleanup(true);
@@ -384,14 +389,18 @@ void GameLayer::doStep(float delta)
             label->setPosition(ccp(winSize.width/2,winSize.height/2));
             addChild(label,1,0);
             gameIsEnded = true;
+            setHighScore();
             newGame = false;
+            gameIsOver = true;
             ball->removeFromParentAndCleanup(true);
         }
         else if(ghostBall->getPosition().y > winSize.height-100+ball->getHeight()/2){
+            ScoreData::winRound();
             CCLabelTTF *label = CCLabelTTF::create("you win","",123);
             label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
             addChild(label,1,0);
             gameIsEnded = true;
+            gameIsOver = false;
             newGame = false;
             ball->removeFromParentAndCleanup(true);
 
@@ -614,7 +623,7 @@ void GameLayer::itemIntersects() {
 				((*it)->removeFromParentAndCleanup(true));
 				it = itemList.erase(it);
 			} else if ((*it)->rect().intersectsRect(ball->rect())&& (*it)->getFrameLasted()>20) {
-
+        ScoreData::itemScore();
 				if ((*it)->getFunction() == "enlarge") {
 					enlargePaddle(ball);
 				} else if ((*it)->getFunction() == "reverseX") {
@@ -1024,3 +1033,19 @@ void GameLayer::keyBackClicked()
 	pause();
 
 }
+
+void GameLayer::setHighScore(){
+
+CCLOG("score %d",ScoreData::getScore());
+
+  if (ScoreData::getScore()>ScoreData::highScore)
+  {  
+      CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore",ScoreData::getScore());
+      ScoreData::highScore=ScoreData::getScore();
+
+  }
+  ScoreData::setScoreTo0();
+}
+
+
+

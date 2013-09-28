@@ -20,7 +20,8 @@ private:
 	void initBackground();
 	void initMenu();
 	void actionCallback();
-
+	bool haveSavedFile();
+	void getHighScoreFromFile();
 public:
 	virtual bool init();
 

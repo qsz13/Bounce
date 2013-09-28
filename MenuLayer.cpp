@@ -115,7 +115,7 @@ bool MenuLayer::init()
 
 	this->initBackground();
 	this->initMenu();
-
+	this->getHighScoreFromFile();
 	return true;
 }
 
@@ -167,3 +167,27 @@ void MenuLayer::menuSetting(CCObject *pSender)
 	// this->addChild(testLabel, 2);
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, SettingLayer::scene()));
 }
+
+
+bool MenuLayer::haveSavedFile()
+{  
+    if(!CCUserDefault::sharedUserDefault()->getBoolForKey("haveSavedFileXml"))//通过设置的bool型标志位判断，如果不存在  
+    {  
+        CCUserDefault::sharedUserDefault()->setBoolForKey("haveSavedFileXml", true);//写入bool判断位  
+        CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore",0);//写入初始分数0  
+        CCUserDefault::sharedUserDefault()->flush();//设置完一定要调用flush，才能从缓冲写入io  
+        return false;  
+    }  
+    else  
+    {  
+        return true;  
+    }  
+}  
+
+void MenuLayer::getHighScoreFromFile()
+{  
+    if (haveSavedFile())//如果存在存档  
+    {  
+        ScoreData::highScore=CCUserDefault::sharedUserDefault()->getIntegerForKey("HighScore",0); 
+    }  
+}  

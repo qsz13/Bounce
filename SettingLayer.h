@@ -10,8 +10,9 @@
 
 
 #include "cocos2d.h"
-//#include "GameLayer.h"
+#include "CCControlSlider.h"
 using namespace cocos2d;
+using namespace cocos2d::extension;
 
 class SettingLayer : public CCLayer{
 public:

@@ -16,6 +16,7 @@
 #include "Ball.h"
 #include "SettingLayer.h"
 #include "PauseLayer.h"
+#include "ScoreData.h"
 #include "EnlargeItem.h"
 #include "BallContactListener.h"
 #include <cstdlib>
@@ -87,6 +88,7 @@ private:
 	void resume();
 	bool gameIsPaused;
 	bool gameIsEnded;
+	bool gameIsOver;
 	bool newGame;
 	bool isSkweing;
 	bool freezeMode;
@@ -114,6 +116,7 @@ private:
 	void buildGround();
 	void restrictPaddleMovement();
 	void countDown();
+	void setHighScore();
 
 };
 

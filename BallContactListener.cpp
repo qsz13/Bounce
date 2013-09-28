@@ -19,7 +19,7 @@ void BallContactListener::BeginContact(b2Contact* contact)
 		//CCLOG("contact");
 		if((spriteA->getTag()==0&&spriteB->getTag()==1)
 			||(spriteA->getTag()==1&&spriteB->getTag()==0)){
-
+            ScoreData::defendScore();
 
 
 
