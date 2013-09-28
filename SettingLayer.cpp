@@ -49,7 +49,7 @@ bool SettingLayer::init()
 {
 	if (!CCLayer::init())
 		return false;
-
+	setKeypadEnabled(true);
 	setTouchEnabled(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
 	setTouchMode(kCCTouchesOneByOne);
@@ -112,3 +112,7 @@ void SettingLayer::setControlMode(SettingLayer::ControlType mode){
 	controlMode = mode;
 }
 
+void SettingLayer::keyBackClicked(){
+
+		CCDirector::sharedDirector()->popScene();
+}

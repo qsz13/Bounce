@@ -31,7 +31,7 @@ private:
 	void initBackButton();
 	void initControlMode();
 	void initGravitySeneitivity();
-
+	void keyBackClicked();
 	void backButtonPressed();
 	static int sensitivity;
 	static ControlType controlMode;

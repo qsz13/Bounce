@@ -44,7 +44,7 @@ bool PauseLayer::init()
 {
 	if (!CCLayer::init())
 		return false;
-
+	setKeypadEnabled(true);
 	setTouchEnabled(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
 	setTouchMode(kCCTouchesOneByOne);
