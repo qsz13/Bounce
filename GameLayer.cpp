@@ -474,72 +474,74 @@ void GameLayer::restart(){
 
 
 
-void GameLayer::dropItem(){
+ void GameLayer::dropItem(){
 
     int drop = rand()%6;
 
     if(!gameIsEnded && !gameIsPaused && itemList.size() < MAX_ITEM){
-         if(drop ==0){
+        if(drop ==0){
             int type= rand()%8;
             if(type == 0){
-            	item = EnlargeItem::createEnlargeItem();
+                item = EnlargeItem::createEnlargeItem();
 
             }
             else if(type == 1){
-            	item = ReverseXItem::createReverseXItem();
+                item = ReverseXItem::createReverseXItem();
             }
             else if(type == 2){
-              item = DoubleItem::createDoubleItem();
+                item = DoubleItem::createDoubleItem();
             }
             else if(type == 3){
-            	item = ReverseYItem::createReverseYItem();
+                item = ReverseYItem::createReverseYItem();
             }
             else if(type == 4){
-              item = FreezeItem::createFreezeItem();
+                item = FreezeItem::createFreezeItem();
             }
             else if(type == 5){
-              item = ShortenItem::createShortenItem();
+                item = ShortenItem::createShortenItem();
             }
             else if(type == 6){
-              item = StealthItem::createStealthItem();
+                item = StealthItem::createStealthItem();
             }
             else if(type <= 7){
-              item = SkewingItem::createSkewingItem();
+                item = SkewingItem::createSkewingItem();
             }
 
-            bool positionCorrect = false;
+
 
             while(true){
 
-              int x=40+rand()%((int)winSize.width-80);
-              int y=(winSize.height-100)/2-350+rand()%700;
-              item->setPosition(ccp(x,y));
+                int x=40+rand()%((int)winSize.width-80);
+                int y=(winSize.height-100)/2-350+rand()%700;
+                item->setPosition(ccp(x,y));
+                bool positionCorrect = true;
 
+                if(!itemList.empty())
+                {
 
-              if(!itemList.empty())
-              {
-              for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();it++) {
+                    for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();it++) {
 
-                 if (!((*it)->rect().intersectsRect(item->rect()))){
-                  CCLOG("intersects");
-                    positionCorrect = true;
-                 }
+                        if ((*it)->rect().intersectsRect(item->rect())){
+                            positionCorrect = false;
+                            break;
+                        }
 
-              }
-              if(positionCorrect){
-                break;
-              }
-              }
-              else {
-                break;
-              }
+                    }
+                    if(positionCorrect){
+                        break;
+                    }
+                }
+                else 
+                {
+                    break;
+                }
 
             }
             addChild(item,1,0);
             itemList.push_back(item);
 
 
-         
+
         }
     }
 }

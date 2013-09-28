@@ -47,7 +47,6 @@ public:
 
 	CCSize winSize;
 
-
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
@@ -61,8 +60,6 @@ public:
 	Ball* getGhostBall();
 	MyPaddle* getMyPaddle();
 	EnemyPaddle* getEnemyPaddle();
-
-
 
 
 private:
