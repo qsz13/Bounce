@@ -137,13 +137,13 @@ void PauseLayer::onEnterTransitionDidFinish(){
 	CCPoint delta =  ccp(winSize.width / 2, winSize.height-500) - pMenusResume->getPosition();
 	CCActionInterval* move = CCMoveBy::create(0.5, delta);
 	CCActionInterval* move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
-	pMenusResume->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
+	pMenusResume->runAction( CCSequence::create(move_ease_out, NULL));
 
 
 	delta =  ccp(winSize.width / 2, winSize.height-780) - pMenusBackToMenu->getPosition();
 	move = CCMoveBy::create(0.5, delta);
 	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
-	pMenusBackToMenu->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
+	pMenusBackToMenu->runAction( CCSequence::create(move_ease_out, NULL));
 
 
 	pMenusResume->runAction( CCSequence::create(  CCFadeIn::create(0.5f), NULL));
@@ -156,12 +156,12 @@ void PauseLayer::resume(){
 	CCPoint delta =  ccp(winSize.width / 2, winSize.height+57/2) - pMenusResume->getPosition();
 	CCActionInterval* move = CCMoveBy::create(0.5, delta);
 	CCActionInterval* move_ease_in = CCEaseBackIn::create((CCActionInterval*)(move->copy()->autorelease()));
-	pMenusResume->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_in, NULL));
+	pMenusResume->runAction( CCSequence::create(move_ease_in, NULL));
 
 	delta =  ccp(winSize.width / 2, -57/2) - pMenusBackToMenu->getPosition();
 	move = CCMoveBy::create(0.5, delta);
 	move_ease_in = CCEaseBackIn::create((CCActionInterval*)(move->copy()->autorelease()));
-	pMenusBackToMenu->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_in, NULL));
+	pMenusBackToMenu->runAction( CCSequence::create(move_ease_in, NULL));
 
 
 	pMenusResume->runAction( CCSequence::create(  CCFadeOut::create(0.5f), NULL));
