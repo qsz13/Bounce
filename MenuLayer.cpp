@@ -153,8 +153,8 @@ bool MenuLayer::init()
 		return false;
 
 	setTouchEnabled(true);
-	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
+//	setTouchPriority(kCCMenuHandlerPriority + 1);
+//	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initMenu();

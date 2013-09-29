@@ -35,6 +35,7 @@ private:
 	CCSize winSize;
 	void resume();
 	void popToGameLayer();
+	void onExit();
 };
 
 #endif /* PAUSELAYER_H_ */

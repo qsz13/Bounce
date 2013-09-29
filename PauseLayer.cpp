@@ -46,8 +46,8 @@ bool PauseLayer::init()
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
+//	setTouchPriority(kCCMenuHandlerPriority + 1);
+//	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initMenu();
@@ -133,7 +133,7 @@ void PauseLayer::menupResume(CCObject *pSender){
 }
 
 void PauseLayer::onEnterTransitionDidFinish(){
-
+	setTouchEnabled(true);
 	CCPoint delta =  ccp(winSize.width / 2, winSize.height-500) - pMenusResume->getPosition();
 	CCActionInterval* move = CCMoveBy::create(0.5, delta);
 	CCActionInterval* move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
@@ -179,3 +179,9 @@ void PauseLayer::popToGameLayer(){
 
 }
 
+void PauseLayer::onExit(){
+
+pMenusResume->setOpacity( 0 );
+pMenusSetting->setOpacity( 0 );
+pMenusBackToMenu->setOpacity( 0 );
+}
