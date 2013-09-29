@@ -61,7 +61,7 @@ public:
 	Ball* getGhostBall();
 	MyPaddle* getMyPaddle();
 	EnemyPaddle* getEnemyPaddle();
-
+	
 
 private:
 	static GameLayer *layer;
@@ -78,6 +78,9 @@ private:
 	b2Fixture *enemyPaddleFixture;
 	b2MouseJoint *_mouseJoint;
 	CCLabelTTF *scores;
+
+	CCMenu* pauseButton;
+	CCSprite* scoresLabel;
 
 	void onEnterTransitionDidFinish();
 	void keyBackClicked();

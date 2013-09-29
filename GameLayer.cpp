@@ -49,13 +49,13 @@ void GameLayer::initTopBar()
                                                           menu_selector(GameLayer::pause));
     pauseButtonImage -> setPosition( ccp(0, 0) );
     //CCLOG("%f",pauseButtonImage->getContentSize().height);
-    CCMenu* pauseButton = CCMenu::create(pauseButtonImage, NULL);
+    pauseButton = CCMenu::create(pauseButtonImage, NULL);
     pauseButton -> setPosition( ccp(size.width / 4, size.height - 50) );
     this -> addChild(pauseButton, 3);
 
     //Scores Label
     // 创建图片精灵
-    CCSprite* scoresLabel = CCSprite::create("GameLayer/ScoresLabel.png");
+    scoresLabel = CCSprite::create("GameLayer/ScoresLabel.png");
 
     // 设置图片精灵的位置
     scoresLabel->setPosition(ccp(size.width*3/4, size.height - 50));
@@ -139,6 +139,8 @@ void GameLayer::onEnterTransitionDidFinish(){
 
 	 CCLayer::onEnterTransitionDidFinish();
 
+   
+   CCActionInterval*  actionTo = CCMoveTo::create(2, ccp(s.width-40, s.height-40));
 	 if(newGame){
 		 if(ScoreData::gameIsOver){
 		      ScoreData::setScoreTo0();
