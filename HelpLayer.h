@@ -7,8 +7,11 @@
 
 #ifndef HELPLAYER_H_
 #define HELPLAYER_H_
- #include "cocos2d.h"
+#include "cocos2d.h"
+#include "cocos-ext.h"
+#include "ScrollLayer.h"
 using namespace cocos2d;
+USING_NS_CC_EXT; 
 
 class HelpLayer : public CCLayer{
 public:
@@ -23,7 +26,8 @@ private:
 	void initBackButton();
 
 	void backButtonPressed();
-
+	void initScroll();
+	CCSize winSize;
 
 };
 

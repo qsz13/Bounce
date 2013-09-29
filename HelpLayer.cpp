@@ -28,9 +28,9 @@ CCScene* HelpLayer::scene()
 
 void HelpLayer::initBackground()
 {
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	winSize = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* settingLayerBackground = CCSprite::create("HelpLayer/HelpSceneBackground.png");
-	settingLayerBackground->setPosition(ccp(size.width/2, size.height/2));
+	settingLayerBackground->setPosition(ccp(winSize.width/2, winSize.height/2));
 	this->addChild(settingLayerBackground, 0);
 }
 
@@ -40,12 +40,12 @@ bool HelpLayer::init()
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
+//	setTouchPriority(kCCMenuHandlerPriority + 1);
+//	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initBackButton();
-
+	this->initScroll();
 	return true;
 }
 
@@ -58,18 +58,19 @@ void HelpLayer::keyBackClicked()
 
 void HelpLayer::initBackButton()
 {
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-    //Pause Button
-    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
-                                                          "HelpLayer/Back.png",
-                                                          "HelpLayer/Back_Pressed.png",
-                                                          this,
-                                                          menu_selector(HelpLayer::backButtonPressed));
-    backButtonImage -> setPosition( ccp(0, 0) );
-    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
-    backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
-    this -> addChild(backButton, 3);
+	 //Pause Button
+	    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
+	                                                          "HelpLayer/Back.png",
+	                                                          "HelpLayer/Back_Pressed.png",
+	                                                          this,
+	                                                          menu_selector(HelpLayer::backButtonPressed));
+	    backButtonImage -> setPosition( ccp(0, 0) );
+	    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
+	    backButton -> setPosition( ccp(winSize.width / 2, winSize.height - 1019) );
+	    this -> addChild(backButton, 3);
+
+
 }
 
 void HelpLayer::backButtonPressed()
@@ -78,3 +79,25 @@ void HelpLayer::backButtonPressed()
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInT>(0.3);
 
 }
+
+
+
+void HelpLayer::initScroll(){
+
+	// CCSize _size = CCDirector::sharedDirector()->getWinSize();
+	CCLayerColor* layer= CCLayerColor::create((ccColor4B){100,100,100,100});
+	layer->setContentSize(CCSizeMake(1500,winSize.height/2));
+	layer->setPosition(ccp(0,winSize.height/2));
+	ScrollLayer* scroll=ScrollLayer::create();
+	//scroll->setClippingToBounds(true);
+	//scroll->setDirection(kCCScrollViewDirectionHorizontal);
+	scroll->addChild(layer,1);
+	this->addChild(scroll);
+
+
+
+   
+}
+
+
+

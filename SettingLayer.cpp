@@ -77,6 +77,7 @@ void SettingLayer::initBackButton()
     CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
     backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
     this -> addChild(backButton, 3);
+    
 }
 
 void SettingLayer::initControlMode()

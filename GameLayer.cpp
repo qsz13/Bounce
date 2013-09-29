@@ -390,9 +390,13 @@ void GameLayer::doStep(float delta)
     //Ball *ball= (Ball*)this->getChildByTag(0);
         if(ball->getPosition().y<-ball->getHeight()/2){
 
-            CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
-            label->setPosition(ccp(winSize.width/2,winSize.height/2));
-            addChild(label,1,0);
+          CCSprite *bg = CCSprite::create("GameLayer/Continue & Restart/RestartBackground.png");
+          bg->setPosition(ccp(winSize.width/2,winSize.height/2));
+          this->addChild(bg,1,0);
+
+            // CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
+            // label->setPosition(ccp(winSize.width/2,winSize.height/2));
+            // addChild(label,1,0);
             gameIsEnded = true;
             newGame = false;
             ScoreData::gameIsOver = true;
@@ -404,9 +408,14 @@ void GameLayer::doStep(float delta)
             }
         }
         else if(ball->getPosition().y > winSize.height-100 + ball->getHeight()/2){
-            CCLabelTTF *label = CCLabelTTF::create("you win","",123);
-            label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
-            addChild(label,1,0);
+             CCSprite *bg = CCSprite::create("GameLayer/Continue & Restart/ContinueBackground.png");
+            bg->setPosition(ccp(winSize.width/2,winSize.height/2));
+            this->addChild(bg,1,0);
+
+
+            // CCLabelTTF *label = CCLabelTTF::create("you win","",123);
+            // label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
+            // addChild(label,1,0);
             gameIsEnded = true;
             ScoreData::gameIsOver = false;
             
@@ -422,9 +431,13 @@ void GameLayer::doStep(float delta)
         if(ghostBall!=NULL){
             if(ghostBall->getPosition().y<ball->getHeight()/2){
 
-            CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
-            label->setPosition(ccp(winSize.width/2,winSize.height/2));
-            addChild(label,1,0);
+
+              CCSprite *bg = CCSprite::create("GameLayer/Continue & Restart/RestartBackground.png");
+          bg->setPosition(ccp(winSize.width/2,winSize.height/2));
+          this->addChild(bg,1,0);
+            // CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
+            // label->setPosition(ccp(winSize.width/2,winSize.height/2));
+            // addChild(label,1,0);
             gameIsEnded = true;
             setHighScore();
             newGame = false;
@@ -433,9 +446,12 @@ void GameLayer::doStep(float delta)
         }
         else if(ghostBall->getPosition().y > winSize.height-100+ball->getHeight()/2){
             ScoreData::winRound();
-            CCLabelTTF *label = CCLabelTTF::create("you win","",123);
-            label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
-            addChild(label,1,0);
+            CCSprite *bg = CCSprite::create("GameLayer/Continue & Restart/ContinueBackground.png");
+            bg->setPosition(ccp(winSize.width/2,winSize.height/2));
+            this->addChild(bg,1,0);
+            // CCLabelTTF *label = CCLabelTTF::create("you win","",123);
+            // label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
+            // addChild(label,1,0);
             gameIsEnded = true;
             ScoreData::gameIsOver = false;
             newGame = false;
@@ -461,24 +477,24 @@ void GameLayer::restartConfirm(){
     if(gameIsEnded){
 
       if(ScoreData::gameIsOver){
-          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/restart.png",
-          "GameLayer/restart.png",
+          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/Continue & Restart/Restart.png",
+          "GameLayer/Continue & Restart/Restart_Pressed.png",
           this,
           menu_selector(GameLayer::restart));
         restartButton -> setPosition( ccp(0, 0) );
         CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
-          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/3));
+          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height-789.5));
           this -> addChild(pMenusSetting, 1);
 
       }
       else{
-          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/continue.png",
-          "GameLayer/continue.png",
+          CCMenuItemImage *restartButton = CCMenuItemImage::create("GameLayer/Continue & Restart/Continue.png",
+          "GameLayer/Continue & Restart/Continue_Pressed.png",
           this,
           menu_selector(GameLayer::restart));
         restartButton -> setPosition( ccp(0, 0) );
         CCMenu* pMenusSetting = CCMenu::create(restartButton, NULL);
-          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height/3));
+          pMenusSetting -> setPosition(ccp(winSize.width/2,winSize.height-789.5));
           this -> addChild(pMenusSetting, 1);
 
       }
