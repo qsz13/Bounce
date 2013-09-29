@@ -150,6 +150,19 @@ void GameLayer::onEnterTransitionDidFinish(){
   ball->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
   myPaddle->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
   enemyPaddle->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+  if(ghostBall != NULL){
+    ghostBall->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+  }
+
+  if(!itemList.empty())
+ {
+
+   for (list<Item *>::iterator it = itemList.begin(); it != itemList.end();it++)
+   {
+     (*it)->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+   }
+
+	}
 
 	 if(newGame){
 		 if(ScoreData::gameIsOver){
@@ -1084,14 +1097,48 @@ void GameLayer::skewTimer(){
    }
 }
 
-
-void GameLayer::pause()
-{
-	if(!gameIsPaused){
+void GameLayer::pause() {
+	if (!gameIsPaused) {
 		gameIsPaused = true;
-		CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, PauseLayer::scene()));
-	}
+		//CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, PauseLayer::scene()));
+		CCActionInterval* actionTo1 = CCMoveTo::create(0.3,
+				ccp(winSize.width / 4, winSize.height + 50));
+		CCActionInterval* actionTo2 = CCMoveTo::create(0.3,
+				ccp(winSize.width * 3 / 4, winSize.height + 50));
+		CCActionInterval* actionTo3 = CCMoveTo::create(0.3,
+				ccp(winSize.width * 3 / 4 + 80, winSize.height + 65));
 
+		pauseButton->runAction(actionTo1);
+		scoresLabel->runAction(actionTo2);
+		scores->runAction(
+				CCSequence::create(actionTo3,
+						CCCallFunc::create(this,
+								callfunc_selector(GameLayer::pushToPauseScene)),
+						NULL));
+
+		ball->runAction(CCSequence::create(CCFadeOut::create(0.3f), NULL));
+		myPaddle->runAction(CCSequence::create(CCFadeOut::create(0.3f), NULL));
+		enemyPaddle->runAction(
+				CCSequence::create(CCFadeOut::create(0.3f), NULL));
+		if (ghostBall != NULL) {
+			ghostBall->runAction(
+					CCSequence::create(CCFadeOut::create(0.3f), NULL));
+		}
+		if (!itemList.empty()) {
+
+			for (list<Item *>::iterator it = itemList.begin();
+					it != itemList.end(); it++) {
+				(*it)->runAction(
+						CCSequence::create(CCFadeOut::create(0.3f), NULL));
+			}
+
+		}
+
+	}
+}
+
+void GameLayer::pushToPauseScene(){
+   CCDirector::sharedDirector()->pushScene(PauseLayer::scene());
 }
 
 void GameLayer::resume(){

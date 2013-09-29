@@ -28,6 +28,11 @@ private:
 	void menuSetting(CCObject *pSender);
 	void menuBackToMenu(CCObject *pSender);
 	void menupResume(CCObject *pSender);
+	void onEnterTransitionDidFinish();
+	CCMenu* pMenusSetting;
+	CCMenu* pMenusBackToMenu;
+	CCMenu* pMenusResume;
+	CCSize winSize;
 };
 
 #endif /* PAUSELAYER_H_ */

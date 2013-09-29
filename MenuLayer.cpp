@@ -100,10 +100,10 @@ void MenuLayer::initMenu()
 
 	//Scores
 	CCMenuItemImage *pScoresItem = CCMenuItemImage::create(
-														  "MenuLayer/Scores.png",
-														  "MenuLayer/Scores_Pressed.png",
+														  "MenuLayer/HighScore.png",
+														  "MenuLayer/HighScore_Pressed.png",
 														  this,
-														  menu_selector(MenuLayer::menuScores));
+														  menu_selector(MenuLayer::menuHighScore));
 	pScoresItem -> setPosition( ccp(0, 0) );
 	pScoresItem->setOpacity( 0 );
 
@@ -123,7 +123,7 @@ void MenuLayer::initMenu()
 														  "MenuLayer/Quit.png",
 														  "MenuLayer/Quit_Pressed.png",
 														  this,
-														  menu_selector(MenuLayer::menuCloseCallback));
+														  menu_selector(MenuLayer::menuQuit));
 	pQuitItem -> setPosition( ccp(0, 0) );
 	pQuitItem->setOpacity( 0 );
 
@@ -174,7 +174,7 @@ CCScene* MenuLayer::scene()
 	return scene;
 }
 
-void MenuLayer::menuCloseCallback(CCObject* pSender)
+void MenuLayer::menuQuit(CCObject* pSender)
 {
     CCDirector::sharedDirector()->end();
 
@@ -190,7 +190,7 @@ void MenuLayer::menuHelp(CCObject *pSender)
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInB::create(0.3, HelpLayer::scene()));
 }
 
-void MenuLayer::menuScores(CCObject *pSender)
+void MenuLayer::menuHighScore(CCObject *pSender)
 {
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInT::create(0.3, ScoreLayer::scene()));
 }

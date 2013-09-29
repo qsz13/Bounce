@@ -29,10 +29,10 @@ public:
 
 	static cocos2d::CCScene* scene();
 
-	void menuCloseCallback(CCObject *pSender);
+	void menuQuit(CCObject *pSender);
 	void menuStart(CCObject *pSender);
 	void menuHelp(CCObject *pSender);
-	void menuScores(CCObject *pSender);
+	void menuHighScore(CCObject *pSender);
 	void menuSetting(CCObject *pSender);
 
 	static void getSensitivityFromFile();

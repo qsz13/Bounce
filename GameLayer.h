@@ -121,7 +121,7 @@ private:
 	void restrictPaddleMovement();
 	void countDown();
 	void setHighScore();
-
+	void pushToPauseScene();
 };
 
 #endif /* GAMELAYER_H_ */

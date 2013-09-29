@@ -27,14 +27,14 @@ CCScene* PauseLayer::scene()
 
 void PauseLayer::initBackground()
 {
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
+	winSize = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
 	// 创建图片精灵
 	CCSprite* settingLayerBackground = CCSprite::create("PauseLayer/PauseSceneBackground.png");
 
 	// 设置图片精灵的位置
-	settingLayerBackground->setPosition(ccp(size.width/2, size.height/2));
+	settingLayerBackground->setPosition(ccp(winSize.width/2, winSize.height/2));
 
 	// 把图片精灵放置在图层中
 	this->addChild(settingLayerBackground, 0);
@@ -57,7 +57,23 @@ bool PauseLayer::init()
 
 
 void PauseLayer::initMenu(){
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+
+	CCMenuItemImage *pResumeItem = CCMenuItemImage::create(
+														  "PauseLayer/Resume.png",
+														  "PauseLayer/Resume.png",
+														  this,
+														  menu_selector(PauseLayer::menupResume));
+	pResumeItem -> setPosition( ccp(0, 0) );
+	pResumeItem->setOpacity( 0 );
+
+	pMenusResume = CCMenu::create(pResumeItem, NULL);
+	pMenusResume -> setPosition( ccp(winSize.width / 2, winSize.height+57/2) );
+	pMenusResume->setOpacity( 0 );
+	this -> addChild(pMenusResume, 1);
+
+
+
 	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
 														  "PauseLayer/Setting.png",
 														  "PauseLayer/Setting_Pressed.png",
@@ -66,8 +82,9 @@ void PauseLayer::initMenu(){
 	pSettingItem -> setPosition( ccp(0, 0) );
 	//pSettingItem->setOpacity( 0 );
 
-	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
-	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100) );
+	pMenusSetting = CCMenu::create(pSettingItem, NULL);
+	pMenusSetting -> setPosition( ccp(winSize.width / 2, 640) );
+	pMenusSetting->setOpacity( 0 );
 	this -> addChild(pMenusSetting, 1);
 
 
@@ -82,25 +99,16 @@ void PauseLayer::initMenu(){
 	pBackToMenuItem -> setPosition( ccp(0, 0) );
 	//pSettingItem->setOpacity( 0 );
 
-	CCMenu* pMenusBackToMenu = CCMenu::create(pBackToMenuItem, NULL);
-	pMenusBackToMenu -> setPosition( ccp(size.width / 2, size.height / 2) );
+	pMenusBackToMenu = CCMenu::create(pBackToMenuItem, NULL);
+	pMenusBackToMenu -> setPosition( ccp(winSize.width / 2,-57/2) );
+	pMenusBackToMenu->setOpacity( 0 );
 	this -> addChild(pMenusBackToMenu, 1);
 
 
 
 
 
-	CCMenuItemImage *pResumeItem = CCMenuItemImage::create(
-														  "PauseLayer/Resume.png",
-														  "PauseLayer/Resume.png",
-														  this,
-														  menu_selector(PauseLayer::menupResume));
-	pResumeItem -> setPosition( ccp(0, 0) );
-	//pSettingItem->setOpacity( 0 );
 
-	CCMenu* pMenusResume = CCMenu::create(pResumeItem, NULL);
-	pMenusResume -> setPosition( ccp(size.width / 2, size.height / 2 + 100) );
-	this -> addChild(pMenusResume, 1);
 
 
 
@@ -124,3 +132,28 @@ void PauseLayer::menuBackToMenu(CCObject *pSender){
 void PauseLayer::menupResume(CCObject *pSender){
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }
+
+void PauseLayer::onEnterTransitionDidFinish(){
+
+	CCPoint delta =  ccp(winSize.width / 2, winSize.height-500) - pMenusResume->getPosition();
+	CCActionInterval* move = CCMoveBy::create(1, delta);
+	CCActionInterval* move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusResume->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
+
+
+	delta =  ccp(winSize.width / 2, winSize.height-780) - pMenusBackToMenu->getPosition();
+	move = CCMoveBy::create(1, delta);
+	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusBackToMenu->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
+
+
+	pMenusResume->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+	pMenusSetting->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+	pMenusBackToMenu->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+}
+
+
+
+
+
+
