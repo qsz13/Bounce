@@ -170,7 +170,7 @@ void SettingLayer::initGravitySeneitivity()
 void SettingLayer::backButtonPressed()
 {
     CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }
 
 void SettingLayer::controlModeToGravity()
@@ -259,5 +259,5 @@ void SettingLayer::setControlMode(SettingLayer::ControlType mode)
 void SettingLayer::keyBackClicked()
 {
     CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }
