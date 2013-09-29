@@ -21,7 +21,7 @@ ReverseXItem* ReverseXItem::createReverseXItem(){
 
 	ReverseXItem* reverseXItem =new ReverseXItem();
 	if(reverseXItem && reverseXItem->initWithFile("GameLayer/Items/reverseXItem.png")){
-		reverseXItem -> setScale(0.3);
+
 		return reverseXItem;
 	}
 	CC_SAFE_DELETE(reverseXItem);

@@ -216,7 +216,7 @@ void SettingLayer::controlModeToDrag()
 CCControlSlider* SettingLayer::sliderCtl()
 {
 
-	CCControlSlider *slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlButton.png");
+	CCControlSlider *slider = CCControlSlider::create("SettingLayer/GravitySensitivity/controlSlider.png", "SettingLayer/GravitySensitivity/controlSliderProgress.png", "SettingLayer/GravitySensitivity/controlButton.png");
     slider->setMinimumValue(100);
     slider->setMaximumValue(350);
     slider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingLayer::sliderAction), CCControlEventValueChanged);

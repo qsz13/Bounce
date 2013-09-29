@@ -50,7 +50,7 @@ void GameLayer::initTopBar()
     pauseButtonImage -> setPosition( ccp(0, 0) );
     //CCLOG("%f",pauseButtonImage->getContentSize().height);
     pauseButton = CCMenu::create(pauseButtonImage, NULL);
-    pauseButton -> setPosition( ccp(size.width / 4, size.height - 50) );
+    pauseButton -> setPosition( ccp(size.width / 4, size.height + 50) );
     this -> addChild(pauseButton, 3);
 
     //Scores Label
@@ -58,7 +58,7 @@ void GameLayer::initTopBar()
     scoresLabel = CCSprite::create("GameLayer/ScoresLabel.png");
 
     // 设置图片精灵的位置
-    scoresLabel->setPosition(ccp(size.width*3/4, size.height - 50));
+    scoresLabel->setPosition(ccp(size.width*3/4, size.height + 50));
 
     // 把图片精灵放置在图层中
     this->addChild(scoresLabel, 3);
@@ -68,7 +68,7 @@ void GameLayer::initTopBar()
     char temp[10];
     sprintf(temp,"%d",ScoreData::getScore());
     scores = CCLabelTTF::create(temp, "Designer-Notes.ttf", 65);
-    scores->setPosition(ccp(size.width*3/4 + 80, size.height - 65));
+    scores->setPosition(ccp(size.width*3/4 + 80, size.height + 65));
     this->addChild(scores, 3);
 }
 
@@ -139,8 +139,18 @@ void GameLayer::onEnterTransitionDidFinish(){
 
 	 CCLayer::onEnterTransitionDidFinish();
 
-   
-   CCActionInterval*  actionTo = CCMoveTo::create(2, ccp(s.width-40, s.height-40));
+
+   CCActionInterval*  actionTo1 = CCMoveTo::create(0.3, ccp(winSize.width / 4, winSize.height - 50));
+   CCActionInterval*  actionTo2 = CCMoveTo::create(0.4, ccp(winSize.width*3/4, winSize.height - 50));
+   CCActionInterval*  actionTo3 = CCMoveTo::create(0.5, ccp(winSize.width*3/4 + 80, winSize.height - 65));
+   pauseButton->runAction( actionTo1);
+   scoresLabel->runAction( actionTo2);
+   scores->runAction( actionTo3);
+
+  ball->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+  myPaddle->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+  enemyPaddle->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+
 	 if(newGame){
 		 if(ScoreData::gameIsOver){
 		      ScoreData::setScoreTo0();
@@ -206,8 +216,10 @@ void GameLayer::buildGround(){
 void GameLayer::buildBall(){
       ball = Ball::createBall();
       ball->setTag(0);
-    this->addChild(ball, 2,0);
-    ball->setPosition(ccp(winSize.width/2,(winSize.height-100)/2));
+      ball->setPosition(ccp(winSize.width/2,(winSize.height-100)/2));
+      ball-> setOpacity( 0 );
+      this->addChild(ball, 2,0);
+
 
     //ball body
     b2BodyDef ballBodyDef;
@@ -242,9 +254,10 @@ void GameLayer::buildMyPaddle(){
   //my paddle;
     myPaddle = MyPaddle::createMyPaddle();
     myPaddle->setTag(1);
-    this->addChild(myPaddle,2,1);
     myPaddle->setPosition(ccp(winSize.width/2,myPaddle->getTextureRect().getMidY()+50));
-
+    myPaddle-> setOpacity( 0 );
+    this->addChild(myPaddle,2,1);
+   
 
 //my paddle body
     b2BodyDef myPaddleBodyDef;
@@ -272,9 +285,10 @@ void GameLayer::buildEnemyPaddle(){
 
 //enemy paddle;
     enemyPaddle = EnemyPaddle::createEnemyPaddle();
-    this->addChild(enemyPaddle,2);
+    
+    enemyPaddle-> setOpacity( 0 );
     enemyPaddle->setPosition(ccp(winSize.width/2,winSize.height-150));
-
+    this->addChild(enemyPaddle,2);
 
 //enemy paddle body
     b2BodyDef enemyPaddleBodyDef;
@@ -1059,7 +1073,7 @@ void GameLayer::pause()
 {
 	if(!gameIsPaused){
 		gameIsPaused = true;
-		CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, PauseLayer::scene()));
+		CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, PauseLayer::scene()));
 	}
 
 }

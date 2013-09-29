@@ -51,6 +51,6 @@ bool HelpLayer::init()
 void HelpLayer::keyBackClicked()
 {
 
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 
 }

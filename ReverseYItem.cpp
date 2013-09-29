@@ -19,7 +19,7 @@ ReverseYItem* ReverseYItem::createReverseYItem(){
 
 	ReverseYItem* reverseYItem =new ReverseYItem();
 	if(reverseYItem && reverseYItem->initWithFile("GameLayer/Items/reverseYItem.png")){
-		reverseYItem -> setScale(0.3);
+
 		return reverseYItem;
 	}
 	CC_SAFE_DELETE(reverseYItem);

@@ -108,19 +108,19 @@ void PauseLayer::initMenu(){
 
 void PauseLayer::keyBackClicked()
 {
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }
 
 void PauseLayer::menuSetting(CCObject *pSender){
 
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.5, SettingLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, SettingLayer::scene()));
 }
 
 void PauseLayer::menuBackToMenu(CCObject *pSender){
 
-	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(0.5, MenuLayer::scene()));
+	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(0.3, MenuLayer::scene()));
 }
 
 void PauseLayer::menupResume(CCObject *pSender){
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.5);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }

@@ -53,9 +53,6 @@ void MenuLayer::initMenu()
 
 
 
-
-
-
 	//Setting
 	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
 														  "MenuLayer/Setting.png",
@@ -185,22 +182,22 @@ void MenuLayer::menuCloseCallback(CCObject* pSender)
 
 void MenuLayer::menuStart(CCObject* pSender)
 {
-	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(0.5, GameLayer::scene()));
+	CCDirector::sharedDirector()->replaceScene(CCTransitionSlideInR::create(0.3, GameLayer::scene()));
 }
 
 void MenuLayer::menuHelp(CCObject *pSender)
 {
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, HelpLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.3, HelpLayer::scene()));
 }
 
 void MenuLayer::menuScores(CCObject *pSender)
 {
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, ScoreLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.3, ScoreLayer::scene()));
 }
 
 void MenuLayer::menuSetting(CCObject *pSender)
 {
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.5, SettingLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.3, SettingLayer::scene()));
 }
 
 
@@ -212,9 +209,8 @@ bool MenuLayer::haveSavedFile()
         CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore",0);//写入初始分数0  
         CCUserDefault::sharedUserDefault()->setStringForKey	("ControlMode","TOUCH");
         CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",200);
-        
         CCUserDefault::sharedUserDefault()->flush();//设置完一定要调用flush，才能从缓冲写入io  
-        return false;  
+        return false;
     }  
     else  
     {  
@@ -248,8 +244,8 @@ void MenuLayer::getControlModeFromFile(){;
 
 void MenuLayer::getSensitivityFromFile(){
 	if(haveSavedFile()){
-		CCLOG("from file : %d",CCUserDefault::sharedUserDefault()->getIntegerForKey("Sensitivity",200));
+		//CCLOG("from file : %d",CCUserDefault::sharedUserDefault()->getIntegerForKey("Sensitivity",200));
 		SettingLayer::setSensitivity(CCUserDefault::sharedUserDefault()->getIntegerForKey("Sensitivity",200));
-		CCLOG("%d !!",SettingLayer::getSensitivity());
+		//CCLOG("%d !!",SettingLayer::getSensitivity());
 	}
 }
