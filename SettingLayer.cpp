@@ -67,9 +67,6 @@ void SettingLayer::initBackButton()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-
-
-
     //Pause Button
     CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
                                                           "SettingLayer/Back.png",

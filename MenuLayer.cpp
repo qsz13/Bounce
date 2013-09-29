@@ -6,8 +6,10 @@
  */
 
 #include "MenuLayer.h"
-
+#include "SimpleAudioEngine.h"
 using namespace cocos2d;
+using namespace CocosDenshion;
+
 
 void MenuLayer::initBackground()
 {
@@ -39,8 +41,20 @@ void MenuLayer::initMenu()
 	pStartItem->setOpacity( 0 );
 
 	CCMenu* pMenusStart = CCMenu::create(pStartItem, NULL);
-	pMenusStart -> setPosition( ccp(size.width / 2, size.height / 2 - 171) );
+	pMenusStart -> setPosition( ccp(size.width/2,0) );
 	this -> addChild(pMenusStart, 1);
+
+	CCPoint delta =  ccp(size.width / 2, size.height / 2 - 171) - pMenusStart->getPosition();
+
+  	CCActionInterval* move = CCMoveBy::create(1, delta);
+  	CCActionInterval* move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+  	pMenusStart->runAction( CCSequence::create(move_ease_out, NULL));
+
+
+
+
+
+
 
 	//Setting
 	CCMenuItemImage *pSettingItem = CCMenuItemImage::create(
@@ -52,8 +66,19 @@ void MenuLayer::initMenu()
 	pSettingItem->setOpacity( 0 );
 
 	CCMenu* pMenusSetting = CCMenu::create(pSettingItem, NULL);
-	pMenusSetting -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100) );
+	pMenusSetting -> setPosition( ccp(0, size.height / 2 - 171 - 100) );
 	this -> addChild(pMenusSetting, 1);
+
+
+
+
+	delta =  ccp(size.width / 2, size.height / 2 - 171 - 100) - pMenusSetting->getPosition();
+
+  	move = CCMoveBy::create(1, delta);
+  	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+  	pMenusSetting->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
+
+
 
 	//Help
 	CCMenuItemImage *pHelpItem = CCMenuItemImage::create(
@@ -65,8 +90,16 @@ void MenuLayer::initMenu()
 	pHelpItem->setOpacity( 0 );
 
 	CCMenu* pMenusHelp = CCMenu::create(pHelpItem, NULL);
-	pMenusHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80) );
+	pMenusHelp -> setPosition( ccp(size.width, size.height / 2 - 171 - 100 - 80) );
 	this -> addChild(pMenusHelp, 1);
+
+
+
+	delta =  ccp(size.width / 2, size.height / 2 - 171 - 100 - 80) - pMenusHelp->getPosition();
+
+	move = CCMoveBy::create(1, delta);
+	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusHelp->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
 
 	//Scores
 	CCMenuItemImage *pScoresItem = CCMenuItemImage::create(
@@ -78,8 +111,15 @@ void MenuLayer::initMenu()
 	pScoresItem->setOpacity( 0 );
 
 	CCMenu* pScoresHelp = CCMenu::create(pScoresItem, NULL);
-	pScoresHelp -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 2) );
+	pScoresHelp -> setPosition( ccp(0, size.height / 2 - 171 - 100 - 80 * 2) );
 	this -> addChild(pScoresHelp, 1);
+
+
+	delta =  ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 2) - pScoresHelp->getPosition();
+
+  	move = CCMoveBy::create(1, delta);
+  	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+  	pScoresHelp->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
 
 	//Quit
 	CCMenuItemImage *pQuitItem = CCMenuItemImage::create(
@@ -91,16 +131,22 @@ void MenuLayer::initMenu()
 	pQuitItem->setOpacity( 0 );
 
 	CCMenu* pMenusQuit = CCMenu::create(pQuitItem, NULL);
-	pMenusQuit -> setPosition( ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) );
+	pMenusQuit -> setPosition( ccp(size.width, size.height / 2 - 171 - 100 - 80 * 3) );
 	this -> addChild(pMenusQuit, 1);
+
+	delta =  ccp(size.width / 2, size.height / 2 - 171 - 100 - 80 * 3) - pMenusQuit->getPosition();
+
+	move = CCMoveBy::create(1, delta);
+	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusQuit->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
 
 
 	CCActionInterval*  action1 = CCFadeIn::create(1.0f);
 	pStartItem->runAction( CCSequence::create( action1, NULL));
-	pSettingItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
-	pHelpItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
-	pScoresItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
-	pQuitItem->runAction( CCSequence::create( CCFadeIn::create(1.0f), NULL));
+	pSettingItem->runAction( CCSequence::create(CCDelayTime::create(0.5), CCFadeIn::create(1.0f), NULL));
+	pHelpItem->runAction( CCSequence::create( CCDelayTime::create(0.5),CCFadeIn::create(1.0f), NULL));
+	pScoresItem->runAction( CCSequence::create( CCDelayTime::create(0.5),CCFadeIn::create(1.0f), NULL));
+	pQuitItem->runAction( CCSequence::create( CCDelayTime::create(0.5),CCFadeIn::create(1.0f), NULL));
 
 }
 
@@ -118,6 +164,8 @@ bool MenuLayer::init()
 	this->getHighScoreFromFile();
 	this->getControlModeFromFile();
 	this->getSensitivityFromFile();
+	//preloadBackgroundMusic("background.mp3");
+	//SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background.mp3",true);
 	return true;
 }
 
