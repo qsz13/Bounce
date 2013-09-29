@@ -229,7 +229,7 @@ void MenuLayer::getHighScoreFromFile()
 
 void MenuLayer::getControlModeFromFile(){;
 	if(haveSavedFile()){
-		string cm = CCUserDefault::sharedUserDefault()->getStringForKey("ControlMode");
+		string cm = CCUserDefault::sharedUserDefault()->getStringForKey("ControlMode","TOUCH");
 		if(cm == "TOUCH"){
 			SettingLayer::setControlMode(SettingLayer::TOUCH);
 		} 
