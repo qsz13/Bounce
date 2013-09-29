@@ -20,6 +20,9 @@ private:
 	void initBackground();
 	bool init();
 	void keyBackClicked();
+	void initBackButton();
+
+	void backButtonPressed();
 
 
 };

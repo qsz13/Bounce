@@ -74,13 +74,13 @@ void ScoreLayer::initBackButton()
 void ScoreLayer::keyBackClicked()
 {
 
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
 
 }
 
 void ScoreLayer::backButtonPressed()
 {
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
 
 }
 

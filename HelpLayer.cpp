@@ -44,6 +44,7 @@ bool HelpLayer::init()
 	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
+	this->initBackButton();
 
 	return true;
 }
@@ -51,6 +52,29 @@ bool HelpLayer::init()
 void HelpLayer::keyBackClicked()
 {
 
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInT>(0.3);
+
+}
+
+void HelpLayer::initBackButton()
+{
+	CCSize size = CCDirector::sharedDirector()->getWinSize();
+
+    //Pause Button
+    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
+                                                          "HelpLayer/Back.png",
+                                                          "HelpLayer/Back_Pressed.png",
+                                                          this,
+                                                          menu_selector(HelpLayer::backButtonPressed));
+    backButtonImage -> setPosition( ccp(0, 0) );
+    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
+    backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
+    this -> addChild(backButton, 3);
+}
+
+void HelpLayer::backButtonPressed()
+{
+
+	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInT>(0.3);
 
 }

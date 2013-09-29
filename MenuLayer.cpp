@@ -187,12 +187,12 @@ void MenuLayer::menuStart(CCObject* pSender)
 
 void MenuLayer::menuHelp(CCObject *pSender)
 {
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.3, HelpLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInB::create(0.3, HelpLayer::scene()));
 }
 
 void MenuLayer::menuScores(CCObject *pSender)
 {
-	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInL::create(0.3, ScoreLayer::scene()));
+	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInT::create(0.3, ScoreLayer::scene()));
 }
 
 void MenuLayer::menuSetting(CCObject *pSender)
