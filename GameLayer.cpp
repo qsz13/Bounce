@@ -1113,7 +1113,7 @@ void GameLayer::pause() {
 		scores->runAction(
 				CCSequence::create(actionTo3,
 						CCCallFunc::create(this,
-								callfunc_selector(GameLayer::pushToPauseScene)),
+								callfunc_selector(GameLayer::pushToPauseLayer)),
 						NULL));
 
 		ball->runAction(CCSequence::create(CCFadeOut::create(0.3f), NULL));
@@ -1137,7 +1137,7 @@ void GameLayer::pause() {
 	}
 }
 
-void GameLayer::pushToPauseScene(){
+void GameLayer::pushToPauseLayer(){
    CCDirector::sharedDirector()->pushScene(PauseLayer::scene());
 }
 

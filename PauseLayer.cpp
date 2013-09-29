@@ -65,7 +65,6 @@ void PauseLayer::initMenu(){
 														  this,
 														  menu_selector(PauseLayer::menupResume));
 	pResumeItem -> setPosition( ccp(0, 0) );
-	pResumeItem->setOpacity( 0 );
 
 	pMenusResume = CCMenu::create(pResumeItem, NULL);
 	pMenusResume -> setPosition( ccp(winSize.width / 2, winSize.height+57/2) );
@@ -116,7 +115,7 @@ void PauseLayer::initMenu(){
 
 void PauseLayer::keyBackClicked()
 {
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+	resume();
 }
 
 void PauseLayer::menuSetting(CCObject *pSender){
@@ -130,30 +129,53 @@ void PauseLayer::menuBackToMenu(CCObject *pSender){
 }
 
 void PauseLayer::menupResume(CCObject *pSender){
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+	resume();
 }
 
 void PauseLayer::onEnterTransitionDidFinish(){
 
 	CCPoint delta =  ccp(winSize.width / 2, winSize.height-500) - pMenusResume->getPosition();
-	CCActionInterval* move = CCMoveBy::create(1, delta);
+	CCActionInterval* move = CCMoveBy::create(0.5, delta);
 	CCActionInterval* move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
 	pMenusResume->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
 
 
 	delta =  ccp(winSize.width / 2, winSize.height-780) - pMenusBackToMenu->getPosition();
-	move = CCMoveBy::create(1, delta);
+	move = CCMoveBy::create(0.5, delta);
 	move_ease_out = CCEaseBackOut::create((CCActionInterval*)(move->copy()->autorelease()));
 	pMenusBackToMenu->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_out, NULL));
 
 
-	pMenusResume->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
-	pMenusSetting->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
-	pMenusBackToMenu->runAction( CCSequence::create(  CCFadeIn::create(1.0f), NULL));
+	pMenusResume->runAction( CCSequence::create(  CCFadeIn::create(0.5f), NULL));
+	pMenusSetting->runAction( CCSequence::create(  CCFadeIn::create(0.5f), NULL));
+	pMenusBackToMenu->runAction( CCSequence::create(  CCFadeIn::create(0.5f), NULL));
 }
 
 
+void PauseLayer::resume(){
+	CCPoint delta =  ccp(winSize.width / 2, winSize.height+57/2) - pMenusResume->getPosition();
+	CCActionInterval* move = CCMoveBy::create(0.5, delta);
+	CCActionInterval* move_ease_in = CCEaseBackIn::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusResume->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_in, NULL));
+
+	delta =  ccp(winSize.width / 2, -57/2) - pMenusBackToMenu->getPosition();
+	move = CCMoveBy::create(0.5, delta);
+	move_ease_in = CCEaseBackIn::create((CCActionInterval*)(move->copy()->autorelease()));
+	pMenusBackToMenu->runAction( CCSequence::create(CCDelayTime::create(0.5),move_ease_in, NULL));
 
 
+	pMenusResume->runAction( CCSequence::create(  CCFadeOut::create(0.5f), NULL));
+	pMenusSetting->runAction( CCSequence::create(  CCFadeOut::create(0.5f), NULL));
+	pMenusBackToMenu->runAction(
+				CCSequence::create(CCFadeOut::create(0.5f),
+						CCCallFunc::create(this,
+								callfunc_selector(PauseLayer::popToGameLayer)),
+						NULL));
 
+}
+
+void PauseLayer::popToGameLayer(){
+	CCDirector::sharedDirector()->popScene();
+
+}
 

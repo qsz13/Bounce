@@ -33,6 +33,8 @@ private:
 	CCMenu* pMenusBackToMenu;
 	CCMenu* pMenusResume;
 	CCSize winSize;
+	void resume();
+	void popToGameLayer();
 };
 
 #endif /* PAUSELAYER_H_ */
