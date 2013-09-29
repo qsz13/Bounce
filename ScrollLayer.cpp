@@ -34,7 +34,7 @@ bool ScrollLayer::init()
 	for (int i = 1; i <= 3; ++ i)
 	{
 	   memset(helpstr, 0, sizeof(helpstr));
-	   sprintf(helpstr,"HelpLayer/help_%02d.png",i);
+	   sprintf(helpstr,"HelpLayer/help_%d.png",i);
 	   CCSprite *pSprite = CCSprite::create(helpstr);
 	   pSprite->setPosition(ccp(visibleSize.width * (i-0.5f), visibleSize.height / 2));
 	   pLayer->addChild(pSprite);

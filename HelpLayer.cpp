@@ -84,15 +84,15 @@ void HelpLayer::backButtonPressed()
 
 void HelpLayer::initScroll(){
 
-	// CCSize _size = CCDirector::sharedDirector()->getWinSize();
-	CCLayerColor* layer= CCLayerColor::create((ccColor4B){100,100,100,100});
-	layer->setContentSize(CCSizeMake(1500,winSize.height/2));
-	layer->setPosition(ccp(0,winSize.height/2));
+	 CCSize _size = CCDirector::sharedDirector()->getWinSize();
+	 CCLayerColor* layer= CCLayerColor::create((ccColor4B){100,100,100,100});
+	 layer->setContentSize(CCSizeMake(1500,winSize.height/2));
+	 layer->setPosition(ccp(0,winSize.height/2));
 	ScrollLayer* scroll=ScrollLayer::create();
-	//scroll->setClippingToBounds(true);
-	//scroll->setDirection(kCCScrollViewDirectionHorizontal);
-	scroll->addChild(layer,1);
-	this->addChild(scroll);
+//	scroll->setClippingToBounds(true);
+//	scroll->setDirection(kCCScrollViewDirectionHorizontal);
+	layer->addChild(scroll,1);
+	this->addChild(layer);
 
 
 
