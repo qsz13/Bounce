@@ -35,9 +35,9 @@ bool SettingLayer::init()
 	if (!CCLayer::init())
 		return false;
 	setKeypadEnabled(true);
-	setTouchEnabled(true);
-	// setTouchPriority(kCCMenuHandlerPriority + 1);
-	// setTouchMode(kCCTouchesOneByOne);
+	//setTouchEnabled(true);
+	 setTouchPriority(kCCMenuHandlerPriority + 1);
+	 //setTouchMode(kCCTouchesOneByOne);
 
 
 	this->initBackground();
@@ -168,11 +168,7 @@ void SettingLayer::initGravitySeneitivity()
 	this->addChild(gravitySensitivityControlSlider, 2);
 }
 
-void SettingLayer::backButtonPressed()
-{
-    CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
-}
+
 
 void SettingLayer::controlModeToGravity()
 {
@@ -262,3 +258,11 @@ void SettingLayer::keyBackClicked()
     CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
 }
+
+void SettingLayer::backButtonPressed()
+{
+    CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",sensitivity);
+  CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInR>(0.3);
+}
+
+bool SettingLayer::ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	){return true;}

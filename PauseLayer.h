@@ -36,6 +36,7 @@ private:
 	void resume();
 	void popToGameLayer();
 	void onExit();
+	bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
 };
 
 #endif /* PAUSELAYER_H_ */

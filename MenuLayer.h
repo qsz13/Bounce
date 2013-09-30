@@ -39,6 +39,7 @@ public:
 	static void getHighScoreFromFile();
 	static void getControlModeFromFile();
 	CREATE_FUNC(MenuLayer);
+	bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
 };
 
 #endif /* MENULAYER_H_ */

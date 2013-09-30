@@ -51,8 +51,7 @@ private:
 	CCMenu* controlModeGravity;
 	CCMenu* controlModeDrag;
 	CCMenu* controlModeTouch;
-
-
+	virtual bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
 
 };
 

@@ -46,8 +46,8 @@ bool PauseLayer::init()
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-//	setTouchPriority(kCCMenuHandlerPriority + 1);
-//	setTouchMode(kCCTouchesOneByOne);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
+	//setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initMenu();
@@ -119,7 +119,7 @@ void PauseLayer::keyBackClicked()
 }
 
 void PauseLayer::menuSetting(CCObject *pSender){
-
+	setTouchEnabled(false);
 	CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, SettingLayer::scene()));
 }
 
@@ -180,8 +180,9 @@ void PauseLayer::popToGameLayer(){
 }
 
 void PauseLayer::onExit(){
-
+	CCLayer::onExit();
 pMenusResume->setOpacity( 0 );
 pMenusSetting->setOpacity( 0 );
 pMenusBackToMenu->setOpacity( 0 );
 }
+bool PauseLayer::ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	){return true;}

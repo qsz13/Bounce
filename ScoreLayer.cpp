@@ -30,8 +30,8 @@ bool ScoreLayer::init()
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-//	setTouchPriority(kCCMenuHandlerPriority + 1);
-//	setTouchMode(kCCTouchesOneByOne);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
+	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initBackButton();

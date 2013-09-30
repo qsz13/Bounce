@@ -89,6 +89,7 @@ bool GameLayer::init()
     newGame = true;
     srand(time(NULL));
     setKeypadEnabled(true);
+	setTouchPriority(kCCMenuHandlerPriority + 1);
     if ( !CCLayer::init() )
     {
         return false;
