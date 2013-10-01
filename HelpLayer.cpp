@@ -91,6 +91,7 @@ void HelpLayer::initScroll(){
 	ScrollLayer* scroll=ScrollLayer::create();
 //	scroll->setClippingToBounds(true);
 //	scroll->setDirection(kCCScrollViewDirectionHorizontal);
+	//scroll->setPosition(ccp((910+315)/2, winSize.width/2));
 	layer->addChild(scroll,1);
 	this->addChild(layer);
 

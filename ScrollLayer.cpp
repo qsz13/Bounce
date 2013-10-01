@@ -31,21 +31,21 @@ bool ScrollLayer::init()
 
 	CCLayer *pLayer = CCLayer::create();
 	char helpstr[30] = {0};
-	for (int i = 1; i <= 3; ++ i)
+	for (int i = 1; i <= 7; ++ i)
 	{
 	   memset(helpstr, 0, sizeof(helpstr));
-	   sprintf(helpstr,"HelpLayer/help_%d.png",i);
+	   sprintf(helpstr,"HelpLayer/HelpLayer-%d.png",i);
 	   CCSprite *pSprite = CCSprite::create(helpstr);
 	   pSprite->setPosition(ccp(visibleSize.width * (i-0.5f), visibleSize.height / 2));
 	   pLayer->addChild(pSprite);
 	}
 
-	m_pScrollView = CCScrollView::create(CCSizeMake(960, 640), pLayer);
+	m_pScrollView = CCScrollView::create(CCSizeMake(720, 910-315), pLayer);
 	m_pScrollView->setContentOffset(CCPointZero);
 	m_pScrollView->setTouchEnabled(false);
 	m_pScrollView->setDelegate(this);
 	m_pScrollView->setDirection(kCCScrollViewDirectionHorizontal);
-	pLayer->setContentSize(CCSizeMake(960*3, 640));
+	pLayer->setContentSize(CCSizeMake(720*7, 910-315));
 
 	this->addChild(m_pScrollView);
 
