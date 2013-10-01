@@ -139,7 +139,15 @@ bool GameLayer::init()
 void GameLayer::onEnterTransitionDidFinish(){
 
 	 CCLayer::onEnterTransitionDidFinish();
+     if(SettingLayer::getControlMode()==SettingLayer::GRAVITY) {
+      setAccelerometerEnabled(true);
+      setTouchEnabled(false);
 
+    }
+    else {
+        setTouchEnabled(true);
+        setAccelerometerEnabled(false);
+    }
 
    CCActionInterval*  actionTo1 = CCMoveTo::create(0.3, ccp(winSize.width / 4, winSize.height - 50));
    CCActionInterval*  actionTo2 = CCMoveTo::create(0.4, ccp(winSize.width*3/4, winSize.height - 50));
