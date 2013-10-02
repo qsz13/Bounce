@@ -55,9 +55,6 @@ void ScoreLayer::initBackButton()
 {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-
-
-
     //Pause Button
     CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
                                                           "ScoreLayer/Back.png",
@@ -67,36 +64,29 @@ void ScoreLayer::initBackButton()
     backButtonImage -> setPosition( ccp(0, 0) );
     CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
     backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
-    this -> addChild(backButton, 3);
+    this -> addChild(backButton, 2);
 }
 
 
 void ScoreLayer::keyBackClicked()
 {
-
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
-
 }
 
 void ScoreLayer::backButtonPressed()
 {
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
-
 }
 
 void ScoreLayer::initHighScore(){
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	highScoreLabel = CCLabelTTF::create("High Score:", "Designer-Notes.ttf", 150);
-
 
 	char temp[10];
 	sprintf(temp,"%d",ScoreData::highScore);
 	highScore =  CCLabelTTF::create(temp, "Designer-Notes.ttf", 150);
-
-	highScoreLabel->setPosition(ccp(size.width/2, size.height/2+100));
-    this->addChild(highScoreLabel, 3);
+	highScore->setColor(ccc3(158, 93, 161));
 
     highScore->setPosition(ccp(size.width/2, size.height/2-100));
-	this->addChild(highScore, 3);
+	this->addChild(highScore, 1);
 
 }

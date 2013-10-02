@@ -36,7 +36,8 @@ bool ScrollLayer::init()
 	   memset(helpstr, 0, sizeof(helpstr));
 	   sprintf(helpstr,"HelpLayer/HelpLayer-%d.png",i);
 	   CCSprite *pSprite = CCSprite::create(helpstr);
-	   pSprite->setPosition(ccp(visibleSize.width * (i-0.5f), visibleSize.height / 2));
+       pSprite->setPosition(ccp(visibleSize.width * (i-0.5f), (910-315)/2));
+
 	   pLayer->addChild(pSprite);
 	}
 
@@ -96,6 +97,7 @@ void ScrollLayer::onExit()
 
 bool ScrollLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    CCLog("touch begin");
     m_touchPoint = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     return true;
 }
@@ -133,31 +135,37 @@ void ScrollLayer::adjustScrollView(float offset)
    // CCSpriteFrameCache *pCache =  CCSpriteFrameCache::sharedSpriteFrameCache();
     //CCSprite *pPoint = (CCSprite *)this->getChildByTag(m_nCurPage);
     //pPoint->setDisplayFrame(pCache->spriteFrameByName("button_normal.png"));
+    //
+    CCPoint delta;
     if (offset<0)
     {
         m_nCurPage ++;
-    }else
+        delta =  ccp(45, 0);
+    }
+    else
     {
         m_nCurPage --;
+        delta =  ccp(-45, 0);
     }
- 
+    
     if (m_nCurPage <1)
     {
         m_nCurPage = 1;
     }
-//
-//    if(m_nCurPage > 3)
-//    {
-//        //CCLayer *pLayer = ListViewLayer::create();
-//        CCScene *pScene = CCScene::create();
-//        pScene->addChild(pLayer);
-//        CCDirector::sharedDirector()->replaceScene(pScene);
-//    }
+    if (m_nCurPage > 7)
+    {
+        m_nCurPage = 7;
+    }
     else
     {
+        CCActionInterval* move = CCMoveBy::create(0.5, delta);      
+        CCActionInterval* move_ease_out = CCEaseElasticOut::create((CCActionInterval*)(move->copy()->autorelease()) );
+        HelpLayer::movingDot->runAction( CCSequence::create(move_ease_out, NULL));
         //pPoint = (CCSprite *)this->getChildByTag(m_nCurPage);
         //pPoint->setDisplayFrame(pCache->spriteFrameByName("button_selected.png"));
         CCPoint  adjustPos = ccp(origin.x - visibleSize.width * (m_nCurPage-1), 0);
         m_pScrollView->setContentOffset(adjustPos, true);
+
+        
     }
 }

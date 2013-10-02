@@ -7,6 +7,8 @@
 
 #include "HelpLayer.h"
 
+CCSprite * HelpLayer::movingDot = NULL;
+
 HelpLayer::HelpLayer() {
 	// TODO Auto-generated constructor stub
 
@@ -28,10 +30,16 @@ CCScene* HelpLayer::scene()
 
 void HelpLayer::initBackground()
 {
+	//Background
 	winSize = CCDirector::sharedDirector()->getWinSize();
 	CCSprite* settingLayerBackground = CCSprite::create("HelpLayer/HelpSceneBackground.png");
 	settingLayerBackground->setPosition(ccp(winSize.width/2, winSize.height/2));
 	this->addChild(settingLayerBackground, 0);
+
+    //Moving Dot
+    movingDot = CCSprite::create("HelpLayer/MovingDot.png");
+    movingDot->setPosition(ccp(winSize.width / 2 - 45 * 3, winSize.height - (910 + 940) / 2));
+    this->addChild(movingDot, 2);
 }
 
 bool HelpLayer::init()
@@ -51,54 +59,41 @@ bool HelpLayer::init()
 
 void HelpLayer::keyBackClicked()
 {
-
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInT>(0.3);
-
 }
 
 void HelpLayer::initBackButton()
 {
 
 	 //Pause Button
-	    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
-	                                                          "HelpLayer/Back.png",
-	                                                          "HelpLayer/Back_Pressed.png",
-	                                                          this,
-	                                                          menu_selector(HelpLayer::backButtonPressed));
-	    backButtonImage -> setPosition( ccp(0, 0) );
-	    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
-	    backButton -> setPosition( ccp(winSize.width / 2, winSize.height - 1019) );
-	    this -> addChild(backButton, 3);
-
-
+    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
+                                                          "HelpLayer/Back.png",
+                                                          "HelpLayer/Back_Pressed.png",
+                                                          this,
+                                                          menu_selector(HelpLayer::backButtonPressed));
+    backButtonImage -> setPosition( ccp(0, 0) );
+    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
+    backButton -> setPosition( ccp(winSize.width / 2, winSize.height - 1019) );
+    this -> addChild(backButton, 3);
 }
 
 void HelpLayer::backButtonPressed()
 {
-
 	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInT>(0.3);
-
 }
 
-
-
-void HelpLayer::initScroll(){
-
+void HelpLayer::initScroll()
+{
 	 CCSize _size = CCDirector::sharedDirector()->getWinSize();
 	 CCLayerColor* layer= CCLayerColor::create((ccColor4B){100,100,100,100});
-	 layer->setContentSize(CCSizeMake(1500,winSize.height/2));
-	 layer->setPosition(ccp(0,winSize.height/2));
+	 layer->setContentSize(CCSizeMake(720*7, 910-315));
+	 layer->setPosition(ccp(0, winSize.height - 910 ));
+
 	ScrollLayer* scroll=ScrollLayer::create();
 //	scroll->setClippingToBounds(true);
 //	scroll->setDirection(kCCScrollViewDirectionHorizontal);
 	//scroll->setPosition(ccp((910+315)/2, winSize.width/2));
 	layer->addChild(scroll,1);
-	this->addChild(layer);
-
-
-
-   
+	this->addChild(layer, 1);
 }
-
-
 
