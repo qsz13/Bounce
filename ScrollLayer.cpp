@@ -152,7 +152,7 @@ void ScrollLayer::adjustScrollView(float offset)
     {
         m_nCurPage = 1;
     }
-    if (m_nCurPage > 7)
+    else if (m_nCurPage > 7)
     {
         m_nCurPage = 7;
     }
