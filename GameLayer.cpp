@@ -129,10 +129,13 @@ void GameLayer::onEnterTransitionDidFinish() {
 	if (SettingLayer::getControlMode() == SettingLayer::GRAVITY) {
 		setAccelerometerEnabled(true);
 		setTouchEnabled(false);
+		CCLOG("gravity");
 
 	} else {
 		setTouchEnabled(true);
 		setAccelerometerEnabled(false);
+
+		CCLOG("Touch");
 	}
 
 	CCActionInterval* actionTo1 = CCMoveTo::create(0.3,
@@ -852,15 +855,12 @@ void GameLayer::avoidUnwantedSituation() {
 
 	if (!freezeMode) {
 		if (bs < 225) {
-			CCLOG("slow");
 			b2Vec2 *bf = new b2Vec2(bv.x, bv.y);
-			//v.y *= 1000;
 			ball->getBallBody()->ApplyForceToCenter(*bf);
 		}
 	}
 
 	if (bs > 1000) {
-		CCLOG("fast,%f,%f", bv.x, bv.y);
 		b2Vec2 *bf = new b2Vec2(-bv.x * 10, -bv.y * 10);
 
 		ball->getBallBody()->ApplyForceToCenter(*bf);

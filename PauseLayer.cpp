@@ -56,7 +56,7 @@ bool PauseLayer::init() {
 void PauseLayer::initMenu() {
 
 	CCMenuItemImage *pResumeItem = CCMenuItemImage::create(
-			"PauseLayer/Resume.png", "PauseLayer/Resume.png", this,
+			"PauseLayer/Resume.png", "PauseLayer/Resume_Pressed.png", this,
 			menu_selector(PauseLayer::menupResume));
 	pResumeItem->setPosition(ccp(0, 0));
 
@@ -77,7 +77,7 @@ void PauseLayer::initMenu() {
 	this->addChild(pMenusSetting, 1);
 
 	CCMenuItemImage *pBackToMenuItem = CCMenuItemImage::create(
-			"PauseLayer/BackToMenu.png", "PauseLayer/BackToMenu.png", this,
+			"PauseLayer/BackToMenu.png", "PauseLayer/BackToMenu_Pressed.png", this,
 			menu_selector(PauseLayer::menuBackToMenu));
 	pBackToMenuItem->setPosition(ccp(0, 0));
 	//pSettingItem->setOpacity( 0 );
