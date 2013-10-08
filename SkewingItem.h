@@ -10,7 +10,7 @@
 
 #include "Item.h"
 
-class SkewingItem :public Item{
+class SkewingItem: public Item {
 public:
 	SkewingItem();
 	virtual ~SkewingItem();

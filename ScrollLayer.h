@@ -15,14 +15,13 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-
-class ScrollLayer : public cocos2d::CCLayer ,public CCScrollViewDelegate{
+class ScrollLayer: public cocos2d::CCLayer, public CCScrollViewDelegate {
 public:
 	ScrollLayer();
 	virtual ~ScrollLayer();
 
 	bool init();
-	CREATE_FUNC(ScrollLayer);
+	CREATE_FUNC (ScrollLayer);
 
 //scrollview滚动的时候会调用
 	void scrollViewDidScroll(CCScrollView* view);
@@ -38,19 +37,13 @@ public:
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
-
-
-
-
 private:
 
 //根据手势滑动的距离和方向滚动图层
-	 void adjustScrollView(float offset);
-	 CCScrollView *m_pScrollView;
-	 CCPoint m_touchPoint;
-	 int m_nCurPage;
-
-	
+	void adjustScrollView(float offset);
+	CCScrollView *m_pScrollView;
+	CCPoint m_touchPoint;
+	int m_nCurPage;
 
 };
 

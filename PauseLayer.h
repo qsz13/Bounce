@@ -11,7 +11,7 @@
 #include "SettingLayer.h"
 #include "MenuLayer.h"
 using namespace cocos2d;
-class PauseLayer : public CCLayer {
+class PauseLayer: public CCLayer {
 public:
 	PauseLayer();
 	virtual ~PauseLayer();
@@ -36,7 +36,7 @@ private:
 	void resume();
 	void popToGameLayer();
 	void onExit();
-	bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
+	bool ccTouchBegan(CCTouch * pTouch, CCEvent * pEvent);
 };
 
 #endif /* PAUSELAYER_H_ */

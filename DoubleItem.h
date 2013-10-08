@@ -13,8 +13,7 @@
 
 using namespace cocos2d;
 
-
-class DoubleItem :public Item {
+class DoubleItem: public Item {
 public:
 	DoubleItem();
 	virtual ~DoubleItem();

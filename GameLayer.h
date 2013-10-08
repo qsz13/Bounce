@@ -37,12 +37,10 @@ using namespace cocos2d;
 class GameLayer: public CCLayer {
 public:
 
-
 	virtual bool init();
 	static CCScene* scene();
 	CREATE_FUNC (GameLayer);
 	static GameLayer *getLayer();
-
 
 	void doStep(float delta);
 
@@ -61,7 +59,6 @@ public:
 	Ball* getGhostBall();
 	MyPaddle* getMyPaddle();
 	EnemyPaddle* getEnemyPaddle();
-	
 
 private:
 	static GameLayer *layer;
@@ -84,7 +81,6 @@ private:
 
 	void onEnterTransitionDidFinish();
 	void keyBackClicked();
-
 
 	void initBackground();
 	void initTopBar();

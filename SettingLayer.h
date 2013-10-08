@@ -15,12 +15,14 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-class SettingLayer : public CCLayer{
+class SettingLayer: public CCLayer {
 public:
 	SettingLayer();
 	virtual ~SettingLayer();
 	static CCScene* scene();
-	enum ControlType{GRAVITY,DRAG,TOUCH};
+	enum ControlType {
+		GRAVITY, DRAG, TOUCH
+	};
 	static int getControlMode();
 	static void setControlMode(ControlType mode);
 	static int getSensitivity();
@@ -41,17 +43,17 @@ private:
 	void controlModeToTouch();
 
 	CCControlSlider* sliderCtl();
-    void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
+	void sliderAction(CCObject* pSender, CCControlEvent controlEvent);
 
 	static int sensitivity;
 	static ControlType controlMode;
 	CCSprite *controlModeSelector;
 	CCControlSlider *gravitySensitivityControlSlider;
-	
+
 	CCMenu* controlModeGravity;
 	CCMenu* controlModeDrag;
 	CCMenu* controlModeTouch;
-	virtual bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
+	virtual bool ccTouchBegan(CCTouch * pTouch, CCEvent * pEvent);
 
 };
 

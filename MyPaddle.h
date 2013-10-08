@@ -13,10 +13,8 @@ using namespace cocos2d;
 // #define MY_PADDLE_SCALE_X 0.3
 // #define MY_PADDLE_SCALE_Y 0.5
 
-
-class MyPaddle : public Paddle {
+class MyPaddle: public Paddle {
 public:
-
 
 	static MyPaddle* createMyPaddle();
 
@@ -24,10 +22,9 @@ public:
 	float getWidth();
 	float getHeight();
 
-    b2Body* getMyPaddleBody();
-    void setMyPaddleBody(b2Body* myPaddleBody);
+	b2Body* getMyPaddleBody();
+	void setMyPaddleBody(b2Body* myPaddleBody);
 
-	
 protected:
 	//static MyPaddle *myPaddle;
 	MyPaddle();

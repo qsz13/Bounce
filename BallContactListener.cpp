@@ -9,36 +9,22 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-void BallContactListener::BeginContact(b2Contact* contact)
-{
-    b2Body* bodyA = contact->GetFixtureA()->GetBody();
-    b2Body* bodyB = contact->GetFixtureB()->GetBody();
-    if (bodyA->GetUserData() != NULL && bodyB->GetUserData() != NULL) {
-		CCSprite* spriteA = (CCSprite*)bodyA->GetUserData();
-		CCSprite* spriteB = (CCSprite*)bodyB->GetUserData();
+void BallContactListener::BeginContact(b2Contact* contact) {
+	b2Body* bodyA = contact->GetFixtureA()->GetBody();
+	b2Body* bodyB = contact->GetFixtureB()->GetBody();
+	if (bodyA->GetUserData() != NULL && bodyB->GetUserData() != NULL) {
+		CCSprite* spriteA = (CCSprite*) bodyA->GetUserData();
+		CCSprite* spriteB = (CCSprite*) bodyB->GetUserData();
 		//CCLOG("contact");
-		if((spriteA->getTag()==0&&spriteB->getTag()==1)
-			||(spriteA->getTag()==1&&spriteB->getTag()==0)){
-            ScoreData::defendScore();
+		if ((spriteA->getTag() == 0 && spriteB->getTag() == 1)
+				|| (spriteA->getTag() == 1 && spriteB->getTag() == 0)) {
+			ScoreData::defendScore();
 
 		}
-    }
+	}
 }
 
+void BallContactListener::EndContact(b2Contact* contact) {
 
-void BallContactListener::EndContact(b2Contact* contact)
-{
-    // b2Body* bodyA = contact->GetFixtureA()->GetBody();
-    // b2Body* bodyB = contact->GetFixtureB()->GetBody();
-    // CCSprite* spriteA = (CCSprite*)bodyA->GetUserData();
-    // CCSprite* spriteB = (CCSprite*)bodyB->GetUserData();
-   
-    // //更改碰撞体颜色
-    // if (spriteA != NULL && spriteB != NULL)
-    // {
-    //     spriteA.color = ccWHITE;
-    //     spriteB.color = ccWHITE;
-    // }
 }
-
 

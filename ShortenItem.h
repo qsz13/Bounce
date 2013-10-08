@@ -12,14 +12,11 @@
 #include "Item.h"
 using namespace cocos2d;
 
-
-class ShortenItem : public Item{
+class ShortenItem: public Item {
 public:
 	ShortenItem();
 	virtual ~ShortenItem();
 	static ShortenItem* createShortenItem();
-
-
 
 };
 

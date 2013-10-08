@@ -10,7 +10,7 @@
 #include "cocos2d.h"
 #include "Item.h"
 using namespace cocos2d;
-class FreezeItem : public Item{
+class FreezeItem: public Item {
 public:
 	FreezeItem();
 	virtual ~FreezeItem();

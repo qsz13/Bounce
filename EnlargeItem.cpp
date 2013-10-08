@@ -16,10 +16,11 @@ EnlargeItem::~EnlargeItem() {
 	// TODO Auto-generated destructor stub
 }
 
-EnlargeItem* EnlargeItem::createEnlargeItem(){
+EnlargeItem* EnlargeItem::createEnlargeItem() {
 
-	EnlargeItem* enlargeItem =new EnlargeItem();
-	if(enlargeItem && enlargeItem->initWithFile("GameLayer/Items/enlargeItem.png")){
+	EnlargeItem* enlargeItem = new EnlargeItem();
+	if (enlargeItem
+			&& enlargeItem->initWithFile("GameLayer/Items/enlargeItem.png")) {
 		return enlargeItem;
 	}
 	CC_SAFE_DELETE(enlargeItem);

@@ -10,12 +10,10 @@
 #include "Box2D.h"
 #include "ScoreData.h"
 
-
-class BallContactListener : public b2ContactListener{
+class BallContactListener: public b2ContactListener {
 private:
 	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 };
-
 
 #endif /* BALLCONTACTLISTENER_H_ */

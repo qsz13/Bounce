@@ -14,14 +14,12 @@
 #include "ScoreLayer.h"
 #include "HelpLayer.h"
 #include <string>
-class MenuLayer : public cocos2d::CCLayer
-{
+class MenuLayer: public cocos2d::CCLayer {
 private:
 	void initBackground();
 	void initMenu();
 	void actionCallback();
 	static bool haveSavedFile();
-	
 
 public:
 
@@ -38,8 +36,8 @@ public:
 	static void getSensitivityFromFile();
 	static void getHighScoreFromFile();
 	static void getControlModeFromFile();
-	CREATE_FUNC(MenuLayer);
-	bool ccTouchBegan	(	CCTouch * 	pTouch,	CCEvent * 	pEvent 	);
+	CREATE_FUNC (MenuLayer);
+	bool ccTouchBegan(CCTouch * pTouch, CCEvent * pEvent);
 };
 
 #endif /* MENULAYER_H_ */

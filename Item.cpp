@@ -17,21 +17,21 @@ Item::~Item() {
 	// TODO Auto-generated destructor stub
 }
 
-CCRect Item::rect(){
-	 //CCRect myRect = myPaddle->boundingBox();
+CCRect Item::rect() {
 	CCSize s = this->boundingBox().size;
-	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
+	return CCRectMake(this->getPosition().x - s.width / 2,
+			this->getPosition().y - s.height / 2, s.width, s.height);
 
 }
-       
-void Item::frameAddOne(){
+
+void Item::frameAddOne() {
 	frameLasted++;
 }
 
-int Item::getFrameLasted(){
+int Item::getFrameLasted() {
 	return frameLasted;
 }
 
-string Item::getFunction(){
+string Item::getFunction() {
 	return function;
 }

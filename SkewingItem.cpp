@@ -16,11 +16,11 @@ SkewingItem::~SkewingItem() {
 	// TODO Auto-generated destructor stub
 }
 
+SkewingItem* SkewingItem::createSkewingItem() {
 
-SkewingItem* SkewingItem::createSkewingItem(){
-
-	SkewingItem* skewingItem =new SkewingItem();
-	if(skewingItem && skewingItem->initWithFile("GameLayer/Items/skewingItem.png")){
+	SkewingItem* skewingItem = new SkewingItem();
+	if (skewingItem
+			&& skewingItem->initWithFile("GameLayer/Items/skewingItem.png")) {
 		return skewingItem;
 	}
 	CC_SAFE_DELETE(skewingItem);

@@ -12,12 +12,12 @@
 #include "Item.h"
 
 using namespace cocos2d;
-class ReverseXItem : public Item{
+class ReverseXItem: public Item {
 public:
 	ReverseXItem();
 	virtual ~ReverseXItem();
 	static ReverseXItem* createReverseXItem();
-	
+
 };
 
 #endif /* REVERSEITEM_H_ */

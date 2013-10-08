@@ -23,7 +23,6 @@ public:
 private:
 	static int score;
 
-
 };
 
 #endif /* SCOREDATA_H_ */

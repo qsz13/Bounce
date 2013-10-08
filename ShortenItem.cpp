@@ -16,10 +16,11 @@ ShortenItem::~ShortenItem() {
 	// TODO Auto-generated destructor stub
 }
 
-ShortenItem* ShortenItem::createShortenItem(){
+ShortenItem* ShortenItem::createShortenItem() {
 
-	ShortenItem* shortenItem =new ShortenItem();
-	if(shortenItem && shortenItem->initWithFile("GameLayer/Items/shortenItem.png")){
+	ShortenItem* shortenItem = new ShortenItem();
+	if (shortenItem
+			&& shortenItem->initWithFile("GameLayer/Items/shortenItem.png")) {
 		return shortenItem;
 	}
 	CC_SAFE_DELETE(shortenItem);

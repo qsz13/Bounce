@@ -11,10 +11,11 @@
 Ball::Ball() {
 	velocity.speed = 20;
 
-	velocity.x = 10+rand()%73205/10000;
-	if (rand()&1) 
+	velocity.x = 10 + rand() % 73205 / 10000;
+	if (rand() & 1)
 		velocity.x = -velocity.x;
-	velocity.y = -sqrt(velocity.speed*velocity.speed - velocity.x * velocity.x);
+	velocity.y = -sqrt(
+			velocity.speed * velocity.speed - velocity.x * velocity.x);
 
 	frameLasted = 0;
 	frozenFrameLasted = 0;
@@ -25,111 +26,105 @@ Ball::~Ball() {
 	// TODO Auto-generated destructor stub
 }
 
-Ball* Ball::createBall(){
-
-		Ball* ball = new Ball();
-
-		if (ball && ball->initWithFile("GameLayer/ball.png"))
-		{
-			ball->myInit();
-			//ball->autorelease();
-			return ball;
-		}
-			CC_SAFE_DELETE(ball);
-			return NULL;
-
-}
-
-Ball* Ball::createGhostBall(){
+Ball* Ball::createBall() {
 
 	Ball* ball = new Ball();
 
-	if (ball && ball->initWithFile("GameLayer/ghostBall.png"))
-	{
+	if (ball && ball->initWithFile("GameLayer/ball.png")) {
 		ball->myInit();
 		//ball->autorelease();
 		return ball;
 	}
-		CC_SAFE_DELETE(ball);
-		return NULL;
-
+	CC_SAFE_DELETE(ball);
+	return NULL;
 
 }
 
+Ball* Ball::createGhostBall() {
 
-void Ball::myInit(){
+	Ball* ball = new Ball();
+
+	if (ball && ball->initWithFile("GameLayer/ghostBall.png")) {
+		ball->myInit();
+		//ball->autorelease();
+		return ball;
+	}
+	CC_SAFE_DELETE(ball);
+	return NULL;
+
+}
+
+void Ball::myInit() {
 	//this->setScale(BALL_SCALE);
 }
 
-
-float Ball::getWidth(){
+float Ball::getWidth() {
 	return this->getTextureRect().getMaxY();
 }
 
-float Ball::getHeight(){
+float Ball::getHeight() {
 	return this->getTextureRect().getMaxX();
 }
 
-float Ball::getRadius(){
-	return this->getTextureRect().getMaxX()/2;
+float Ball::getRadius() {
+	return this->getTextureRect().getMaxX() / 2;
 }
 
-Velocity Ball::getVelocity(){
+Velocity Ball::getVelocity() {
 	return velocity;
 }
 
-Velocity Ball::setVelocity(Velocity v){
+Velocity Ball::setVelocity(Velocity v) {
 	velocity = v;
 }
 
-b2Body* Ball::getBallBody(){
+b2Body* Ball::getBallBody() {
 	return ballBody;
 }
-void Ball::setBallBody(b2Body* ballBody){
+void Ball::setBallBody(b2Body* ballBody) {
 	this->ballBody = ballBody;
 }
 
-CCRect Ball::rect(){
+CCRect Ball::rect() {
 
 	CCSize s = this->getContentSize();
-	return CCRectMake(this->getPosition().x-s.width/2, this->getPosition().y-s.height/2, s.width, s.height);
+	return CCRectMake(this->getPosition().x - s.width / 2,
+			this->getPosition().y - s.height / 2, s.width, s.height);
 
-	 
 }
-       
 
-void Ball::frameAddOne(){
+void Ball::frameAddOne() {
 	frameLasted++;
 
 }
-int Ball::getFrameLasted(){
+int Ball::getFrameLasted() {
 	return frameLasted;
 
 }
 
-int Ball::getPriority(){
-	priority = this->getPosition().y-CCDirector::sharedDirector()->getWinSize().height;
+int Ball::getPriority() {
+	priority = this->getPosition().y
+			- CCDirector::sharedDirector()->getWinSize().height;
 	priority += ballBody->GetLinearVelocity().y;
 	return priority;
 }
 
-
- void Ball::frozenFrameAddOne(){
-	 frozenFrameLasted++;
- }
-int Ball::getFrozenFrameLasted(){
+void Ball::frozenFrameAddOne() {
+	frozenFrameLasted++;
+}
+int Ball::getFrozenFrameLasted() {
 	return frozenFrameLasted;
 }
-void Ball::setFrozenFrameTo0(){
+void Ball::setFrozenFrameTo0() {
 	frozenFrameLasted = 0;
 }
 
-void Ball::skewFrameAddOne(){
+void Ball::skewFrameAddOne() {
 	skewFrameLasted++;
 }
-int Ball::getSkewFrameLasted(){
+int Ball::getSkewFrameLasted() {
 	return skewFrameLasted;
 }
-void Ball::setSkewFrameLastedTo0(){
+void Ball::setSkewFrameLastedTo0() {
 	skewFrameLasted = 0;
 }

@@ -10,11 +10,10 @@
 
 #include "cocos2d.h"
 #include "ScoreData.h"
- 
+
 using namespace cocos2d;
 
-class ScoreLayer :public CCLayer
-{
+class ScoreLayer: public CCLayer {
 public:
 	ScoreLayer();
 	virtual ~ScoreLayer();

@@ -13,10 +13,9 @@
 #include "ScrollLayer.h"
 
 using namespace cocos2d;
-USING_NS_CC_EXT; 
+USING_NS_CC_EXT;
 
-class HelpLayer : public CCLayer
-{
+class HelpLayer: public CCLayer {
 public:
 	HelpLayer();
 	virtual ~HelpLayer();
@@ -24,7 +23,6 @@ public:
 	CREATE_FUNC (HelpLayer);
 
 	static CCSprite *movingDot;
-
 
 private:
 	void initBackground();

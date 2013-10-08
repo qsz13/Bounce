@@ -14,18 +14,19 @@
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
-class Paddle : public CCSprite{
+class Paddle: public CCSprite {
 public:
 	Paddle();
 	virtual ~Paddle();
 	b2BodyDef* getBodyDef();
-	enum lengthType{shortPaddle,normalPaddle,longPaddle};
+	enum lengthType {
+		shortPaddle, normalPaddle, longPaddle
+	};
 	lengthType getLengthState();
 	void setLengthState(lengthType length);
 	void setFrameLastedTo0();
 	int getFrameLasted();
 	void frameAddOne();
-
 
 protected:
 	b2BodyDef paddleBodyDef;

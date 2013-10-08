@@ -16,15 +16,14 @@ FreezeItem::~FreezeItem() {
 	// TODO Auto-generated destructor stub
 }
 
+FreezeItem* FreezeItem::createFreezeItem() {
 
-FreezeItem* FreezeItem::createFreezeItem(){
-
-	FreezeItem* freezeItem =new FreezeItem();
-	if(freezeItem && freezeItem->initWithFile("GameLayer/Items/freezeItem.png")){
+	FreezeItem* freezeItem = new FreezeItem();
+	if (freezeItem
+			&& freezeItem->initWithFile("GameLayer/Items/freezeItem.png")) {
 		return freezeItem;
 	}
 	CC_SAFE_DELETE(freezeItem);
 	return NULL;
-
 
 }

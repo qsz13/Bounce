@@ -16,22 +16,20 @@ ScoreLayer::~ScoreLayer() {
 	// TODO Auto-generated destructor stub
 }
 
-CCScene* ScoreLayer::scene()
-{
-    CCScene *scene = CCScene::create();
-    ScoreLayer* layer = ScoreLayer::create();
-    scene->addChild(layer);
-    return scene;
+CCScene* ScoreLayer::scene() {
+	CCScene *scene = CCScene::create();
+	ScoreLayer* layer = ScoreLayer::create();
+	scene->addChild(layer);
+	return scene;
 }
 
-bool ScoreLayer::init()
-{
+bool ScoreLayer::init() {
 	if (!CCLayer::init())
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
-	setTouchMode(kCCTouchesOneByOne);
+	setTouchMode (kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initBackButton();
@@ -39,54 +37,46 @@ bool ScoreLayer::init()
 	return true;
 }
 
-
-
-void ScoreLayer::initBackground()
-{
+void ScoreLayer::initBackground() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
-	CCSprite* settingLayerBackground = CCSprite::create("ScoreLayer/ScoreSceneBackground.png");
-	settingLayerBackground->setPosition(ccp(size.width/2, size.height/2));
+	CCSprite* settingLayerBackground = CCSprite::create(
+			"ScoreLayer/ScoreSceneBackground.png");
+	settingLayerBackground->setPosition(ccp(size.width / 2, size.height / 2));
 	this->addChild(settingLayerBackground, 0);
 }
 
-
-
-void ScoreLayer::initBackButton()
-{
+void ScoreLayer::initBackButton() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-    //Pause Button
-    CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
-                                                          "ScoreLayer/Back.png",
-                                                          "ScoreLayer/Back_Pressed.png",
-                                                          this,
-                                                          menu_selector(ScoreLayer::backButtonPressed));
-    backButtonImage -> setPosition( ccp(0, 0) );
-    CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
-    backButton -> setPosition( ccp(size.width / 2, size.height - 1019) );
-    this -> addChild(backButton, 2);
+	//Pause Button
+	CCMenuItemImage *backButtonImage = CCMenuItemImage::create(
+			"ScoreLayer/Back.png", "ScoreLayer/Back_Pressed.png", this,
+			menu_selector(ScoreLayer::backButtonPressed));
+	backButtonImage->setPosition(ccp(0, 0));
+	CCMenu* backButton = CCMenu::create(backButtonImage, NULL);
+	backButton->setPosition(ccp(size.width / 2, size.height - 1019));
+	this->addChild(backButton, 2);
 }
 
-
-void ScoreLayer::keyBackClicked()
-{
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
+void ScoreLayer::keyBackClicked() {
+	CCDirector::sharedDirector()->popSceneWithTransition < CCTransitionSlideInB
+			> (0.3);
 }
 
-void ScoreLayer::backButtonPressed()
-{
-	CCDirector::sharedDirector()->popSceneWithTransition<CCTransitionSlideInB>(0.3);
+void ScoreLayer::backButtonPressed() {
+	CCDirector::sharedDirector()->popSceneWithTransition < CCTransitionSlideInB
+			> (0.3);
 }
 
-void ScoreLayer::initHighScore(){
+void ScoreLayer::initHighScore() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	char temp[10];
-	sprintf(temp,"%d",ScoreData::highScore);
-	highScore =  CCLabelTTF::create(temp, "Designer-Notes.ttf", 150);
+	sprintf(temp, "%d", ScoreData::highScore);
+	highScore = CCLabelTTF::create(temp, "Designer-Notes.ttf", 150);
 	highScore->setColor(ccc3(158, 93, 161));
 
-    highScore->setPosition(ccp(size.width/2, size.height/2-100));
+	highScore->setPosition(ccp(size.width / 2, size.height / 2 - 100));
 	this->addChild(highScore, 1);
 
 }

@@ -15,11 +15,11 @@ DoubleItem::~DoubleItem() {
 	// TODO Auto-generated destructor stub
 }
 
+DoubleItem* DoubleItem::createDoubleItem() {
 
-DoubleItem* DoubleItem::createDoubleItem(){
-
-	DoubleItem* doubleItem =new DoubleItem();
-	if(doubleItem && doubleItem->initWithFile("GameLayer/Items/doubleItem.png")){
+	DoubleItem* doubleItem = new DoubleItem();
+	if (doubleItem
+			&& doubleItem->initWithFile("GameLayer/Items/doubleItem.png")) {
 		return doubleItem;
 	}
 	CC_SAFE_DELETE(doubleItem);

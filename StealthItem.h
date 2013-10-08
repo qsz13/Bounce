@@ -10,7 +10,7 @@
 
 #include "Item.h"
 
-class StealthItem :public Item {
+class StealthItem: public Item {
 public:
 	StealthItem();
 	virtual ~StealthItem();

@@ -11,7 +11,7 @@
 #include "cocos2d.h"
 #include "Item.h"
 
-class ReverseYItem :public Item{
+class ReverseYItem: public Item {
 public:
 	ReverseYItem();
 	virtual ~ReverseYItem();

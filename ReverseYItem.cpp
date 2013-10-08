@@ -8,17 +8,18 @@
 #include "ReverseYItem.h"
 
 ReverseYItem::ReverseYItem() {
-		function = "reverseY";
+	function = "reverseY";
 }
 
 ReverseYItem::~ReverseYItem() {
 	// TODO Auto-generated destructor stub
 }
 
-ReverseYItem* ReverseYItem::createReverseYItem(){
+ReverseYItem* ReverseYItem::createReverseYItem() {
 
-	ReverseYItem* reverseYItem =new ReverseYItem();
-	if(reverseYItem && reverseYItem->initWithFile("GameLayer/Items/reverseYItem.png")){
+	ReverseYItem* reverseYItem = new ReverseYItem();
+	if (reverseYItem
+			&& reverseYItem->initWithFile("GameLayer/Items/reverseYItem.png")) {
 
 		return reverseYItem;
 	}

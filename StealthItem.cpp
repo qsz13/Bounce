@@ -8,7 +8,7 @@
 #include "StealthItem.h"
 
 StealthItem::StealthItem() {
-		function = "stealth";
+	function = "stealth";
 
 }
 
@@ -16,10 +16,11 @@ StealthItem::~StealthItem() {
 	// TODO Auto-generated destructor stub
 }
 
-StealthItem* StealthItem::createStealthItem(){
+StealthItem* StealthItem::createStealthItem() {
 
-	StealthItem* stealthItem =new StealthItem();
-	if(stealthItem && stealthItem->initWithFile("GameLayer/Items/stealthItem.png")){
+	StealthItem* stealthItem = new StealthItem();
+	if (stealthItem
+			&& stealthItem->initWithFile("GameLayer/Items/stealthItem.png")) {
 		return stealthItem;
 	}
 	CC_SAFE_DELETE(stealthItem);

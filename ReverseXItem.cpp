@@ -16,11 +16,11 @@ ReverseXItem::~ReverseXItem() {
 	// TODO Auto-generated destructor stub
 }
 
+ReverseXItem* ReverseXItem::createReverseXItem() {
 
-ReverseXItem* ReverseXItem::createReverseXItem(){
-
-	ReverseXItem* reverseXItem =new ReverseXItem();
-	if(reverseXItem && reverseXItem->initWithFile("GameLayer/Items/reverseXItem.png")){
+	ReverseXItem* reverseXItem = new ReverseXItem();
+	if (reverseXItem
+			&& reverseXItem->initWithFile("GameLayer/Items/reverseXItem.png")) {
 
 		return reverseXItem;
 	}

@@ -19,18 +19,18 @@ ScoreData::~ScoreData() {
 	// TODO Auto-generated destructor stub
 }
 
-void ScoreData::setScoreTo0(){
+void ScoreData::setScoreTo0() {
 	score = 0;
 }
-int ScoreData::getScore(){
+int ScoreData::getScore() {
 	return score;
 }
-void ScoreData::winRound(){
+void ScoreData::winRound() {
 	score += 50;
 }
-void ScoreData::itemScore(){
+void ScoreData::itemScore() {
 	score += 10;
 }
-void ScoreData::defendScore(){
+void ScoreData::defendScore() {
 	score += 5;
 }

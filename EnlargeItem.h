@@ -13,14 +13,11 @@
 #define PTM_RATIO 32.0
 using namespace cocos2d;
 
-class EnlargeItem : public Item {
+class EnlargeItem: public Item {
 public:
 	EnlargeItem();
 	virtual ~EnlargeItem();
 	static EnlargeItem* createEnlargeItem();
-
-
-
 
 };
 
