@@ -37,6 +37,7 @@ void GameLayer::initBackground() {
 }
 
 void GameLayer::initTopBar() {
+
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Pause Button
@@ -44,7 +45,6 @@ void GameLayer::initTopBar() {
 			"GameLayer/Pause.png", "GameLayer/Pause_Pressed.png", this,
 			menu_selector(GameLayer::pause));
 	pauseButtonImage->setPosition(ccp(0, 0));
-	//CCLOG("%f",pauseButtonImage->getContentSize().height);
 	pauseButton = CCMenu::create(pauseButtonImage, NULL);
 	pauseButton->setPosition(ccp(size.width / 4, size.height + 50));
 	this->addChild(pauseButton, 3);
@@ -134,7 +134,8 @@ void GameLayer::onEnterTransitionDidFinish() {
 	} else {
 		setTouchEnabled(true);
 		setAccelerometerEnabled(false);
-
+		b2Vec2 gravity(0,0);
+		world->SetGravity(gravity);
 		CCLOG("Touch");
 	}
 
@@ -290,7 +291,7 @@ void GameLayer::buildMyPaddle() {
 	myPaddleFixtureDef.shape = &myPaddleShape;
 	myPaddleFixtureDef.density = 10.0f;
 	myPaddleFixtureDef.friction = 0.4f;
-	myPaddleFixtureDef.restitution = 0.1f;
+	myPaddleFixtureDef.restitution = 0.02f;
 
 	myPaddleFixture = myPaddle->getMyPaddleBody()->CreateFixture(
 			&myPaddleFixtureDef);
@@ -594,9 +595,28 @@ void GameLayer::ccTouchesEnded(CCSet *pTouches, CCEvent* event) {
 }
 
 void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue) {
-	b2Vec2 gravity(pAccelerationValue->x * SettingLayer::getSensitivity(),
-			pAccelerationValue->y * SettingLayer::getSensitivity());
-	world->SetGravity(gravity);
+	// b2Vec2 gravity(pAccelerationValue->x * SettingLayer::getSensitivity(),
+	// 		pAccelerationValue->y * SettingLayer::getSensitivity());
+	// world->SetGravity(gravity);
+	//if(pAccelerationValue->x > 0){
+	//if (SettingLayer::getControlMode() == SettingLayer::TOUCH) {
+		if(pAccelerationValue->x > 0.03){
+			CCLOG("!!!!");
+			b2Vec2 v = b2Vec2(0.08 * SettingLayer::getSensitivity(), 0);
+			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+		}
+		else if(pAccelerationValue->x < -0.03){
+			b2Vec2 v = b2Vec2(-0.08 * SettingLayer::getSensitivity(), 0);
+			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+		}else
+		{
+			b2Vec2 v = b2Vec2(0, 0);
+			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+		}
+	//}
+	//}
+
+
 }
 
 void GameLayer::dropItem() {
