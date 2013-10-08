@@ -15,7 +15,6 @@ void BallContactListener::BeginContact(b2Contact* contact) {
 	if (bodyA->GetUserData() != NULL && bodyB->GetUserData() != NULL) {
 		CCSprite* spriteA = (CCSprite*) bodyA->GetUserData();
 		CCSprite* spriteB = (CCSprite*) bodyB->GetUserData();
-		//CCLOG("contact");
 		if ((spriteA->getTag() == 0 && spriteB->getTag() == 1)
 				|| (spriteA->getTag() == 1 && spriteB->getTag() == 0)) {
 			ScoreData::defendScore();

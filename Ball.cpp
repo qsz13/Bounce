@@ -6,7 +6,6 @@
  */
 
 #include "Ball.h"
-//Ball* Ball::ball = NULL;
 
 Ball::Ball() {
 	velocity.speed = 20;
@@ -23,7 +22,7 @@ Ball::Ball() {
 }
 
 Ball::~Ball() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 Ball* Ball::createBall() {
@@ -31,8 +30,6 @@ Ball* Ball::createBall() {
 	Ball* ball = new Ball();
 
 	if (ball && ball->initWithFile("GameLayer/ball.png")) {
-		ball->myInit();
-		//ball->autorelease();
 		return ball;
 	}
 	CC_SAFE_DELETE(ball);
@@ -45,19 +42,12 @@ Ball* Ball::createGhostBall() {
 	Ball* ball = new Ball();
 
 	if (ball && ball->initWithFile("GameLayer/ghostBall.png")) {
-		ball->myInit();
-		//ball->autorelease();
 		return ball;
 	}
 	CC_SAFE_DELETE(ball);
 	return NULL;
 
 }
-
-void Ball::myInit() {
-	//this->setScale(BALL_SCALE);
-}
-
 float Ball::getWidth() {
 	return this->getTextureRect().getMaxY();
 }

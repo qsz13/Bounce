@@ -11,12 +11,10 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 
 ScrollLayer::ScrollLayer() {
-	// TODO Auto-generated constructor stub
 
 }
 
 ScrollLayer::~ScrollLayer() {
-	// TODO Auto-generated destructor stub
 }
 
 bool ScrollLayer::init() {
@@ -52,12 +50,10 @@ bool ScrollLayer::init() {
 
 }
 
-//scrollview滚动的时候会调用
 void ScrollLayer::scrollViewDidScroll(CCScrollView* view) {
 
 }
 
-//scrollview缩放的时候会调用
 void ScrollLayer::scrollViewDidZoom(CCScrollView* view) {
 
 }
@@ -75,7 +71,6 @@ void ScrollLayer::onExit() {
 }
 
 bool ScrollLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
-	CCLog("touch begin");
 	m_touchPoint = CCDirector::sharedDirector()->convertToGL(
 			pTouch->getLocationInView());
 	return true;

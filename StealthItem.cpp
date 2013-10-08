@@ -13,7 +13,6 @@ StealthItem::StealthItem() {
 }
 
 StealthItem::~StealthItem() {
-	// TODO Auto-generated destructor stub
 }
 
 StealthItem* StealthItem::createStealthItem() {

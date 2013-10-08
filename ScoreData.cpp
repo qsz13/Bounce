@@ -11,12 +11,10 @@ int ScoreData::score;
 int ScoreData::highScore;
 bool ScoreData::gameIsOver = false;
 ScoreData::ScoreData() {
-	// TODO Auto-generated constructor stub
 
 }
 
 ScoreData::~ScoreData() {
-	// TODO Auto-generated destructor stub
 }
 
 void ScoreData::setScoreTo0() {

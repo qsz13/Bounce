@@ -25,14 +25,9 @@ void GameLayer::initBackground() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
-	// 创建图片精灵
 	CCSprite* gameLayerBackground = CCSprite::create(
 			"GameLayer/GameSceneBackground.png");
-
-	// 设置图片精灵的位置
 	gameLayerBackground->setPosition(ccp(size.width / 2, size.height / 2));
-
-	// 把图片精灵放置在图层中
 	this->addChild(gameLayerBackground, 0);
 }
 
@@ -50,17 +45,11 @@ void GameLayer::initTopBar() {
 	this->addChild(pauseButton, 3);
 
 	//Scores Label
-	// 创建图片精灵
 	scoresLabel = CCSprite::create("GameLayer/ScoresLabel.png");
-
-	// 设置图片精灵的位置
 	scoresLabel->setPosition(ccp(size.width * 3 / 4, size.height + 50));
-
-	// 把图片精灵放置在图层中
 	this->addChild(scoresLabel, 3);
 
 	//Scores
-
 	char temp[10];
 	sprintf(temp, "%d", ScoreData::getScore());
 	scores = CCLabelTTF::create(temp, "Designer-Notes.ttf", 65);
@@ -68,7 +57,6 @@ void GameLayer::initTopBar() {
 	this->addChild(scores, 3);
 }
 
-// on "init" you need to initialize your instance
 bool GameLayer::init() {
 	initBackground();
 	initTopBar();
@@ -82,8 +70,8 @@ bool GameLayer::init() {
 	isSkweing = false;
 	ScoreData::gameIsOver = false;
 	newGame = true;
-	srand(time(NULL));
-	setKeypadEnabled(true);
+	srand (time(NULL));setKeypadEnabled
+	(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
 	if (!CCLayer::init()) {
 		return false;
@@ -129,14 +117,12 @@ void GameLayer::onEnterTransitionDidFinish() {
 	if (SettingLayer::getControlMode() == SettingLayer::GRAVITY) {
 		setAccelerometerEnabled(true);
 		setTouchEnabled(false);
-		CCLOG("gravity");
 
 	} else {
 		setTouchEnabled(true);
 		setAccelerometerEnabled(false);
-		b2Vec2 gravity(0,0);
+		b2Vec2 gravity(0, 0);
 		world->SetGravity(gravity);
-		CCLOG("Touch");
 	}
 
 	CCActionInterval* actionTo1 = CCMoveTo::create(0.3,
@@ -267,7 +253,7 @@ void GameLayer::buildBall() {
 
 void GameLayer::buildMyPaddle() {
 
-	//my paddle;
+//my paddle;
 	myPaddle = MyPaddle::createMyPaddle();
 	myPaddle->setTag(1);
 	myPaddle->setPosition(
@@ -324,8 +310,7 @@ void GameLayer::buildEnemyPaddle() {
 	enemyPaddleFixtureDef.shape = &enemyPaddleShape;
 	enemyPaddleFixtureDef.density = 10.0f;
 	enemyPaddleFixtureDef.friction = 0.4f;
-	enemyPaddleFixtureDef.restitution = 0.1f;
-	// enemyPaddleFixtureDef.gravityScale = 0.0f;
+	enemyPaddleFixtureDef.restitution = 0.02f;
 	enemyPaddleFixture = enemyPaddle->getEnemyPaddleBody()->CreateFixture(
 			&enemyPaddleFixtureDef);
 
@@ -339,7 +324,6 @@ void GameLayer::restrictPaddleMovement() {
 	jointDef.Initialize(myPaddle->getMyPaddleBody(), groundBody,
 			myPaddle->getMyPaddleBody()->GetWorldCenter(), worldAxis);
 	world->CreateJoint(&jointDef);
-
 	jointDef.Initialize(enemyPaddle->getEnemyPaddleBody(), groundBody,
 			enemyPaddle->getEnemyPaddleBody()->GetWorldCenter(), worldAxis);
 	world->CreateJoint(&jointDef);
@@ -373,7 +357,6 @@ void GameLayer::doStep(float delta) {
 				switch (f->GetType()) {
 				case b2Shape::e_circle: {
 					b2CircleShape* circle = (b2CircleShape*) f->GetShape();
-					/* Do stuff with a circle shape */
 				}
 					break;
 
@@ -382,7 +365,6 @@ void GameLayer::doStep(float delta) {
 					CCRect rect = sprite->boundingBox();
 					poly->SetAsBox(rect.size.width / 2 / PTM_RATIO,
 							rect.size.height / 2 / PTM_RATIO);
-
 				}
 					break;
 				}
@@ -397,17 +379,12 @@ void GameLayer::doStep(float delta) {
 		avoidUnwantedSituation();
 
 		if (!gameIsEnded) {
-			//Ball *ball= (Ball*)this->getChildByTag(0);
 			if (ball->getPosition().y < -ball->getHeight() / 2) {
 
 				CCSprite *bg = CCSprite::create(
 						"GameLayer/Continue & Restart/RestartBackground.png");
 				bg->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 				this->addChild(bg, 1, 0);
-
-				// CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
-				// label->setPosition(ccp(winSize.width/2,winSize.height/2));
-				// addChild(label,1,0);
 				gameIsEnded = true;
 				newGame = false;
 				ScoreData::gameIsOver = true;
@@ -423,10 +400,6 @@ void GameLayer::doStep(float delta) {
 						"GameLayer/Continue & Restart/ContinueBackground.png");
 				bg->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 				this->addChild(bg, 1, 0);
-
-				// CCLabelTTF *label = CCLabelTTF::create("you win","",123);
-				// label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
-				// addChild(label,1,0);
 				gameIsEnded = true;
 				ScoreData::gameIsOver = false;
 
@@ -447,9 +420,6 @@ void GameLayer::doStep(float delta) {
 									"GameLayer/Continue & Restart/RestartBackground.png");
 					bg->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 					this->addChild(bg, 1, 0);
-					// CCLabelTTF *label = CCLabelTTF::create("you lose","",123);
-					// label->setPosition(ccp(winSize.width/2,winSize.height/2));
-					// addChild(label,1,0);
 					gameIsEnded = true;
 					setHighScore();
 					newGame = false;
@@ -463,9 +433,6 @@ void GameLayer::doStep(float delta) {
 									"GameLayer/Continue & Restart/ContinueBackground.png");
 					bg->setPosition(ccp(winSize.width / 2, winSize.height / 2));
 					this->addChild(bg, 1, 0);
-					// CCLabelTTF *label = CCLabelTTF::create("you win","",123);
-					// label->setPosition(ccp(winSize.width/2,winSize.height*3/4));
-					// addChild(label,1,0);
 					gameIsEnded = true;
 					ScoreData::gameIsOver = false;
 					newGame = false;
@@ -508,11 +475,8 @@ void GameLayer::restartConfirm() {
 			pMenusSetting->setPosition(
 					ccp(winSize.width / 2, winSize.height - 789.5));
 			this->addChild(pMenusSetting, 1);
-
 		}
-
 	}
-
 }
 
 void GameLayer::restart() {
@@ -565,7 +529,7 @@ void GameLayer::ccTouchesMoved(CCSet *pTouches, CCEvent* event) {
 		location = CCDirector::sharedDirector()->convertToGL(location);
 		b2Vec2 locationWorld = b2Vec2(location.x / PTM_RATIO,
 				location.y / PTM_RATIO);
-		if (_mouseJoint)   //判断 否则会找不到  然后报错
+		if (_mouseJoint) 
 			_mouseJoint->SetTarget(locationWorld);
 	} else if (SettingLayer::getControlMode() == SettingLayer::TOUCH) {
 		CCTouch *myTouch = (CCTouch*) pTouches->anyObject();
@@ -583,9 +547,9 @@ void GameLayer::ccTouchesMoved(CCSet *pTouches, CCEvent* event) {
 
 void GameLayer::ccTouchesEnded(CCSet *pTouches, CCEvent* event) {
 	if (SettingLayer::getControlMode() == SettingLayer::DRAG) {
-		if (_mouseJoint)  //判断 否则会找不到  然后报错
+		if (_mouseJoint)
 		{
-			world->DestroyJoint(_mouseJoint);   //摧毁关节
+			world->DestroyJoint(_mouseJoint);
 			_mouseJoint = NULL;
 		}
 	} else if (SettingLayer::getControlMode() == SettingLayer::TOUCH) {
@@ -595,28 +559,17 @@ void GameLayer::ccTouchesEnded(CCSet *pTouches, CCEvent* event) {
 }
 
 void GameLayer::didAccelerate(CCAcceleration* pAccelerationValue) {
-	// b2Vec2 gravity(pAccelerationValue->x * SettingLayer::getSensitivity(),
-	// 		pAccelerationValue->y * SettingLayer::getSensitivity());
-	// world->SetGravity(gravity);
-	//if(pAccelerationValue->x > 0){
-	//if (SettingLayer::getControlMode() == SettingLayer::TOUCH) {
-		if(pAccelerationValue->x > 0.03){
-			CCLOG("!!!!");
-			b2Vec2 v = b2Vec2(0.08 * SettingLayer::getSensitivity(), 0);
-			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
-		}
-		else if(pAccelerationValue->x < -0.03){
-			b2Vec2 v = b2Vec2(-0.08 * SettingLayer::getSensitivity(), 0);
-			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
-		}else
-		{
-			b2Vec2 v = b2Vec2(0, 0);
-			myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
-		}
-	//}
-	//}
 
-
+	if (pAccelerationValue->x > 0.03) {
+		b2Vec2 v = b2Vec2(0.08 * SettingLayer::getSensitivity(), 0);
+		myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+	} else if (pAccelerationValue->x < -0.03) {
+		b2Vec2 v = b2Vec2(-0.08 * SettingLayer::getSensitivity(), 0);
+		myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+	} else {
+		b2Vec2 v = b2Vec2(0, 0);
+		myPaddle->getMyPaddleBody()->SetLinearVelocity(v);
+	}
 }
 
 void GameLayer::dropItem() {
@@ -661,7 +614,6 @@ void GameLayer::dropItem() {
 							positionCorrect = false;
 							break;
 						}
-
 					}
 					if (positionCorrect) {
 						break;
@@ -731,7 +683,6 @@ void GameLayer::itemIntersects() {
 
 }
 
-//-------------------------- can be put in paddle class
 void GameLayer::enlargePaddle(Ball* ball) {
 	CCActionInterval* actionBy = CCScaleBy::create(0.5f, 2.0f, 1.0f);
 	b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
@@ -852,7 +803,6 @@ void GameLayer::paddleTimer() {
 void GameLayer::reverseBallXVelocity() {
 	b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
 	v.x = -v.x;
-	CCLOG("reverse");
 	ball->getBallBody()->SetLinearVelocity(v);
 
 }
@@ -861,12 +811,10 @@ void GameLayer::reverseBallYVelocity() {
 
 	b2Vec2 v = ball->getBallBody()->GetLinearVelocity();
 	v.y = -v.y;
-	CCLOG("reverse");
 	ball->getBallBody()->SetLinearVelocity(v);
 
 }
 
-//===============================================================================
 
 void GameLayer::avoidUnwantedSituation() {
 	b2Vec2 bv = ball->getBallBody()->GetLinearVelocity();
@@ -890,14 +838,11 @@ void GameLayer::avoidUnwantedSituation() {
 		b2Vec2 gv = ghostBall->getBallBody()->GetLinearVelocity();
 		float gs = gv.x * gv.x + gv.y * gv.y;
 		if (gs < 225) {
-			CCLOG("slow");
 			b2Vec2 *gf = new b2Vec2(gv.x, gv.y);
-			//v.y *= 1000;
 			ghostBall->getBallBody()->ApplyForceToCenter(*gf);
 		}
 
 		else if (bs > 1000) {
-			CCLOG("fast,%f,%f", gv.x, gv.y);
 			b2Vec2 *gf = new b2Vec2(-gv.x, -gv.y);
 
 			ghostBall->getBallBody()->ApplyForceToCenter(*gf);
@@ -1060,7 +1005,6 @@ void GameLayer::skewTimer() {
 void GameLayer::pause() {
 	if (!gameIsPaused) {
 		gameIsPaused = true;
-		//CCDirector::sharedDirector()->pushScene(CCTransitionSlideInR::create(0.3, PauseLayer::scene()));
 		CCActionInterval* actionTo1 = CCMoveTo::create(0.3,
 				ccp(winSize.width / 4, winSize.height + 50));
 		CCActionInterval* actionTo2 = CCMoveTo::create(0.3,
@@ -1115,7 +1059,6 @@ void GameLayer::keyBackClicked() {
 
 void GameLayer::setHighScore() {
 
-	CCLOG("score %d", ScoreData::getScore());
 
 	if (ScoreData::getScore() > ScoreData::highScore) {
 		CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore",

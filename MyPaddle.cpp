@@ -7,23 +7,20 @@
 
 #include "MyPaddle.h"
 
-//MyPaddle* MyPaddle::myPaddle = NULL;
 
 MyPaddle::MyPaddle() :
 		Paddle() {
-	// paddleBodyDef.userData = myPaddle;
 
 }
 
 MyPaddle::~MyPaddle() {
-	// TODO Auto-generated destructor stub
+
 }
 
 MyPaddle* MyPaddle::createMyPaddle() {
 
 	MyPaddle *myPaddle = new MyPaddle();
 	if (myPaddle && myPaddle->initWithFile("GameLayer/myPaddle.png")) {
-		myPaddle->myInit();
 		myPaddle->autorelease();
 		return myPaddle;
 	}
@@ -32,8 +29,6 @@ MyPaddle* MyPaddle::createMyPaddle() {
 
 }
 
-void MyPaddle::myInit() {
-}
 
 float MyPaddle::getWidth() {
 	return this->getTextureRect().getMaxX();

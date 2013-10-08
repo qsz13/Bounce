@@ -22,7 +22,6 @@ b2BodyDef* Paddle::getBodyDef() {
 }
 
 Paddle::~Paddle() {
-	// TODO Auto-generated destructor stub
 }
 
 Paddle::lengthType Paddle::getLengthState() {

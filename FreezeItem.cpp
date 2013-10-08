@@ -13,7 +13,7 @@ FreezeItem::FreezeItem() {
 }
 
 FreezeItem::~FreezeItem() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 FreezeItem* FreezeItem::createFreezeItem() {

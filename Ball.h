@@ -11,7 +11,7 @@
 #include "Box2D.h"
 #include <cmath>
 #define PTM_RATIO 32.0
-//#define BALL_SCALE 0.2
+
 using namespace cocos2d;
 
 struct Velocity {
@@ -27,7 +27,6 @@ public:
 	virtual ~Ball();
 	static Ball* createBall();
 	static Ball* createGhostBall();
-	void myInit();
 	void createBody(b2World &world);
 	b2Body* getBody();
 	float getWidth();
@@ -52,7 +51,6 @@ public:
 	int getSkewFrameLasted();
 	void setSkewFrameLastedTo0();
 private:
-	//static Ball *ball;
 
 	Velocity velocity;
 	CCTexture2D ballTexture;

@@ -12,7 +12,7 @@ DoubleItem::DoubleItem() {
 }
 
 DoubleItem::~DoubleItem() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 DoubleItem* DoubleItem::createDoubleItem() {

@@ -13,7 +13,7 @@ EnemyPaddle::EnemyPaddle() :
 }
 
 EnemyPaddle::~EnemyPaddle() {
-	// TODO Auto-generated destructor stub
+
 }
 
 EnemyPaddle* EnemyPaddle::createEnemyPaddle() {

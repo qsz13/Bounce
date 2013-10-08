@@ -18,7 +18,6 @@ public:
 
 	static MyPaddle* createMyPaddle();
 
-	void myInit();
 	float getWidth();
 	float getHeight();
 
@@ -26,11 +25,9 @@ public:
 	void setMyPaddleBody(b2Body* myPaddleBody);
 
 protected:
-	//static MyPaddle *myPaddle;
 	MyPaddle();
 	virtual ~MyPaddle();
 	b2Body *myPaddleBody;
-	//static CCTexture2D * image ;
 };
 
 #endif /* MYPADDLE_H_ */

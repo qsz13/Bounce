@@ -2,8 +2,9 @@
 
 #include "cocos2d.h"
 #include "MenuLayer.h"
-
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
+using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
@@ -39,6 +40,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     // run
     pDirector->runWithScene(pScene);
 
+
+	SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic( "background.mp3" );
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background.mp3", true);
+
     return true;
 }
 
@@ -48,7 +53,7 @@ void AppDelegate::applicationDidEnterBackground()
     CCDirector::sharedDirector()->pause();
 
     // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
@@ -57,5 +62,5 @@ void AppDelegate::applicationWillEnterForeground()
     CCDirector::sharedDirector()->resume();
     
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }

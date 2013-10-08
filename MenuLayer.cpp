@@ -6,22 +6,18 @@
  */
 
 #include "MenuLayer.h"
-#include "SimpleAudioEngine.h"
+
 using namespace cocos2d;
-using namespace CocosDenshion;
+
 
 void MenuLayer::initBackground() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
-	// 创建图片精灵
 	CCSprite* menuLayerBackground = CCSprite::create(
 			"MenuLayer/Background.png");
 
-	// 设置图片精灵的位置
 	menuLayerBackground->setPosition(ccp(size.width / 2, size.height / 2));
-
-	// 把图片精灵放置在图层中
 	this->addChild(menuLayerBackground, 0);
 }
 
@@ -154,13 +150,12 @@ bool MenuLayer::init() {
 	setTouchPriority(kCCMenuHandlerPriority + 1);
 	setTouchMode (kCCTouchesOneByOne);
 
+
 	this->initBackground();
 	this->initMenu();
 	this->getHighScoreFromFile();
 	this->getControlModeFromFile();
 	this->getSensitivityFromFile();
-	//preloadBackgroundMusic("background.mp3");
-	//SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background.mp3",true);
 	return true;
 }
 
@@ -197,16 +192,16 @@ void MenuLayer::menuSetting(CCObject *pSender) {
 }
 
 bool MenuLayer::haveSavedFile() {
-	if (!CCUserDefault::sharedUserDefault()->getBoolForKey("haveSavedFileXml"))	//通过设置的bool型标志位判断，如果不存在
+	if (!CCUserDefault::sharedUserDefault()->getBoolForKey("haveSavedFileXml"))
 			{
 		CCUserDefault::sharedUserDefault()->setBoolForKey("haveSavedFileXml",
-				true);	//写入bool判断位
-		CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore", 0);//写入初始分数0
+				true);
+		CCUserDefault::sharedUserDefault()->setIntegerForKey("HighScore", 0);
 		CCUserDefault::sharedUserDefault()->setStringForKey("ControlMode",
 				"TOUCH");
 		CCUserDefault::sharedUserDefault()->setIntegerForKey("Sensitivity",
 				200);
-		CCUserDefault::sharedUserDefault()->flush();//设置完一定要调用flush，才能从缓冲写入io
+		CCUserDefault::sharedUserDefault()->flush();
 		return false;
 	} else {
 		return true;
@@ -214,7 +209,7 @@ bool MenuLayer::haveSavedFile() {
 }
 
 void MenuLayer::getHighScoreFromFile() {
-	if (haveSavedFile())	//如果存在存档
+	if (haveSavedFile())
 	{
 		ScoreData::highScore =
 				CCUserDefault::sharedUserDefault()->getIntegerForKey(

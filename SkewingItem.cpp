@@ -13,7 +13,6 @@ SkewingItem::SkewingItem() {
 }
 
 SkewingItem::~SkewingItem() {
-	// TODO Auto-generated destructor stub
 }
 
 SkewingItem* SkewingItem::createSkewingItem() {

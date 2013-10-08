@@ -13,7 +13,6 @@ ReverseXItem::ReverseXItem() {
 }
 
 ReverseXItem::~ReverseXItem() {
-	// TODO Auto-generated destructor stub
 }
 
 ReverseXItem* ReverseXItem::createReverseXItem() {

@@ -13,7 +13,6 @@ ShortenItem::ShortenItem() {
 }
 
 ShortenItem::~ShortenItem() {
-	// TODO Auto-generated destructor stub
 }
 
 ShortenItem* ShortenItem::createShortenItem() {

@@ -10,12 +10,11 @@
 CCSprite * HelpLayer::movingDot = NULL;
 
 HelpLayer::HelpLayer() {
-	// TODO Auto-generated constructor stub
 
 }
 
 HelpLayer::~HelpLayer() {
-	// TODO Auto-generated destructor stub
+
 }
 
 CCScene* HelpLayer::scene() {
@@ -46,8 +45,6 @@ bool HelpLayer::init() {
 		return false;
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
-//	setTouchPriority(kCCMenuHandlerPriority + 1);
-//	setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initBackButton();

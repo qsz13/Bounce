@@ -13,7 +13,7 @@ EnlargeItem::EnlargeItem() {
 }
 
 EnlargeItem::~EnlargeItem() {
-	// TODO Auto-generated destructor stub
+	
 }
 
 EnlargeItem* EnlargeItem::createEnlargeItem() {

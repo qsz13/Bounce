@@ -12,7 +12,6 @@ ReverseYItem::ReverseYItem() {
 }
 
 ReverseYItem::~ReverseYItem() {
-	// TODO Auto-generated destructor stub
 }
 
 ReverseYItem* ReverseYItem::createReverseYItem() {

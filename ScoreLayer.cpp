@@ -8,12 +8,10 @@
 #include "ScoreLayer.h"
 
 ScoreLayer::ScoreLayer() {
-	// TODO Auto-generated constructor stub
 
 }
 
 ScoreLayer::~ScoreLayer() {
-	// TODO Auto-generated destructor stub
 }
 
 CCScene* ScoreLayer::scene() {

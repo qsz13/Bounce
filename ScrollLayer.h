@@ -23,10 +23,8 @@ public:
 	bool init();
 	CREATE_FUNC (ScrollLayer);
 
-//scrollview滚动的时候会调用
 	void scrollViewDidScroll(CCScrollView* view);
 
-//scrollview缩放的时候会调用
 	void scrollViewDidZoom(CCScrollView* view);
 
 	virtual void onEnter();
@@ -39,7 +37,6 @@ public:
 
 private:
 
-//根据手势滑动的距离和方向滚动图层
 	void adjustScrollView(float offset);
 	CCScrollView *m_pScrollView;
 	CCPoint m_touchPoint;

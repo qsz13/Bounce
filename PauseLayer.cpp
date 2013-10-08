@@ -27,15 +27,12 @@ void PauseLayer::initBackground() {
 	winSize = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
-	// 创建图片精灵
 	CCSprite* settingLayerBackground = CCSprite::create(
 			"PauseLayer/PauseSceneBackground.png");
 
-	// 设置图片精灵的位置
 	settingLayerBackground->setPosition(
 			ccp(winSize.width / 2, winSize.height / 2));
 
-	// 把图片精灵放置在图层中
 	this->addChild(settingLayerBackground, 0);
 }
 
@@ -45,7 +42,6 @@ bool PauseLayer::init() {
 	setKeypadEnabled(true);
 	setTouchEnabled(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
-	//setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initMenu();
@@ -69,7 +65,6 @@ void PauseLayer::initMenu() {
 			"PauseLayer/Setting.png", "PauseLayer/Setting_Pressed.png", this,
 			menu_selector(PauseLayer::menuSetting));
 	pSettingItem->setPosition(ccp(0, 0));
-	//pSettingItem->setOpacity( 0 );
 
 	pMenusSetting = CCMenu::create(pSettingItem, NULL);
 	pMenusSetting->setPosition(ccp(winSize.width / 2, 640));
@@ -80,7 +75,6 @@ void PauseLayer::initMenu() {
 			"PauseLayer/BackToMenu.png", "PauseLayer/BackToMenu_Pressed.png", this,
 			menu_selector(PauseLayer::menuBackToMenu));
 	pBackToMenuItem->setPosition(ccp(0, 0));
-	//pSettingItem->setOpacity( 0 );
 
 	pMenusBackToMenu = CCMenu::create(pBackToMenuItem, NULL);
 	pMenusBackToMenu->setPosition(ccp(winSize.width / 2, -57 / 2));

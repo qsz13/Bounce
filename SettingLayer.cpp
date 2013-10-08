@@ -17,7 +17,6 @@ SettingLayer::SettingLayer() {
 }
 
 SettingLayer::~SettingLayer() {
-	// TODO Auto-generated destructor stub
 }
 
 CCScene* SettingLayer::scene() {
@@ -31,9 +30,7 @@ bool SettingLayer::init() {
 	if (!CCLayer::init())
 		return false;
 	setKeypadEnabled(true);
-	//setTouchEnabled(true);
 	setTouchPriority(kCCMenuHandlerPriority + 1);
-	//setTouchMode(kCCTouchesOneByOne);
 
 	this->initBackground();
 	this->initControlMode();
@@ -48,14 +45,11 @@ void SettingLayer::initBackground() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Background
-	// 创建图片精灵
 	CCSprite* settingLayerBackground = CCSprite::create(
 			"SettingLayer/SettingSceneBackground.png");
 
-	// 设置图片精灵的位置
 	settingLayerBackground->setPosition(ccp(size.width / 2, size.height / 2));
 
-	// 把图片精灵放置在图层中
 	this->addChild(settingLayerBackground, 0);
 }
 void SettingLayer::initBackButton() {
@@ -76,15 +70,12 @@ void SettingLayer::initControlMode() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Control Mode Label
-	// 创建图片精灵
 	CCSprite* controlModeLabel = CCSprite::create(
 			"SettingLayer/ControlMode/controlModeLabel.png");
 
-	// 设置图片精灵的位置
 	controlModeLabel->setPosition(
 			ccp((401.5 + 46.4) / 2, size.height - (394 + 360) / 2));
 
-	// 把图片精灵放置在图层中
 	this->addChild(controlModeLabel, 1);
 
 	//Control Mode
@@ -121,7 +112,6 @@ void SettingLayer::initControlMode() {
 	this->addChild(controlModeTouch, 1);
 
 	//Selector
-	// 创建图片精灵
 	controlModeSelector = CCSprite::create(
 			"SettingLayer/ControlMode/controlModeSelector.png");
 
@@ -133,22 +123,18 @@ void SettingLayer::initControlMode() {
 		controlModeSelector->setPosition(controlModeDrag->getPosition());
 	}
 
-	// 把图片精灵放置在图层中
 	this->addChild(controlModeSelector, 2);
 }
 void SettingLayer::initGravitySeneitivity() {
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
 	//Gravity Sensitivity Label
-	// 创建图片精灵
 	CCSprite* gravitySensitivityLabel = CCSprite::create(
 			"SettingLayer/GravitySensitivity/gravitySensitivityLabel.png");
 
-	// 设置图片精灵的位置
 	gravitySensitivityLabel->setPosition(
 			ccp((523.2 + 46.4) / 2, size.height - (590 + 640) / 2));
 
-	// 把图片精灵放置在图层中
 	this->addChild(gravitySensitivityLabel, 1);
 
 	//Gravity Sensitivity Control 
